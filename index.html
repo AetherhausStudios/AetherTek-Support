@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AetherhausStudios — Support & Reviews</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --ink:#1a1118;--parchment:#f5f0e8;--parchment-dark:#ede5d0;
+    --amethyst:#7c4daa;--amethyst-light:#c9a7e8;--amethyst-pale:#f0e8f8;
+    --moss:#3d5c3a;--gold:#c4962a;--gold-light:#f0d48a;--ember:#c44a2a;
+    --smoke:#6b6070;--border:rgba(124,77,170,0.25);--border-strong:rgba(124,77,170,0.5);
+  }
+  body{
+    background:var(--parchment);color:var(--ink);
+    font-family:'Crimson Pro',Georgia,serif;font-size:17px;line-height:1.6;min-height:100vh;
+    background-image:
+      radial-gradient(ellipse at 10% 10%,rgba(124,77,170,0.06) 0%,transparent 50%),
+      radial-gradient(ellipse at 90% 90%,rgba(196,150,42,0.06) 0%,transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%237c4daa' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .page-wrap{max-width:780px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+  .site-header{text-align:center;padding:2.5rem 0 2rem;border-bottom:1px solid var(--border);margin-bottom:2.5rem;position:relative;}
+  .site-header::before,.site-header::after{content:'✦';color:var(--amethyst-light);font-size:14px;position:absolute;bottom:-8px;}
+  .site-header::before{left:calc(50% - 80px);}
+  .site-header::after{right:calc(50% - 80px);}
+  .site-title{font-family:'Cinzel Decorative',serif;font-size:1.8rem;font-weight:700;color:var(--amethyst);letter-spacing:0.02em;line-height:1.2;}
+  .site-subtitle{font-family:'Crimson Pro',serif;font-style:italic;color:var(--smoke);font-size:1rem;margin-top:0.4rem;}
+  .herald-badge{display:inline-block;background:var(--amethyst-pale);border:1px solid var(--border-strong);border-radius:20px;padding:3px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--amethyst);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;}
+  .tabs{display:flex;gap:0;border-bottom:1.5px solid var(--border-strong);margin-bottom:2rem;}
+  .tab-btn{font-family:'Cinzel Decorative',serif;font-size:0.7rem;font-weight:400;letter-spacing:0.05em;padding:0.6rem 1.2rem;background:transparent;border:none;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;cursor:pointer;color:var(--smoke);transition:all 0.2s ease;white-space:nowrap;}
+  .tab-btn:hover{color:var(--amethyst);}
+  .tab-btn.active{color:var(--amethyst);border-bottom-color:var(--amethyst);}
+  .panel{display:none;} .panel.active{display:block;}
+  .form-section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.8rem 2rem;margin-bottom:1.5rem;position:relative;overflow:hidden;}
+  .form-section::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amethyst),var(--gold),var(--amethyst));}
+  .section-label{font-family:'Cinzel Decorative',serif;font-size:0.65rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--amethyst);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+  .field-row.full{grid-template-columns:1fr;}
+  .field-group{display:flex;flex-direction:column;gap:4px;}
+  label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--smoke);text-transform:uppercase;}
+  input[type="text"],input[type="email"],select,textarea{font-family:'Crimson Pro',serif;font-size:16px;padding:8px 12px;border:1px solid var(--border-strong);border-radius:6px;background:var(--parchment);color:var(--ink);transition:border-color 0.2s,box-shadow 0.2s;outline:none;width:100%;}
+  input:focus,select:focus,textarea:focus{border-color:var(--amethyst);box-shadow:0 0 0 3px rgba(124,77,170,0.12);background:#fff;}
+  textarea{resize:vertical;min-height:100px;}
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237c4daa'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer;background-color:var(--parchment);}
+  .urgency-group{display:flex;gap:8px;flex-wrap:wrap;}
+  .urgency-pill{padding:6px 14px;border-radius:20px;border:1px solid var(--border-strong);background:transparent;font-family:'Crimson Pro',serif;font-size:14px;color:var(--smoke);cursor:pointer;transition:all 0.18s;}
+  .urgency-pill:hover{border-color:var(--amethyst);color:var(--amethyst);}
+  .urgency-pill.selected-low{background:var(--moss);border-color:var(--moss);color:#e8f5e5;}
+  .urgency-pill.selected-med{background:var(--gold);border-color:var(--gold);color:#3a2500;}
+  .urgency-pill.selected-high{background:var(--ember);border-color:var(--ember);color:#fce8e0;}
+  .star-row{display:flex;gap:6px;margin-bottom:0.8rem;}
+  .star{width:36px;height:36px;background:none;border:none;cursor:pointer;font-size:28px;line-height:1;color:#d4c5b8;transition:color 0.15s,transform 0.1s;padding:0;}
+  .star:hover,.star.lit{color:var(--gold);}
+  .star:active{transform:scale(0.85);}
+  .star-label{font-family:'Crimson Pro',serif;font-style:italic;color:var(--smoke);font-size:14px;align-self:center;margin-left:4px;min-width:120px;}
+  .tip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1rem;}
+  .tip-card{background:var(--parchment);border:1.5px solid var(--border);border-radius:10px;padding:1rem 0.5rem;text-align:center;cursor:pointer;transition:all 0.18s;font-family:'Crimson Pro',serif;}
+  .tip-card:hover{border-color:var(--amethyst);background:var(--amethyst-pale);}
+  .tip-card.selected{border-color:var(--amethyst);background:var(--amethyst-pale);box-shadow:0 0 0 3px rgba(124,77,170,0.15);}
+  .tip-amount{font-family:'Cinzel Decorative',serif;font-size:1.1rem;font-weight:700;color:var(--amethyst);display:block;}
+  .tip-label{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--smoke);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-top:3px;}
+  .tip-custom{grid-column:span 4;display:flex;align-items:center;gap:10px;}
+  .tip-custom label{margin:0;white-space:nowrap;}
+  .tip-custom input{flex:1;}
+  .submit-btn{font-family:'Cinzel Decorative',serif;font-size:0.8rem;letter-spacing:0.08em;font-weight:700;padding:0.85rem 2.5rem;background:var(--amethyst);color:#fff;border:none;border-radius:8px;cursor:pointer;transition:all 0.2s;display:block;width:100%;margin-top:0.5rem;}
+  .submit-btn:hover{background:#6a3d94;transform:translateY(-1px);}
+  .submit-btn:active{transform:translateY(0);}
+  .submit-btn:disabled{background:#a889c9;cursor:not-allowed;transform:none;}
+  .success-banner{display:none;background:var(--amethyst-pale);border:1px solid var(--border-strong);border-radius:12px;padding:2rem;text-align:center;animation:fadeIn 0.4s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .success-glyph{font-size:2.5rem;display:block;margin-bottom:0.8rem;}
+  .success-title{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--amethyst);margin-bottom:0.4rem;}
+  .success-msg{font-family:'Crimson Pro',serif;font-style:italic;color:var(--smoke);font-size:15px;}
+  .lore-aside{border-left:3px solid var(--amethyst-light);padding:0.8rem 1rem;margin:1.2rem 0;background:var(--amethyst-pale);border-radius:0 8px 8px 0;font-style:italic;font-size:15px;color:var(--smoke);}
+  .ticket-id-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+  .ticket-id{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amethyst);background:var(--amethyst-pale);padding:4px 10px;border-radius:4px;letter-spacing:0.05em;}
+  .char-count{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--smoke);}
+  .error-msg{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ember);margin-top:4px;display:none;}
+  .kofi-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:#FF5E5B;color:#fff;font-family:'Cinzel Decorative',serif;font-size:0.8rem;letter-spacing:0.08em;font-weight:700;padding:0.85rem 2.5rem;border:none;border-radius:8px;cursor:pointer;transition:all 0.2s;text-decoration:none;width:100%;margin-top:0.5rem;}
+  .kofi-btn:hover{background:#e04d4a;transform:translateY(-1px);}
+  .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:#888;}
+  .status-dot.sending{background:var(--gold);animation:pulse 1s infinite;}
+  .status-dot.ok{background:var(--moss);}
+  .status-dot.err{background:var(--ember);}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  .send-status{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--smoke);margin-top:8px;display:flex;align-items:center;min-height:20px;}
+  .fallback-link{display:block;text-align:center;margin-top:8px;font-size:14px;color:var(--amethyst);font-style:italic;text-decoration:none;}
+  .fallback-link:hover{text-decoration:underline;}
+  @media(max-width:600px){
+    .field-row{grid-template-columns:1fr;}
+    .tip-grid{grid-template-columns:repeat(2,1fr);}
+    .tip-custom{grid-column:span 2;}
+    .site-title{font-size:1.3rem;}
+    .tabs{overflow-x:auto;}
+    .tab-btn{font-size:0.6rem;padding:0.6rem 0.9rem;}
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="site-header">
+    <div class="herald-badge">AetherhausStudios</div>
+    <h1 class="site-title">AetherhausStudios</h1>
+    <p class="site-subtitle">tech support, chaos management &amp; general arcane troubleshooting</p>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab-btn active" role="tab" onclick="switchTab('ticket',this)">⟡ Submit a Ticket</button>
+    <button class="tab-btn" role="tab" onclick="switchTab('review',this)">✦ Leave a Review</button>
+    <button class="tab-btn" role="tab" onclick="switchTab('tip',this)">⊹ Leave a Tip</button>
+  </nav>
+
+  <!-- ══ TICKET ══ -->
+  <div id="panel-ticket" class="panel active">
+    <div class="lore-aside">Having a tech calamity? A device cursed by a previous owner? Submit your grievances below and Aether will get to them in the order received — or by vibes, whichever comes first.</div>
+
+    <div class="form-section" id="ticket-s1">
+      <div class="ticket-id-row">
+        <div class="section-label" style="margin:0;flex:1;">Petitioner Details</div>
+        <span class="ticket-id" id="ticket-id">TKT-XXXXXX</span>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label for="t-name">Name or Handle</label>
+          <input type="text" id="t-name" placeholder="mortal name or alias accepted">
+        </div>
+        <div class="field-group">
+          <label for="t-contact">Contact (optional)</label>
+          <input type="email" id="t-contact" placeholder="email or discord handle">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section" id="ticket-s2">
+      <div class="section-label">The Problem</div>
+      <div class="field-row">
+        <div class="field-group">
+          <label for="t-category">Category</label>
+          <select id="t-category">
+            <option value="">— select one —</option>
+            <option>Device Sorcery (hardware/software)</option>
+            <option>Streaming / Twitch Cursework</option>
+            <option>Network Untangling</option>
+            <option>Miscellaneous Chaos</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Urgency Level</label>
+          <div class="urgency-group">
+            <button class="urgency-pill" onclick="selectUrgency(this,'low','selected-low')">🌿 Chill</button>
+            <button class="urgency-pill" onclick="selectUrgency(this,'med','selected-med')">🕯 Burning</button>
+            <button class="urgency-pill" onclick="selectUrgency(this,'high','selected-high')">🔥 ON FIRE</button>
+          </div>
+        </div>
+      </div>
+      <div class="field-row full" style="margin-top:0.8rem;">
+        <div class="field-group">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <label for="t-desc">Describe the Affliction</label>
+            <span class="char-count" id="t-char">0 / 800</span>
+          </div>
+          <textarea id="t-desc" maxlength="800" placeholder="What's broken, cursed, or deeply confusing? Include device model, error messages, what you already tried..." oninput="document.getElementById('t-char').textContent=this.value.length+' / 800'"></textarea>
+          <span class="error-msg" id="t-desc-err">Please describe the affliction before transmitting.</span>
+        </div>
+      </div>
+      <div class="field-row full">
+        <div class="field-group">
+          <label for="t-tried">What Have You Already Tried?</label>
+          <input type="text" id="t-tried" placeholder="e.g. turned it off and on, blamed Mercury retrograde, etc.">
+        </div>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="ticket-btn" onclick="submitTicket()">✦ Transmit Ticket to the Void ✦</button>
+    <div class="send-status" id="ticket-status"></div>
+    <div class="success-banner" id="ticket-success">
+      <span class="success-glyph">⟡</span>
+      <div class="success-title" id="success-ticket-id"></div>
+      <p class="success-msg">Your ticket has been received and dispatched to the Discord ether. One (1) chaotic tech support gremlin has been notified. You'll be heard. Probably soon. Definitely eventually.</p>
+    </div>
+  </div>
+
+  <!-- ══ REVIEW ══ -->
+  <div id="panel-review" class="panel">
+    <div class="lore-aside">Did Aether solve your problem, make you feel less alone in the technological wilderness, or at least entertain you while nothing worked? Leave your testament below.</div>
+
+    <div class="form-section" id="review-s1">
+      <div class="section-label">Your Verdict</div>
+      <div style="margin-bottom:1.2rem;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+          <div class="star-row">
+            <button class="star" onclick="setStar(1)">★</button>
+            <button class="star" onclick="setStar(2)">★</button>
+            <button class="star" onclick="setStar(3)">★</button>
+            <button class="star" onclick="setStar(4)">★</button>
+            <button class="star" onclick="setStar(5)">★</button>
+          </div>
+          <span class="star-label" id="star-label">tap to rate</span>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label for="r-name">Name or Handle</label>
+          <input type="text" id="r-name" placeholder="who speaks for the record">
+        </div>
+        <div class="field-group">
+          <label for="r-service">What Did Aether Help With?</label>
+          <select id="r-service">
+            <option value="">— select —</option>
+            <option>Device troubleshooting</option>
+            <option>Streaming setup</option>
+            <option>General tech support</option>
+            <option>Moral support with tech rage</option>
+            <option>Something else entirely</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row full">
+        <div class="field-group">
+          <label for="r-review">Your Testimony</label>
+          <textarea id="r-review" placeholder="Tell future travellers what to expect. Was the chaos controlled? The vibes correct? The problem actually solved?"></textarea>
+          <span class="error-msg" id="r-review-err">A testimony must be provided before sealing.</span>
+        </div>
+      </div>
+      <div class="field-row full">
+        <div class="field-group">
+          <label for="r-quote">One Line for the Hall of Fame (optional)</label>
+          <input type="text" id="r-quote" placeholder="something quotable, funny, or genuinely kind">
+        </div>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="review-btn" onclick="submitReview()">✦ Seal This Testament ✦</button>
+    <div class="send-status" id="review-status"></div>
+    <div class="success-banner" id="review-success">
+      <span class="success-glyph">✦</span>
+      <div class="success-title">Testament Inscribed</div>
+      <p class="success-msg">It has been recorded — both here and in the Discord archive. May your words echo through the halls of AetherhausStudios for at least the next several weeks.</p>
+    </div>
+  </div>
+
+  <!-- ══ TIP ══ -->
+  <div id="panel-tip" class="panel">
+    <div class="lore-aside">Tips keep the Liquid Death cold, the fries loaded, and the tech support gremlin caffeinated enough to answer your questions. No pressure — but deeply appreciated if you're inclined.</div>
+
+    <div class="form-section">
+      <div class="section-label">Choose Your Offering</div>
+      <div class="tip-grid">
+        <div class="tip-card" onclick="selectTip(this,3)">
+          <span class="tip-amount">$3</span>
+          <span class="tip-label">a sip of water</span>
+        </div>
+        <div class="tip-card" onclick="selectTip(this,5)">
+          <span class="tip-amount">$5</span>
+          <span class="tip-label">chilli fries fund</span>
+        </div>
+        <div class="tip-card" onclick="selectTip(this,10)">
+          <span class="tip-amount">$10</span>
+          <span class="tip-label">one full meal</span>
+        </div>
+        <div class="tip-card" onclick="selectTip(this,20)">
+          <span class="tip-amount">$20</span>
+          <span class="tip-label">legendary patron</span>
+        </div>
+        <div class="tip-custom">
+          <label for="tip-custom-amt">Custom:</label>
+          <input type="text" id="tip-custom-amt" placeholder="$ whatever feels right" oninput="clearTipSelection()" style="max-width:240px;">
+        </div>
+      </div>
+      <div class="field-row full" style="margin-top:0.5rem;">
+        <div class="field-group">
+          <label for="tip-note">Leave a Note (optional)</label>
+          <input type="text" id="tip-note" placeholder="kind words, a request, a snack recommendation...">
+        </div>
+      </div>
+    </div>
+
+    <a class="kofi-btn" href="https://ko-fi.com/aetherhausstudios" target="_blank" rel="noopener">
+      ☕ Send a Tip via Ko-fi
+    </a>
+    <p style="text-align:center;font-style:italic;font-size:14px;color:var(--smoke);margin-top:0.8rem;">Opens ko-fi.com/aetherhausstudios in a new tab</p>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<script>
+  const WEBHOOK = 'https://discordapp.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
+  const TICKET_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSe_cIV1_Ef05QRhNrthUPWza7xgxmo_Pf3NWRZgn4U7oEoXZQ/viewform';
+  const REVIEW_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLScUR7IwNXaTFglMneM6-vCYVxmNYiNxGRowltqadoAaO1RuSg/viewform';
+
+  let currentUrgency = null;
+  let currentStar = 0;
+  let currentTip = null;
+
+  const starLabels = ['','Rough, but honest','It was fine, I guess','Solid support','Really helpful!','Absolute legend ✦'];
+
+  function genId() {
+    const c = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let id = 'TKT-';
+    for (let i = 0; i < 6; i++) id += c[Math.floor(Math.random() * c.length)];
+    return id;
+  }
+
+  let ticketId = genId();
+  document.getElementById('ticket-id').textContent = ticketId;
+
+  function switchTab(name, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function selectUrgency(btn, level, cls) {
+    document.querySelectorAll('.urgency-pill').forEach(p => p.className = 'urgency-pill');
+    btn.classList.add(cls);
+    currentUrgency = level;
+  }
+
+  function setStar(n) {
+    currentStar = n;
+    document.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('lit', i < n));
+    document.getElementById('star-label').textContent = starLabels[n];
+  }
+
+  function selectTip(card, amount) {
+    document.querySelectorAll('.tip-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    currentTip = amount;
+    document.getElementById('tip-custom-amt').value = '';
+  }
+
+  function clearTipSelection() {
+    document.querySelectorAll('.tip-card').forEach(c => c.classList.remove('selected'));
+    currentTip = null;
+  }
+
+  function setStatus(id, state, msg) {
+    const el = document.getElementById(id);
+    el.innerHTML = `<span class="status-dot ${state}"></span>${msg}`;
+  }
+
+  async function sendToDiscord(payload) {
+    const res = await fetch(WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    return res.ok;
+  }
+
+  function hide(id) { document.getElementById(id).style.display = 'none'; }
+
+  async function submitTicket() {
+    const desc = document.getElementById('t-desc').value.trim();
+    const errEl = document.getElementById('t-desc-err');
+    if (!desc) { errEl.style.display = 'block'; document.getElementById('t-desc').focus(); return; }
+    errEl.style.display = 'none';
+
+    const btn = document.getElementById('ticket-btn');
+    btn.disabled = true;
+    setStatus('ticket-status', 'sending', 'Transmitting to Discord...');
+
+    const name     = document.getElementById('t-name').value.trim() || 'Anonymous';
+    const contact  = document.getElementById('t-contact').value.trim() || 'not provided';
+    const category = document.getElementById('t-category').value || 'unspecified';
+    const tried    = document.getElementById('t-tried').value.trim() || 'nothing, apparently';
+    const urgencyMap = { low: '🌿 Chill', med: '🕯 Burning', high: '🔥 ON FIRE' };
+    const urgency  = currentUrgency ? urgencyMap[currentUrgency] : 'unspecified';
+    const color    = { low: 0x3d5c3a, med: 0xc4962a, high: 0xc44a2a }[currentUrgency] || 0x7c4daa;
+
+    const payload = {
+      embeds: [{
+        title: `${ticketId} — New Support Ticket`,
+        color,
+        fields: [
+          { name: 'Petitioner', value: name, inline: true },
+          { name: 'Contact', value: contact, inline: true },
+          { name: 'Category', value: category, inline: true },
+          { name: 'Urgency', value: urgency, inline: true },
+          { name: 'Affliction', value: desc },
+          { name: 'Already Tried', value: tried }
+        ],
+        footer: { text: 'AetherhausStudios Support · ' + new Date().toLocaleString() }
+      }]
+    };
+
+    const ok = await sendToDiscord(payload);
+    if (ok) {
+      setStatus('ticket-status', 'ok', 'Transmitted successfully.');
+      document.getElementById('success-ticket-id').textContent = ticketId + ' — Transmission Confirmed';
+      ['ticket-s1','ticket-s2'].forEach(hide);
+      document.querySelector('#panel-ticket .lore-aside').style.display = 'none';
+      btn.style.display = 'none';
+      document.getElementById('ticket-status').style.display = 'none';
+      document.getElementById('ticket-success').style.display = 'block';
+      ticketId = genId();
+    } else {
+      setStatus('ticket-status', 'err', 'Discord transmission failed — try the Google Form instead.');
+      btn.disabled = false;
+      const link = document.createElement('a');
+      link.href = TICKET_FORM; link.target = '_blank';
+      link.className = 'fallback-link';
+      link.textContent = 'Submit via Google Form →';
+      document.getElementById('ticket-status').after(link);
+    }
+  }
+
+  async function submitReview() {
+    const review = document.getElementById('r-review').value.trim();
+    const errEl = document.getElementById('r-review-err');
+    if (!review) { errEl.style.display = 'block'; document.getElementById('r-review').focus(); return; }
+    errEl.style.display = 'none';
+
+    const btn = document.getElementById('review-btn');
+    btn.disabled = true;
+    setStatus('review-status', 'sending', 'Sealing testament...');
+
+    const name    = document.getElementById('r-name').value.trim() || 'Anonymous';
+    const service = document.getElementById('r-service').value || 'unspecified';
+    const quote   = document.getElementById('r-quote').value.trim();
+    const stars   = currentStar ? '★'.repeat(currentStar) + '☆'.repeat(5 - currentStar) : 'not rated';
+
+    const payload = {
+      embeds: [{
+        title: '✦ New Review',
+        color: 0xc4962a,
+        fields: [
+          { name: 'From', value: name, inline: true },
+          { name: 'Rating', value: stars, inline: true },
+          { name: 'Helped with', value: service, inline: true },
+          { name: 'Testimony', value: review },
+          ...(quote ? [{ name: 'Hall of Fame', value: `"${quote}"` }] : [])
+        ],
+        footer: { text: 'AetherhausStudios Reviews · ' + new Date().toLocaleString() }
+      }]
+    };
+
+    const ok = await sendToDiscord(payload);
+    if (ok) {
+      setStatus('review-status', 'ok', 'Inscribed successfully.');
+      hide('review-s1');
+      document.querySelector('#panel-review .lore-aside').style.display = 'none';
+      btn.style.display = 'none';
+      document.getElementById('review-status').style.display = 'none';
+      document.getElementById('review-success').style.display = 'block';
+    } else {
+      setStatus('review-status', 'err', 'Discord failed — try the Google Form instead.');
+      btn.disabled = false;
+      const link = document.createElement('a');
+      link.href = REVIEW_FORM; link.target = '_blank';
+      link.className = 'fallback-link';
+      link.textContent = 'Submit via Google Form →';
+      document.getElementById('review-status').after(link);
+    }
+  }
+</script>
+</body>
+</html>

@@ -103,18 +103,13 @@
 </div>
 
 <script>
-  const WEBHOOK = 'https://discordapp.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
-  const FALLBACK = 'https://docs.google.com/forms/d/e/1FAIpQLSe_cIV1_Ef05QRhNrthUPWza7xgxmo_Pf3NWRZgn4U7oEoXZQ/viewform';
-  let urgency = null;
+  // ── Hauscall receives the submission and generates the ticket ID server-side.
+  // Update HAUSCALL_URL once deployed to Railway.
+  const HAUSCALL_URL = 'https://hauscall-production.up.railway.app';
+  const FALLBACK     = 'https://docs.google.com/forms/d/e/1FAIpQLSe_cIV1_Ef05QRhNrthUPWza7xgxmo_Pf3NWRZgn4U7oEoXZQ/viewform';
 
-  function genId() {
-    const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let id='TKT-';
-    for(let i=0;i<6;i++) id+=c[Math.floor(Math.random()*c.length)];
-    return id;
-  }
-  let ticketId = genId();
-  document.getElementById('ticket-id').textContent = ticketId;
+  let urgency  = null;
+  let ticketId = 'TKT-XXXXXX'; // placeholder until Hauscall responds
 
   function selectUrgency(btn,level,cls) {
     document.querySelectorAll('.urgency-pill').forEach(p=>p.className='urgency-pill');
@@ -137,37 +132,33 @@
     if(!validate()) return;
     const btn=document.getElementById('submit-btn');
     btn.disabled=true; setStatus('sending','Transmitting to the void...');
-    const name=document.getElementById('t-name').value.trim()||'Anonymous';
-    const discord=document.getElementById('t-discord').value.trim();
-    const notify=document.getElementById('t-notify').checked;
-    const cat=document.getElementById('t-category').value;
-    const tried=document.getElementById('t-tried').value.trim()||'nothing, apparently';
-    const desc=document.getElementById('t-desc').value.trim();
-    const urgencyMap={low:'🌿 Chill',med:'🕯 Burning',high:'🔥 ON FIRE'};
-    const urgencyLabel=urgency?urgencyMap[urgency]:'unspecified';
-    const color={low:0x3d5c3a,med:0xc4962a,high:0xc44a2a}[urgency]||0x7c4daa;
-    const payload={embeds:[{title:`${ticketId} — New Support Ticket`,color,fields:[
-      {name:'Petitioner',value:name,inline:true},
-      {name:'Discord',value:discord,inline:true},
-      {name:'Notify via DM',value:notify?'Yes':'No',inline:true},
-      {name:'Category',value:cat,inline:true},
-      {name:'Urgency',value:urgencyLabel,inline:true},
-      {name:'Affliction',value:desc},
-      {name:'Already Tried',value:tried}
-    ],footer:{text:'AetherhausStudios Support · '+new Date().toLocaleString()}}]};
+    const name    = document.getElementById('t-name').value.trim()||'Anonymous';
+    const discord = document.getElementById('t-discord').value.trim();
+    const notify  = document.getElementById('t-notify').checked;
+    const cat     = document.getElementById('t-category').value;
+    const tried   = document.getElementById('t-tried').value.trim()||'nothing, apparently';
+    const desc    = document.getElementById('t-desc').value.trim();
+    // Hauscall generates the ID — we send the data, it responds with the ID
+    const payload = { name, discord, notify, category: cat, urgency, description: desc, tried };
     try {
-      const res=await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      const res  = await fetch(`${HAUSCALL_URL}/ticket`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
       if(res.ok){
+        const data = await res.json();
+        ticketId   = data.id; // Hauscall's generated ID
         setStatus('ok','Transmitted successfully.');
-        document.getElementById('success-id').textContent=ticketId+' — Transmission Confirmed';
-        document.getElementById('notify-msg').textContent=notify
+        document.getElementById('ticket-id').textContent = ticketId;
+        document.getElementById('success-id').textContent = ticketId+' — Transmission Confirmed';
+        document.getElementById('notify-msg').textContent = notify
           ?'Hauscall will be in touch via Discord DM with updates on your ticket.'
           :'You opted out of automated updates — Aether will reach out directly when ready.';
         ['s1','s2'].forEach(id=>document.getElementById(id).style.display='none');
         document.querySelector('.lore-aside').style.display='none';
         btn.style.display='none';document.getElementById('send-status').style.display='none';
         document.getElementById('success').style.display='block';
-        ticketId=genId();
       } else {throw new Error();}
     } catch {
       setStatus('err','Transmission failed — try the Google Form instead.');

@@ -95,12 +95,8 @@
 </div>
 
 <script>
-  const WEBHOOK='https://discordapp.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
+  const HAUSCALL_URL = 'https://hauscall-production.up.railway.app';
 
-  function genId(){
-    const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let id='RPT-';
-    for(let i=0;i<6;i++)id+=c[Math.floor(Math.random()*c.length)];return id;
-  }
   function toggleNotify(input){
     document.getElementById('notify-row').style.display=input.value.trim()?'flex':'none';
   }
@@ -119,27 +115,18 @@
     if(!validate())return;
     const btn=document.getElementById('submit-btn');
     btn.disabled=true;setStatus('sending','Submitting report...');
-    const rptId=genId();
-    const handle=document.getElementById('r-handle').value.trim();
-    const nature=document.getElementById('r-nature').value;
-    const server=document.getElementById('r-server').value.trim()||'not specified';
-    const context=document.getElementById('r-context').value.trim()||'none provided';
-    const reporter=document.getElementById('r-reporter').value.trim()||'Anonymous';
-    const notify=document.getElementById('r-notify').checked&&reporter!=='Anonymous';
-    const payload={embeds:[{title:`${rptId} — ⚠️ Compromised Account Report`,color:0xc44a2a,fields:[
-      {name:'Reported Account',value:handle,inline:true},
-      {name:'Nature of Incident',value:nature,inline:true},
-      {name:'Server',value:server,inline:true},
-      {name:'Reported By',value:reporter,inline:true},
-      {name:'Notify Reporter',value:notify?'Yes':'No / Anonymous',inline:true},
-      {name:'Additional Context',value:context}
-    ],footer:{text:'AetherhausStudios Security Report · '+new Date().toLocaleString()}}]};
+    const handle   = document.getElementById('r-handle').value.trim();
+    const nature   = document.getElementById('r-nature').value;
+    const server   = document.getElementById('r-server').value.trim()||'not specified';
+    const context  = document.getElementById('r-context').value.trim()||'none provided';
+    const reporter = document.getElementById('r-reporter').value.trim()||'Anonymous';
+    const notify   = document.getElementById('r-notify').checked && reporter !== 'Anonymous';
+    const payload  = { handle, nature, server, context, reporter, notify };
     try{
-      const res=await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      const res = await fetch(`${HAUSCALL_URL}/report`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
       if(res.ok){
         setStatus('ok','Report submitted successfully.');
-        const notifyMsg=document.getElementById('notify-msg');
-        notifyMsg.textContent=notify?'Hauscall will DM you when your report has been reviewed. ':'';
+        document.getElementById('notify-msg').textContent = notify ? 'Hauscall will DM you when your report has been reviewed. ' : '';
         ['s1','s2'].forEach(id=>document.getElementById(id).style.display='none');
         document.querySelector('.lore-aside').style.display='none';
         btn.style.display='none';document.getElementById('send-status').style.display='none';

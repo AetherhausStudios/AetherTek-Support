@@ -124,12 +124,7 @@
 </div>
 
 <script>
-  const WEBHOOK='https://discordapp.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
-
-  function genId(){
-    const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let id='HW-';
-    for(let i=0;i<6;i++)id+=c[Math.floor(Math.random()*c.length)];return id;
-  }
+  const HAUSCALL_URL = 'https://hauscall-production.up.railway.app';
 
   function toggleOther(cb){
     document.getElementById('other-specify').style.display=cb.checked?'block':'none';
@@ -164,33 +159,23 @@
     if(!validate())return;
     const btn=document.getElementById('submit-btn');
     btn.disabled=true;setStatus('sending','Dispatching inquiry...');
-    const inquiryId=genId();
-    const name=document.getElementById('h-name').value.trim()||'Anonymous';
-    const discord=document.getElementById('h-discord').value.trim();
-    const notify=document.getElementById('h-notify').checked;
-    const budget=document.getElementById('h-budget').value.trim();
-    const usecase=document.getElementById('h-usecase').value;
-    const prefs=document.getElementById('h-prefs').value.trim()||'none specified';
-    const looked=document.getElementById('h-looked').value.trim()||'nothing yet';
-    const timesens=document.getElementById('h-timesensitive').checked;
-    const hw=getSelectedHardware();
-    const payload={embeds:[{title:`${inquiryId} — Hardware Inquiry`,color:0xc4962a,fields:[
-      {name:'Petitioner',value:name,inline:true},
-      {name:'Discord',value:discord,inline:true},
-      {name:'Notify via DM',value:notify?'Yes':'No',inline:true},
-      {name:'Hardware Sought',value:hw.join(', ')},
-      {name:'Budget',value:budget,inline:true},
-      {name:'Use Case',value:usecase,inline:true},
-      {name:'Time Sensitive',value:timesens?'Yes ⚡':'No',inline:true},
-      {name:'Preferences / Requirements',value:prefs},
-      {name:'Already Looked At',value:looked}
-    ],footer:{text:'AetherhausStudios Hardware Inquiry · '+new Date().toLocaleString()}}]};
+    const name     = document.getElementById('h-name').value.trim()||'Anonymous';
+    const discord  = document.getElementById('h-discord').value.trim();
+    const notify   = document.getElementById('h-notify').checked;
+    const budget   = document.getElementById('h-budget').value.trim();
+    const usecase  = document.getElementById('h-usecase').value;
+    const prefs    = document.getElementById('h-prefs').value.trim()||'none specified';
+    const looked   = document.getElementById('h-looked').value.trim()||'nothing yet';
+    const timesens = document.getElementById('h-timesensitive').checked;
+    const hw       = getSelectedHardware();
+    const payload  = { name, discord, notify, hardware: hw, budget, usecase, prefs, looked, timeSensitive: timesens };
     try{
-      const res=await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      const res = await fetch(`${HAUSCALL_URL}/hardware`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
       if(res.ok){
+        const data = await res.json();
         setStatus('ok','Inquiry dispatched successfully.');
-        document.getElementById('success-id').textContent=inquiryId+' — Inquiry Received';
-        document.getElementById('notify-msg').textContent=notify
+        document.getElementById('success-id').textContent = data.id + ' — Inquiry Received';
+        document.getElementById('notify-msg').textContent = notify
           ?'Hauscall will be in touch via Discord DM with updates on your inquiry.'
           :'You opted out of automated updates — Aether will reach out directly when ready.';
         ['s1','s2'].forEach(id=>document.getElementById(id).style.display='none');

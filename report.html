@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AetherhausStudios — Report a Compromised Account</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page-wrap">
+  <a class="back-link" href="index.html">← Return to the Maelstrom</a>
+
+  <header class="site-header">
+    <h1 class="site-title">AetherhausStudios</h1>
+    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
+    <p class="page-title">✦ Compromised Account Report ✦</p>
+  </header>
+
+  <div class="lore-aside">Encountered a compromised account spreading chaos across the community? Submit a report below and Aether will review it. Reports are assessed before any action is taken — no account will be flagged without verification.</div>
+
+  <div class="form-section" id="s1">
+    <div class="section-label">The Compromised Account</div>
+
+    <div class="field-row full">
+      <div class="field-group">
+        <label for="r-handle">Compromised Discord Handle <span class="req">*</span></label>
+        <input type="text" id="r-handle" placeholder="The account you are reporting">
+        <span class="error-msg" id="r-handle-err">The compromised account handle is required.</span>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label for="r-nature">Nature of Incident <span class="req">*</span></label>
+        <select id="r-nature">
+          <option value="">— select one —</option>
+          <option>Phishing DMs</option>
+          <option>Spam / Mass Messaging</option>
+          <option>Bot Raid</option>
+          <option>Malicious Link Distribution</option>
+          <option>Impersonation</option>
+          <option>Compromised & Actively Misused</option>
+          <option>Other</option>
+        </select>
+        <span class="error-msg" id="r-nature-err">Please select the nature of the incident.</span>
+      </div>
+      <div class="field-group">
+        <label for="r-server">Server Where Encountered</label>
+        <input type="text" id="r-server" placeholder="Server name (optional)">
+      </div>
+    </div>
+
+    <div class="field-row full">
+      <div class="field-group">
+        <label for="r-context">Additional Context</label>
+        <textarea id="r-context" placeholder="Any additional details — what the account was doing, messages sent, links shared, etc. The more detail the better."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section" id="s2">
+    <div class="section-label">Your Details</div>
+    <div class="lore-aside" style="margin-bottom:1.2rem;font-size:14px;">You may report anonymously. Providing your Discord handle allows Aether to follow up or send a clarification request if needed.</div>
+
+    <div class="field-row full">
+      <div class="field-group">
+        <label for="r-reporter">Your Discord Handle</label>
+        <input type="text" id="r-reporter" placeholder="Leave blank to report anonymously" oninput="toggleNotify(this)">
+      </div>
+    </div>
+
+    <div class="checkbox-group" id="notify-row" style="display:none;">
+      <input type="checkbox" id="r-notify" checked>
+      <label for="r-notify">Notify me via Hauscall DM when this report is reviewed</label>
+    </div>
+  </div>
+
+  <button class="submit-btn" id="submit-btn" onclick="submitReport()">✦ Submit Report to Aether ✦</button>
+  <div class="send-status" id="send-status"></div>
+
+  <div class="success-banner" id="success">
+    <span class="success-glyph">✦</span>
+    <div class="success-title">Report Received</div>
+    <p class="success-msg">Your report has been submitted and will be reviewed by Aether before any action is taken.<br>
+    No account will be flagged without verification.<br><br>
+    <span id="notify-msg"></span>
+    Thank you for helping keep the community safe.</p>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+  </footer>
+</div>
+
+<script>
+  const WEBHOOK='https://discordapp.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
+
+  function genId(){
+    const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let id='RPT-';
+    for(let i=0;i<6;i++)id+=c[Math.floor(Math.random()*c.length)];return id;
+  }
+  function toggleNotify(input){
+    document.getElementById('notify-row').style.display=input.value.trim()?'flex':'none';
+  }
+  function setStatus(state,msg){
+    document.getElementById('send-status').innerHTML=`<span class="status-dot ${state}"></span>${msg}`;
+  }
+  function validate(){
+    let ok=true;
+    const handle=document.getElementById('r-handle').value.trim();
+    const nature=document.getElementById('r-nature').value;
+    if(!handle){document.getElementById('r-handle-err').style.display='block';ok=false;}else{document.getElementById('r-handle-err').style.display='none';}
+    if(!nature){document.getElementById('r-nature-err').style.display='block';ok=false;}else{document.getElementById('r-nature-err').style.display='none';}
+    return ok;
+  }
+  async function submitReport(){
+    if(!validate())return;
+    const btn=document.getElementById('submit-btn');
+    btn.disabled=true;setStatus('sending','Submitting report...');
+    const rptId=genId();
+    const handle=document.getElementById('r-handle').value.trim();
+    const nature=document.getElementById('r-nature').value;
+    const server=document.getElementById('r-server').value.trim()||'not specified';
+    const context=document.getElementById('r-context').value.trim()||'none provided';
+    const reporter=document.getElementById('r-reporter').value.trim()||'Anonymous';
+    const notify=document.getElementById('r-notify').checked&&reporter!=='Anonymous';
+    const payload={embeds:[{title:`${rptId} — ⚠️ Compromised Account Report`,color:0xc44a2a,fields:[
+      {name:'Reported Account',value:handle,inline:true},
+      {name:'Nature of Incident',value:nature,inline:true},
+      {name:'Server',value:server,inline:true},
+      {name:'Reported By',value:reporter,inline:true},
+      {name:'Notify Reporter',value:notify?'Yes':'No / Anonymous',inline:true},
+      {name:'Additional Context',value:context}
+    ],footer:{text:'AetherhausStudios Security Report · '+new Date().toLocaleString()}}]};
+    try{
+      const res=await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      if(res.ok){
+        setStatus('ok','Report submitted successfully.');
+        const notifyMsg=document.getElementById('notify-msg');
+        notifyMsg.textContent=notify?'Hauscall will DM you when your report has been reviewed. ':'';
+        ['s1','s2'].forEach(id=>document.getElementById(id).style.display='none');
+        document.querySelector('.lore-aside').style.display='none';
+        btn.style.display='none';document.getElementById('send-status').style.display='none';
+        document.getElementById('success').style.display='block';
+      } else {throw new Error();}
+    } catch{
+      setStatus('err','Submission failed — please try again or reach out via Discord.');
+      btn.disabled=false;
+    }
+  }
+</script>
+</body>
+</html>

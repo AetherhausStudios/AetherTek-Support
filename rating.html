@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AetherhausStudios — Rate Your Experience</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Rating page specific */
+  .star-row { display: flex; gap: 8px; margin-bottom: 0.5rem; }
+  .star {
+    width: 44px; height: 44px; background: none; border: none;
+    cursor: pointer; font-size: 36px; line-height: 1;
+    color: rgba(196,150,42,0.2); transition: color 0.15s, transform 0.1s;
+    padding: 0;
+  }
+  .star:hover, .star.lit { color: var(--gold); text-shadow: 0 0 14px rgba(196,150,42,0.6); }
+  .star:active { transform: scale(0.85); }
+  .star-label {
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    color: var(--parchment-muted); font-size: 15px;
+    margin-top: 4px; min-height: 22px; transition: color 0.2s;
+  }
+  .kofi-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: linear-gradient(135deg, #e8504e, #c43a38);
+    color: #fff; font-family: 'Cinzel Decorative', serif;
+    font-size: 0.75rem; letter-spacing: 0.08em; font-weight: 700;
+    padding: 0.9rem 2.5rem; border: none; border-radius: 8px;
+    cursor: pointer; transition: all 0.2s; text-decoration: none;
+    display: block; width: 100%; text-align: center; margin-top: 0.6rem;
+    box-shadow: 0 4px 20px rgba(196,74,72,0.3);
+  }
+  .kofi-btn:hover {
+    background: linear-gradient(135deg, #f06260, #d44a48);
+    transform: translateY(-2px); box-shadow: 0 8px 28px rgba(196,74,72,0.45);
+  }
+  .tip-note {
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    font-size: 14px; color: var(--parchment-muted);
+    text-align: center; margin-top: 0.8rem; line-height: 1.65;
+    padding: 0 0.5rem;
+  }
+  .tip-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 8px; margin-bottom: 1rem;
+  }
+  .tip-card {
+    background: var(--surface-raised); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.85rem 0.4rem;
+    text-align: center; cursor: pointer; transition: all 0.18s;
+  }
+  .tip-card:hover { border-color: var(--amethyst); background: rgba(124,77,170,0.15); }
+  .tip-card.selected {
+    border-color: var(--amethyst); background: rgba(124,77,170,0.2);
+    box-shadow: 0 0 12px rgba(124,77,170,0.2);
+  }
+  .tip-amount {
+    font-family: 'Cinzel Decorative', serif; font-size: 1rem;
+    font-weight: 700; color: var(--gold-light); display: block;
+  }
+  .tip-label {
+    font-size: 11px; font-family: 'JetBrains Mono', monospace;
+    color: var(--parchment-muted); text-transform: uppercase;
+    letter-spacing: 0.04em; display: block; margin-top: 3px;
+  }
+  .resolution-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(74,140,66,0.15); border: 1px solid rgba(74,140,66,0.4);
+    border-radius: 20px; padding: 5px 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: #a8d4a0; letter-spacing: 0.05em;
+    margin-bottom: 1.2rem;
+  }
+  .resolution-badge::before {
+    content: '●'; font-size: 8px; color: #4a8c42;
+    animation: blink 2s infinite;
+  }
+  @media(max-width:480px){ .tip-grid{ grid-template-columns: repeat(2,1fr); } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="site-header">
+    <h1 class="site-title">AetherhausStudios</h1>
+    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
+    <p class="page-title">⟡ Resolution Follow-up ⟡</p>
+  </header>
+
+  <div class="lore-aside" id="lore-text">
+    Your ticket has been marked as resolved. Whether the chaos was fully tamed or at least made more manageable, Aether hopes the journey was worthwhile. If you have a moment, a word or a rating goes a long way.
+  </div>
+
+  <!-- TICKET REFERENCE -->
+  <div class="form-section" id="ref-section">
+    <div class="section-label">Resolved Ticket</div>
+    <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+      <div class="resolution-badge" id="ticket-badge">loading...</div>
+      <span style="font-family:'Crimson Pro',serif; font-style:italic; font-size:15px; color:var(--parchment-muted);">This page was sent to you by Hauscall upon resolution of your support ticket.</span>
+    </div>
+  </div>
+
+  <!-- RATING SECTION -->
+  <div class="form-section" id="rating-section">
+    <div class="section-label">Your Verdict</div>
+
+    <div style="margin-bottom:1.4rem;">
+      <div class="star-row" id="star-row">
+        <button class="star" onclick="setStar(1)" aria-label="1 star">★</button>
+        <button class="star" onclick="setStar(2)" aria-label="2 stars">★</button>
+        <button class="star" onclick="setStar(3)" aria-label="3 stars">★</button>
+        <button class="star" onclick="setStar(4)" aria-label="4 stars">★</button>
+        <button class="star" onclick="setStar(5)" aria-label="5 stars">★</button>
+      </div>
+      <div class="star-label" id="star-label">tap a star to rate your experience</div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label for="r-name">Name or Handle</label>
+        <input type="text" id="r-name" placeholder="who speaks for the record">
+      </div>
+      <div class="field-group">
+        <label for="r-service">What Did Aether Help With?</label>
+        <select id="r-service">
+          <option value="">— select —</option>
+          <option>Device troubleshooting</option>
+          <option>Streaming setup</option>
+          <option>OBS / Streamlabs</option>
+          <option>Network issues</option>
+          <option>Steam / game optimisation</option>
+          <option>System optimisation</option>
+          <option>Hardware advice</option>
+          <option>Moral support with tech rage</option>
+          <option>Something else entirely</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row full">
+      <div class="field-group">
+        <label for="r-review">Your Testimony</label>
+        <textarea id="r-review" placeholder="Tell future travellers what to expect. Was the chaos controlled? The vibes correct? The problem actually solved?"></textarea>
+        <span class="error-msg" id="r-review-err">A testimony must be provided before sealing.</span>
+      </div>
+    </div>
+
+    <div class="field-row full">
+      <div class="field-group">
+        <label for="r-quote">One Line for the Hall of Fame (optional)</label>
+        <input type="text" id="r-quote" placeholder="something quotable, funny, or genuinely kind">
+      </div>
+    </div>
+  </div>
+
+  <button class="submit-btn" id="review-btn" onclick="submitReview()">✦ Seal This Testament ✦</button>
+  <div class="send-status" id="review-status"></div>
+
+  <div class="success-banner" id="review-success" style="margin-bottom:1.4rem;">
+    <span class="success-glyph">✦</span>
+    <div class="success-title">Testament Inscribed</div>
+    <p class="success-msg">It has been recorded and dispatched to the Aetherhaus archive.<br>
+    Your words are appreciated more than you know.</p>
+  </div>
+
+  <!-- TIP SECTION — always visible -->
+  <div class="form-section" id="tip-section">
+    <div class="section-label">Leave a Tip</div>
+
+    <div class="tip-grid">
+      <div class="tip-card" onclick="selectTip(this, 3)">
+        <span class="tip-amount">$3</span>
+        <span class="tip-label">a sip of water</span>
+      </div>
+      <div class="tip-card" onclick="selectTip(this, 5)">
+        <span class="tip-amount">$5</span>
+        <span class="tip-label">chilli fries fund</span>
+      </div>
+      <div class="tip-card" onclick="selectTip(this, 10)">
+        <span class="tip-amount">$10</span>
+        <span class="tip-label">one full meal</span>
+      </div>
+      <div class="tip-card" onclick="selectTip(this, 20)">
+        <span class="tip-amount">$20</span>
+        <span class="tip-label">legendary patron</span>
+      </div>
+    </div>
+
+    <a class="kofi-btn" href="https://ko-fi.com/aetherhausstudios" target="_blank" rel="noopener" id="kofi-link">
+      ☕ Send a Tip via Ko-fi
+    </a>
+
+    <p class="tip-note">
+      Aether does not ask for tips — they are entirely optional.<br>
+      Should you consider leaving one, Aether asks only that you tip what you do not need.<br>
+      <em>This assistance is about your wellbeing and peace of mind, first and foremost.</em>
+    </p>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+  </footer>
+</div>
+
+<script>
+  const WEBHOOK = 'https://discordapp.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
+
+  // ── GATE: redirect if no ticket ID in URL ──
+  const params = new URLSearchParams(window.location.search);
+  const ticketId = params.get('ticket');
+  if (!ticketId || !ticketId.startsWith('TKT-')) {
+    window.location.replace('index.html');
+  } else {
+    document.getElementById('ticket-badge').textContent = ticketId + ' — Resolved';
+  }
+
+  let currentStar = 0;
+  let currentTip = null;
+
+  const starLabels = [
+    '', 'Rough, but honest.', 'It was fine, I guess.',
+    'Solid support.', 'Really helpful!', 'Absolute legend ✦'
+  ];
+
+  function setStar(n) {
+    currentStar = n;
+    document.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('lit', i < n));
+    const label = document.getElementById('star-label');
+    label.textContent = starLabels[n];
+    label.style.color = n === 5 ? 'var(--gold-light)' : 'var(--parchment-muted)';
+  }
+
+  function selectTip(card, amount) {
+    document.querySelectorAll('.tip-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    currentTip = amount;
+    // append amount to Ko-fi URL as message hint
+    document.getElementById('kofi-link').href =
+      `https://ko-fi.com/aetherhausstudios`;
+  }
+
+  function setStatus(id, state, msg) {
+    const el = document.getElementById(id);
+    el.innerHTML = `<span class="status-dot ${state}"></span>${msg}`;
+  }
+
+  async function submitReview() {
+    const review = document.getElementById('r-review').value.trim();
+    const errEl = document.getElementById('r-review-err');
+    if (!review) { errEl.style.display = 'block'; document.getElementById('r-review').focus(); return; }
+    errEl.style.display = 'none';
+
+    const btn = document.getElementById('review-btn');
+    btn.disabled = true;
+    setStatus('review-status', 'sending', 'Sealing testament...');
+
+    const name    = document.getElementById('r-name').value.trim() || 'Anonymous';
+    const service = document.getElementById('r-service').value || 'unspecified';
+    const quote   = document.getElementById('r-quote').value.trim();
+    const stars   = currentStar
+      ? '★'.repeat(currentStar) + '☆'.repeat(5 - currentStar)
+      : 'not rated';
+
+    const payload = {
+      embeds: [{
+        title: `✦ New Review — ${ticketId}`,
+        color: 0xc4962a,
+        fields: [
+          { name: 'From', value: name, inline: true },
+          { name: 'Rating', value: stars, inline: true },
+          { name: 'Helped with', value: service, inline: true },
+          { name: 'Testimony', value: review },
+          ...(quote ? [{ name: 'Hall of Fame', value: `"${quote}"` }] : [])
+        ],
+        footer: { text: 'AetherhausStudios Reviews · ' + new Date().toLocaleString() }
+      }]
+    };
+
+    try {
+      const res = await fetch(WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        setStatus('review-status', 'ok', 'Inscribed successfully.');
+        document.getElementById('rating-section').style.display = 'none';
+        btn.style.display = 'none';
+        document.getElementById('review-status').style.display = 'none';
+        document.getElementById('review-success').style.display = 'block';
+      } else { throw new Error(); }
+    } catch {
+      setStatus('review-status', 'err', 'Discord failed — please try again.');
+      btn.disabled = false;
+    }
+  }
+</script>
+</body>
+</html>

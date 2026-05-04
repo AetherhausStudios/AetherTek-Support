@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AetherhausStudios — Hardware Inquiry</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page-wrap">
+  <a class="back-link" href="index.html">← Return to the Maelstrom</a>
+
+  <header class="site-header">
+    <h1 class="site-title">AetherhausStudios</h1>
+    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
+    <p class="page-title">⊹ Hardware Inquiry ⊹</p>
+  </header>
+
+  <div class="lore-aside">Looking for quality gear without sacrificing your life savings to the void? Aether specialises in hunting down solid hardware on a budget. Tell us what you need and we'll see what can be conjured.</div>
+
+  <div class="form-section" id="s1">
+    <div class="section-label">Your Details</div>
+    <div class="field-row">
+      <div class="field-group">
+        <label for="h-name">Name or Handle</label>
+        <input type="text" id="h-name" placeholder="mortal name or alias accepted">
+      </div>
+      <div class="field-group">
+        <label for="h-discord">Discord Handle <span class="req">*</span></label>
+        <input type="text" id="h-discord" placeholder="e.g. username or user#0000">
+        <span class="error-msg" id="h-discord-err">A Discord handle is required so Aether can reach you.</span>
+      </div>
+    </div>
+    <div class="checkbox-group">
+      <input type="checkbox" id="h-notify" checked>
+      <label for="h-notify">Send me automated status updates via Hauscall DM</label>
+    </div>
+  </div>
+
+  <div class="form-section" id="s2">
+    <div class="section-label">What Are You Looking For?</div>
+
+    <div class="field-group" style="margin-bottom:1.2rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <label>Hardware Type <span class="req">*</span></label>
+        <span style="font-family:'Crimson Pro',serif;text-transform:none;letter-spacing:0;font-style:italic;font-size:13px;color:var(--smoke);">select all that apply</span>
+      </div>
+      <div class="multi-check-grid" id="hw-grid">
+        <div class="multi-check-item"><input type="checkbox" id="hw-monitor" value="Monitor"><label for="hw-monitor">Monitor</label></div>
+        <div class="multi-check-item"><input type="checkbox" id="hw-keyboard" value="Keyboard"><label for="hw-keyboard">Keyboard</label></div>
+        <div class="multi-check-item"><input type="checkbox" id="hw-mouse" value="Mouse"><label for="hw-mouse">Mouse</label></div>
+        <div class="multi-check-item"><input type="checkbox" id="hw-headset" value="Headset"><label for="hw-headset">Headset</label></div>
+        <div class="multi-check-item"><input type="checkbox" id="hw-mic" value="Microphone"><label for="hw-mic">Microphone</label></div>
+        <div class="multi-check-item"><input type="checkbox" id="hw-webcam" value="Webcam"><label for="hw-webcam">Webcam</label></div>
+        <div class="multi-check-item"><input type="checkbox" id="hw-controller" value="Controller / Gamepad"><label for="hw-controller">Controller / Gamepad</label></div>
+        <div class="multi-check-item"><input type="checkbox" id="hw-streaming" value="Streaming Peripherals"><label for="hw-streaming">Streaming Peripherals</label></div>
+        <div class="multi-check-item"><input type="checkbox" id="hw-components" value="PC Components"><label for="hw-components">PC Components</label></div>
+        <div class="multi-check-item"><input type="checkbox" id="hw-other" value="Other" onchange="toggleOther(this)"><label for="hw-other">Other — please specify</label></div>
+      </div>
+      <div class="other-specify" id="other-specify">
+        <input type="text" id="hw-other-text" placeholder="What are you looking for?">
+      </div>
+      <span class="error-msg" id="hw-type-err">Please select at least one hardware type.</span>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label for="h-budget">Budget <span class="req">*</span></label>
+        <input type="text" id="h-budget" placeholder="e.g. $50, under $150, flexible...">
+        <span class="error-msg" id="h-budget-err">Budget is required — it's the whole game.</span>
+      </div>
+      <div class="field-group">
+        <label for="h-usecase">Primary Use Case <span class="req">*</span></label>
+        <select id="h-usecase">
+          <option value="">— select one —</option>
+          <option>Streaming</option>
+          <option>Gaming</option>
+          <option>Streaming & Gaming</option>
+          <option>Work / Productivity</option>
+          <option>General Use</option>
+          <option>Content Creation</option>
+          <option>Mixed Use</option>
+        </select>
+        <span class="error-msg" id="h-use-err">Please select a use case.</span>
+      </div>
+    </div>
+
+    <div class="field-row full">
+      <div class="field-group">
+        <label for="h-prefs">Specific Requirements or Preferences</label>
+        <textarea id="h-prefs" placeholder="e.g. must be wireless, prefer mechanical switches, needs to work with my capture card, colour accuracy matters, etc."></textarea>
+      </div>
+    </div>
+
+    <div class="field-row full">
+      <div class="field-group">
+        <label for="h-looked">Anything You've Already Looked At?</label>
+        <input type="text" id="h-looked" placeholder="So Aether doesn't recommend something you've already ruled out">
+      </div>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="h-timesensitive">
+      <label for="h-timesensitive">This is a time sensitive purchase</label>
+    </div>
+  </div>
+
+  <button class="submit-btn" id="submit-btn" onclick="submitHardware()">⊹ Dispatch the Inquiry ⊹</button>
+  <div class="send-status" id="send-status"></div>
+
+  <div class="success-banner" id="success">
+    <span class="success-glyph">⊹</span>
+    <div class="success-title" id="success-id"></div>
+    <p class="success-msg">Your hardware inquiry has been received.<br>
+    Aether shall commence the hunt for quality within your budget.<br><br>
+    <span id="notify-msg"></span></p>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+  </footer>
+</div>
+
+<script>
+  const WEBHOOK='https://discordapp.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
+
+  function genId(){
+    const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let id='HW-';
+    for(let i=0;i<6;i++)id+=c[Math.floor(Math.random()*c.length)];return id;
+  }
+
+  function toggleOther(cb){
+    document.getElementById('other-specify').style.display=cb.checked?'block':'none';
+  }
+  function setStatus(state,msg){
+    document.getElementById('send-status').innerHTML=`<span class="status-dot ${state}"></span>${msg}`;
+  }
+  function getSelectedHardware(){
+    const checks=document.querySelectorAll('#hw-grid input[type="checkbox"]:checked');
+    const types=[];
+    checks.forEach(c=>{
+      if(c.value==='Other'){
+        const spec=document.getElementById('hw-other-text').value.trim();
+        types.push(spec?`Other: ${spec}`:'Other');
+      } else {types.push(c.value);}
+    });
+    return types;
+  }
+  function validate(){
+    let ok=true;
+    const discord=document.getElementById('h-discord').value.trim();
+    const budget=document.getElementById('h-budget').value.trim();
+    const usecase=document.getElementById('h-usecase').value;
+    const hw=getSelectedHardware();
+    if(!discord){document.getElementById('h-discord-err').style.display='block';ok=false;}else{document.getElementById('h-discord-err').style.display='none';}
+    if(!budget){document.getElementById('h-budget-err').style.display='block';ok=false;}else{document.getElementById('h-budget-err').style.display='none';}
+    if(!usecase){document.getElementById('h-use-err').style.display='block';ok=false;}else{document.getElementById('h-use-err').style.display='none';}
+    if(hw.length===0){document.getElementById('hw-type-err').style.display='block';ok=false;}else{document.getElementById('hw-type-err').style.display='none';}
+    return ok;
+  }
+  async function submitHardware(){
+    if(!validate())return;
+    const btn=document.getElementById('submit-btn');
+    btn.disabled=true;setStatus('sending','Dispatching inquiry...');
+    const inquiryId=genId();
+    const name=document.getElementById('h-name').value.trim()||'Anonymous';
+    const discord=document.getElementById('h-discord').value.trim();
+    const notify=document.getElementById('h-notify').checked;
+    const budget=document.getElementById('h-budget').value.trim();
+    const usecase=document.getElementById('h-usecase').value;
+    const prefs=document.getElementById('h-prefs').value.trim()||'none specified';
+    const looked=document.getElementById('h-looked').value.trim()||'nothing yet';
+    const timesens=document.getElementById('h-timesensitive').checked;
+    const hw=getSelectedHardware();
+    const payload={embeds:[{title:`${inquiryId} — Hardware Inquiry`,color:0xc4962a,fields:[
+      {name:'Petitioner',value:name,inline:true},
+      {name:'Discord',value:discord,inline:true},
+      {name:'Notify via DM',value:notify?'Yes':'No',inline:true},
+      {name:'Hardware Sought',value:hw.join(', ')},
+      {name:'Budget',value:budget,inline:true},
+      {name:'Use Case',value:usecase,inline:true},
+      {name:'Time Sensitive',value:timesens?'Yes ⚡':'No',inline:true},
+      {name:'Preferences / Requirements',value:prefs},
+      {name:'Already Looked At',value:looked}
+    ],footer:{text:'AetherhausStudios Hardware Inquiry · '+new Date().toLocaleString()}}]};
+    try{
+      const res=await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      if(res.ok){
+        setStatus('ok','Inquiry dispatched successfully.');
+        document.getElementById('success-id').textContent=inquiryId+' — Inquiry Received';
+        document.getElementById('notify-msg').textContent=notify
+          ?'Hauscall will be in touch via Discord DM with updates on your inquiry.'
+          :'You opted out of automated updates — Aether will reach out directly when ready.';
+        ['s1','s2'].forEach(id=>document.getElementById(id).style.display='none');
+        document.querySelector('.lore-aside').style.display='none';
+        btn.style.display='none';document.getElementById('send-status').style.display='none';
+        document.getElementById('success').style.display='block';
+      } else {throw new Error();}
+    } catch{
+      setStatus('err','Dispatch failed — please try again or reach out via Discord.');
+      btn.disabled=false;
+    }
+  }
+</script>
+</body>
+</html>

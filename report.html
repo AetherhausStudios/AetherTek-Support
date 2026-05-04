@@ -69,6 +69,16 @@
       </div>
     </div>
 
+    <div class="field-row full" id="discord-id-row" style="display:none;">
+      <div class="field-group">
+        <label for="r-discord-id">Discord User ID <span style="color:var(--smoke);font-size:10px;text-transform:none;letter-spacing:0;">(optional — enables Hauscall DMs)</span></label>
+        <input type="text" id="r-discord-id" placeholder="e.g. 123456789012345678">
+        <span style="font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;color:var(--smoke);margin-top:3px;">
+          Settings → Advanced → enable Developer Mode, then right-click your name and click Copy User ID.
+        </span>
+      </div>
+    </div>
+
     <div class="checkbox-group" id="notify-row" style="display:none;">
       <input type="checkbox" id="r-notify" checked>
       <label for="r-notify">Notify me via Hauscall DM when this report is reviewed</label>
@@ -98,7 +108,9 @@
   const HAUSCALL_URL = 'https://hauscall-production.up.railway.app';
 
   function toggleNotify(input){
-    document.getElementById('notify-row').style.display=input.value.trim()?'flex':'none';
+    const show = input.value.trim() ? 'flex' : 'none';
+    document.getElementById('notify-row').style.display = show;
+    document.getElementById('discord-id-row').style.display = input.value.trim() ? 'block' : 'none';
   }
   function setStatus(state,msg){
     document.getElementById('send-status').innerHTML=`<span class="status-dot ${state}"></span>${msg}`;
@@ -119,9 +131,10 @@
     const nature   = document.getElementById('r-nature').value;
     const server   = document.getElementById('r-server').value.trim()||'not specified';
     const context  = document.getElementById('r-context').value.trim()||'none provided';
-    const reporter = document.getElementById('r-reporter').value.trim()||'Anonymous';
-    const notify   = document.getElementById('r-notify').checked && reporter !== 'Anonymous';
-    const payload  = { handle, nature, server, context, reporter, notify };
+    const reporter  = document.getElementById('r-reporter').value.trim()||'Anonymous';
+    const discordId = document.getElementById('r-discord-id').value.trim()||null;
+    const notify    = document.getElementById('r-notify').checked && reporter !== 'Anonymous';
+    const payload   = { handle, nature, server, context, reporter, discordId, notify };
     try{
       const res = await fetch(`${HAUSCALL_URL}/report`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
       if(res.ok){

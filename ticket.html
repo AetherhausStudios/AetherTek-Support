@@ -34,6 +34,15 @@
         <span class="error-msg" id="t-discord-err">A Discord handle is required so Aether can reach you.</span>
       </div>
     </div>
+    <div class="field-row full">
+      <div class="field-group">
+        <label for="t-discord-id">Discord User ID <span style="color:var(--smoke);font-size:10px;text-transform:none;letter-spacing:0;">(optional — enables Hauscall DMs)</span></label>
+        <input type="text" id="t-discord-id" placeholder="e.g. 123456789012345678">
+        <span style="font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;color:var(--smoke);margin-top:3px;">
+          To find your User ID: Settings → Advanced → enable Developer Mode, then right-click your name anywhere and click Copy User ID.
+        </span>
+      </div>
+    </div>
     <div class="checkbox-group">
       <input type="checkbox" id="t-notify" checked>
       <label for="t-notify">Send me automated status updates via Hauscall DM</label>
@@ -132,14 +141,15 @@
     if(!validate()) return;
     const btn=document.getElementById('submit-btn');
     btn.disabled=true; setStatus('sending','Transmitting to the void...');
-    const name    = document.getElementById('t-name').value.trim()||'Anonymous';
-    const discord = document.getElementById('t-discord').value.trim();
-    const notify  = document.getElementById('t-notify').checked;
-    const cat     = document.getElementById('t-category').value;
-    const tried   = document.getElementById('t-tried').value.trim()||'nothing, apparently';
-    const desc    = document.getElementById('t-desc').value.trim();
+    const name      = document.getElementById('t-name').value.trim()||'Anonymous';
+    const discord   = document.getElementById('t-discord').value.trim();
+    const discordId = document.getElementById('t-discord-id').value.trim()||null;
+    const notify    = document.getElementById('t-notify').checked;
+    const cat       = document.getElementById('t-category').value;
+    const tried     = document.getElementById('t-tried').value.trim()||'nothing, apparently';
+    const desc      = document.getElementById('t-desc').value.trim();
     // Hauscall generates the ID — we send the data, it responds with the ID
-    const payload = { name, discord, notify, category: cat, urgency, description: desc, tried };
+    const payload = { name, discord, discordId, notify, category: cat, urgency, description: desc, tried };
     try {
       const res  = await fetch(`${HAUSCALL_URL}/ticket`, {
         method: 'POST',

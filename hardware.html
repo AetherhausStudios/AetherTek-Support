@@ -31,6 +31,15 @@
         <span class="error-msg" id="h-discord-err">A Discord handle is required so Aether can reach you.</span>
       </div>
     </div>
+    <div class="field-row full">
+      <div class="field-group">
+        <label for="h-discord-id">Discord User ID <span style="color:var(--smoke);font-size:10px;text-transform:none;letter-spacing:0;">(optional — enables Hauscall DMs)</span></label>
+        <input type="text" id="h-discord-id" placeholder="e.g. 123456789012345678">
+        <span style="font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;color:var(--smoke);margin-top:3px;">
+          To find your User ID: Settings → Advanced → enable Developer Mode, then right-click your name anywhere and click Copy User ID.
+        </span>
+      </div>
+    </div>
     <div class="checkbox-group">
       <input type="checkbox" id="h-notify" checked>
       <label for="h-notify">Send me automated status updates via Hauscall DM</label>
@@ -161,6 +170,7 @@
     btn.disabled=true;setStatus('sending','Dispatching inquiry...');
     const name     = document.getElementById('h-name').value.trim()||'Anonymous';
     const discord  = document.getElementById('h-discord').value.trim();
+    const discordId = document.getElementById('h-discord-id').value.trim()||null;
     const notify   = document.getElementById('h-notify').checked;
     const budget   = document.getElementById('h-budget').value.trim();
     const usecase  = document.getElementById('h-usecase').value;
@@ -168,7 +178,7 @@
     const looked   = document.getElementById('h-looked').value.trim()||'nothing yet';
     const timesens = document.getElementById('h-timesensitive').checked;
     const hw       = getSelectedHardware();
-    const payload  = { name, discord, notify, hardware: hw, budget, usecase, prefs, looked, timeSensitive: timesens };
+    const payload  = { name, discord, discordId, notify, hardware: hw, budget, usecase, prefs, looked, timeSensitive: timesens };
     try{
       const res = await fetch(`${HAUSCALL_URL}/hardware`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
       if(res.ok){

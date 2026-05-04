@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hauscall — Invite to Your Server</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ── INVITE PAGE SPECIFIC ── */
+
+  .invite-hero {
+    text-align: center;
+    padding: 2rem 0 2.5rem;
+  }
+
+  .hauscall-sigil {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    color: var(--amethyst-light);
+    animation: float 4s ease-in-out infinite;
+    text-shadow: 0 0 40px rgba(124,77,170,0.5);
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); text-shadow: 0 0 40px rgba(124,77,170,0.5); }
+    50%      { transform: translateY(-8px); text-shadow: 0 0 60px rgba(124,77,170,0.8); }
+  }
+
+  .hauscall-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--amethyst-light);
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 40px rgba(124,77,170,0.4);
+    margin-bottom: 0.3rem;
+  }
+
+  .hauscall-tagline {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    color: var(--parchment-muted);
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .hauscall-slogan {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold); opacity: 0.7;
+  }
+
+  /* ── PARTNERSHIP BADGE ── */
+  .partnership-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(196,150,42,0.15), rgba(196,150,42,0.05));
+    border: 1px solid var(--border-gold);
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 2rem;
+  }
+
+  .partnership-badge::before {
+    content: '✦';
+    color: var(--gold);
+    animation: sparkle 2s ease-in-out infinite;
+  }
+
+  .partnership-badge::after {
+    content: '✦';
+    color: var(--gold);
+    animation: sparkle 2s ease-in-out infinite 1s;
+  }
+
+  @keyframes sparkle {
+    0%,100% { opacity: 0.5; } 50% { opacity: 1; }
+  }
+
+  /* ── FEATURE CARDS ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.3rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .feature-card:hover {
+    border-color: var(--amethyst);
+    box-shadow: 0 0 20px rgba(124,77,170,0.12);
+  }
+
+  .feature-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amethyst-light);
+    margin-bottom: 0.4rem;
+  }
+
+  .feature-desc {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--parchment-dim);
+    line-height: 1.55;
+  }
+
+  /* ── WHAT YOU GET SECTION ── */
+  .perks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .perk-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .perk-row:last-child { border-bottom: none; }
+
+  .perk-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+    width: 24px;
+    text-align: center;
+  }
+
+  .perk-content { flex: 1; }
+
+  .perk-title {
+    font-family: 'Crimson Pro', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--parchment);
+    margin-bottom: 0.15rem;
+  }
+
+  .perk-desc {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--parchment-muted);
+    line-height: 1.5;
+  }
+
+  /* ── REQUIREMENTS BOX ── */
+  .requirements {
+    background: linear-gradient(135deg, rgba(196,150,42,0.08), rgba(196,150,42,0.03));
+    border: 1px solid var(--border-gold);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .req-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .req-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-gold);
+  }
+
+  .req-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    color: var(--parchment-dim);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .req-item:last-child { margin-bottom: 0; }
+
+  .req-item::before {
+    content: '⟡';
+    color: var(--gold);
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  /* ── INVITE BUTTON ── */
+  .invite-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    padding: 1.1rem 2.5rem;
+    background: linear-gradient(135deg, #5865F2 0%, #4752c4 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.22s;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(88,101,242,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+
+  .invite-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent 60%);
+    pointer-events: none;
+  }
+
+  .invite-btn:hover {
+    background: linear-gradient(135deg, #6875f5 0%, #5662d9 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(88,101,242,0.55), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+
+  .invite-btn:active { transform: translateY(0); }
+
+  .discord-icon {
+    width: 22px; height: 22px;
+    fill: #fff;
+    flex-shrink: 0;
+  }
+
+  .invite-note {
+    text-align: center;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--parchment-muted);
+    opacity: 0.6;
+    margin-top: 0.6rem;
+  }
+
+  /* ── AETHER CREDIT ── */
+  .aether-credit {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.3rem;
+    margin-top: 1rem;
+  }
+
+  .aether-avatar {
+    font-size: 2rem;
+    flex-shrink: 0;
+    color: var(--amethyst-light);
+    text-shadow: 0 0 20px rgba(124,77,170,0.4);
+  }
+
+  .aether-text {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--parchment-dim);
+    line-height: 1.55;
+  }
+
+  .aether-text strong {
+    font-style: normal;
+    color: var(--parchment);
+    font-weight: 600;
+  }
+
+  @media(max-width:580px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .hauscall-name { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <a class="back-link" href="index.html">← Return to the Maelstrom</a>
+
+  <header class="site-header">
+    <h1 class="site-title">AetherhausStudios</h1>
+    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
+    <p class="page-title">⊹ Add Hauscall to Your Server ⊹</p>
+  </header>
+
+  <!-- HERO -->
+  <div class="invite-hero">
+    <span class="hauscall-sigil">⊹</span>
+    <div class="hauscall-name">Hauscall</div>
+    <p class="hauscall-tagline">Familiar of Aetherhaus · Keeper of the Queue</p>
+    <p class="hauscall-slogan">Composed. Dutiful. Probably Fine.</p>
+  </div>
+
+  <div style="text-align:center; margin-bottom:2rem;">
+    <span class="partnership-badge">Free & Exclusive Partnership with AetherhausStudios Tech Support</span>
+  </div>
+
+  <div class="lore-aside">
+    Hauscall is the familiar that manages the AetherhausStudios tech support operation. Adding it to your server gives your community direct access to Aether's support services — and gives your moderation team a direct line to community security alerts.
+  </div>
+
+  <!-- WHAT IT DOES -->
+  <div class="form-section">
+    <div class="section-label">What Hauscall Brings to Your Server</div>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <span class="feature-icon">🎟️</span>
+        <div class="feature-title">Tech Support Access</div>
+        <p class="feature-desc">Your members can submit tech support tickets directly to Aether — hardware issues, streaming chaos, OBS afflictions, network untangling and more.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">📬</span>
+        <div class="feature-title">Automated DM Updates</div>
+        <p class="feature-desc">Hauscall sends your members direct messages at every stage of their support journey — ticket received, review begun, and resolution confirmed.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">⚠️</span>
+        <div class="feature-title">Security Broadcasts</div>
+        <p class="feature-desc">During Phishing Season and beyond, Hauscall delivers verified security alerts about compromised accounts directly to your mod team — before they become your server's problem.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🔍</span>
+        <div class="feature-title">Clarification Pipeline</div>
+        <p class="feature-desc">Your mods can use <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold-light);">/clarify</span> to pipe questions about any alert directly to Aether for review and response.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PERKS FOR THE COMMUNITY -->
+  <div class="form-section">
+    <div class="section-label">What Your Community Gets</div>
+    <div class="perks-list">
+      <div class="perk-row">
+        <div class="perk-icon">✦</div>
+        <div class="perk-content">
+          <div class="perk-title">Priority access to Aether's tech support queue</div>
+          <p class="perk-desc">Your members submit tickets via the AetherhausStudios support page and enter the same queue as everyone else — handled in order, with care, at no cost.</p>
+        </div>
+      </div>
+      <div class="perk-row">
+        <div class="perk-icon">✦</div>
+        <div class="perk-content">
+          <div class="perk-title">Hardware recommendations on a budget</div>
+          <p class="perk-desc">Monitors, keyboards, mics, streaming peripherals — Aether hunts down quality within your members' budgets so they don't have to.</p>
+        </div>
+      </div>
+      <div class="perk-row">
+        <div class="perk-icon">✦</div>
+        <div class="perk-content">
+          <div class="perk-title">Proactive community security coverage</div>
+          <p class="perk-desc">When compromised accounts are spotted across the network, your mod team hears about it first — with enough detail to act before it spreads.</p>
+        </div>
+      </div>
+      <div class="perk-row">
+        <div class="perk-icon">✦</div>
+        <div class="perk-content">
+          <div class="perk-title">A direct line to someone who knows what they're doing</div>
+          <p class="perk-desc">Aether has been solving tech problems across streaming communities for years. Your members get that expertise without the guesswork.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REQUIREMENTS -->
+  <div class="requirements">
+    <div class="req-title">Setup Requirements</div>
+    <div class="req-item">Give Hauscall access to one <strong style="color:var(--parchment);">mod-only channel</strong> — security broadcasts and clarification requests will be posted there, keeping alerts out of public view.</div>
+    <div class="req-item">Hauscall does not post to public channels, does not moderate, and does not interfere with your existing bots or server structure.</div>
+    <div class="req-item">Access is by invitation only — Hauscall is extended to servers within Aether's trusted community.</div>
+  </div>
+
+  <!-- INVITE BUTTON -->
+  <a class="invite-btn" href="https://discord.com/oauth2/authorize?client_id=1500636086983200768&permissions=2147551232&integration_type=0&scope=bot+applications.commands" target="_blank" rel="noopener">
+    <svg class="discord-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+    </svg>
+    Invite Hauscall to My Server
+  </a>
+  <p class="invite-note">Opens Discord's authorisation page — select your server and click Authorise</p>
+
+  <!-- AETHER CREDIT -->
+  <div class="aether-credit">
+    <div class="aether-avatar">⟡</div>
+    <div class="aether-text">
+      <strong>A note from Aether:</strong> Hauscall is offered to trusted servers at no cost. This is about building a safer, better-supported community — not a transaction. If your server qualifies and you'd like to partner, reach out via Discord.
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+  </footer>
+</div>
+</body>
+</html>

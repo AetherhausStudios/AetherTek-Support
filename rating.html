@@ -209,9 +209,10 @@
   const HAUSCALL_URL = 'https://hauscall-production.up.railway.app';
 
   // ── GATE: redirect if no ticket ID in URL ──
-  const params = new URLSearchParams(window.location.search);
+  const params   = new URLSearchParams(window.location.search);
   const ticketId = params.get('ticket');
-  if (!ticketId || !ticketId.startsWith('TKT-')) {
+  const VALID    = ['TKT-', 'HW-', 'RPT-'];
+  if (!ticketId || !VALID.some(p => ticketId.startsWith(p))) {
     window.location.replace('index.html');
   } else {
     document.getElementById('ticket-badge').textContent = ticketId + ' — Resolved';

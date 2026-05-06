@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AetherhausStudios — Hauscall</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Hauscall page specific */
+  .hauscall-hero {
+    text-align: center;
+    padding: 1rem 0 2rem;
+    position: relative;
+  }
+  .hauscall-sigil {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--amethyst-light);
+    animation: float 4s ease-in-out infinite;
+    text-shadow: 0 0 40px rgba(124,77,170,0.5);
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); text-shadow: 0 0 40px rgba(124,77,170,0.5); }
+    50% { transform: translateY(-8px); text-shadow: 0 0 60px rgba(124,77,170,0.8); }
+  }
+  .hauscall-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2.2rem; font-weight: 700;
+    color: var(--amethyst-light);
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 40px rgba(124,77,170,0.4);
+    margin-bottom: 0.3rem;
+  }
+  .hauscall-title {
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    color: var(--parchment-muted); font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  .hauscall-slogan {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); opacity: 0.7;
+  }
+
+  /* Workflow steps */
+  .workflow-steps {
+    display: flex; flex-direction: column; gap: 0;
+    margin: 0.5rem 0;
+  }
+  .workflow-step {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .workflow-step:last-child { border-bottom: none; }
+  .step-icon {
+    font-size: 1.6rem; flex-shrink: 0;
+    width: 42px; text-align: center;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+  .step-label {
+    font-family: 'Cinzel Decorative', serif; font-size: 0.65rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--amethyst-light); margin-bottom: 0.3rem;
+  }
+  .step-title {
+    font-family: 'Crimson Pro', serif; font-weight: 600;
+    font-size: 1.05rem; color: var(--parchment);
+    margin-bottom: 0.2rem;
+  }
+  .step-desc {
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    font-size: 14px; color: var(--parchment-muted); line-height: 1.55;
+  }
+  .step-badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: rgba(124,77,170,0.15); border: 1px solid var(--border-strong);
+    color: var(--amethyst-light); border-radius: 4px;
+    padding: 2px 8px; margin-left: 8px; vertical-align: middle;
+  }
+
+  /* Message preview cards */
+  .message-preview {
+    background: #1e1a2e;
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 1rem 1.2rem;
+    margin-top: 0.8rem; position: relative;
+  }
+  .message-preview::before {
+    content: 'Hauscall';
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    font-weight: 500; color: var(--amethyst-light);
+    letter-spacing: 0.04em; display: block; margin-bottom: 0.4rem;
+  }
+  .message-preview::after {
+    content: 'BOT';
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    background: var(--amethyst); color: #fff;
+    padding: 1px 5px; border-radius: 3px;
+    position: absolute; top: 1rem; left: 85px;
+    letter-spacing: 0.04em;
+  }
+  .message-text {
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    font-size: 14.5px; color: var(--parchment-dim); line-height: 1.65;
+  }
+  .message-text em {
+    font-style: normal; color: var(--gold-light);
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+
+  /* Command list */
+  .command-list { display: flex; flex-direction: column; gap: 6px; }
+  .command-row {
+    display: flex; gap: 12px; align-items: baseline;
+    padding: 7px 10px; border-radius: 6px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    transition: border-color 0.15s;
+  }
+  .command-row:hover { border-color: var(--amethyst); }
+  .command-name {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    color: var(--gold-light); flex-shrink: 0; min-width: 200px;
+  }
+  .command-desc {
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    font-size: 14px; color: var(--parchment-muted);
+  }
+  .command-group-label {
+    font-family: 'Cinzel Decorative', serif; font-size: 0.6rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--amethyst-light); margin: 1rem 0 0.5rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .command-group-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--border-strong), transparent);
+  }
+
+  /* Invite section */
+  .invite-section {
+    text-align: center; padding: 1rem 0.5rem;
+  }
+  .invite-placeholder {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--parchment-muted); letter-spacing: 0.05em;
+    background: var(--surface-raised); border: 1px dashed var(--border-strong);
+    border-radius: 8px; padding: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+  .invite-note {
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    font-size: 14px; color: var(--parchment-muted);
+  }
+
+  @media(max-width:580px){
+    .hauscall-name { font-size: 1.6rem; }
+    .command-name { min-width: 160px; font-size: 12px; }
+    .workflow-step { flex-direction: column; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <a class="back-link" href="index.html">← Return to the Maelstrom</a>
+
+  <header class="site-header">
+    <h1 class="site-title">AetherhausStudios</h1>
+    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
+    <p class="page-title">⊹ Meet Hauscall ⊹</p>
+  </header>
+
+  <!-- HERO -->
+  <div class="hauscall-hero">
+    <span class="hauscall-sigil">⊹</span>
+    <div class="hauscall-name">Hauscall</div>
+    <p class="hauscall-title">Familiar of Aetherhaus · Keeper of the Queue</p>
+    <p class="hauscall-slogan">Composed. Dutiful. Probably Fine.</p>
+  </div>
+
+  <div class="lore-aside">
+    Hauscall is the familiar that keeps the Aetherhaus support operation running. It does not possess Aether's power — but it operates in Aether's name, carries Aether's authority, and manages the structured touchpoints so that every petitioner knows where they stand.
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="form-section">
+    <div class="section-label">How It Works</div>
+    <div class="workflow-steps">
+
+      <div class="workflow-step">
+        <div class="step-icon">📋</div>
+        <div class="step-content">
+          <div class="step-label">Step 1 — Submission</div>
+          <div class="step-title">You submit a ticket</div>
+          <div class="step-desc">Via the support page. Hauscall receives it, logs it to the queue, and sends you a confirmation DM if you opted in.</div>
+          <div class="message-preview">
+            <div class="message-text">
+              Greetings, traveller. Hauscall here, familiar of Aetherhaus and keeper of the queue.<br><br>
+              Your support ticket <em>{TKT-XXXXXX}</em> has been received, logged, and is currently <em>{X}</em> in line. Aether will be with you as soon as the chaos permits — you will be notified the moment your case enters review.<br><br>
+              Should your situation worsen or your urgency change, feel free to resubmit. The queue is watched.<br><br>
+              Sit tight, and do try not to panic.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <div class="step-icon">🔍</div>
+        <div class="step-content">
+          <div class="step-label">Step 2 — Review</div>
+          <div class="step-title">Aether begins reviewing your case</div>
+          <div class="step-desc">When Aether picks up your ticket, Hauscall lets you know — so you're ready when contact comes.</div>
+          <div class="message-preview">
+            <div class="message-text">
+              Greetings again, traveller. Hauscall, returning with news.<br><br>
+              Aether has begun reviewing your support ticket <em>{TKT-XXXXXX}</em>. You can expect a direct message shortly to gather any additional information needed and begin working with you towards resolution.<br><br>
+              The gears are turning. Sit tight.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <div class="step-icon">✦</div>
+        <div class="step-content">
+          <div class="step-label">Step 3 — Resolution</div>
+          <div class="step-title">Your ticket is marked resolved</div>
+          <div class="step-desc">Hauscall sends a final message with a link to leave a rating and, if you're so inclined, a tip — on your terms entirely.</div>
+          <div class="message-preview">
+            <div class="message-text">
+              Greetings, traveller. Hauscall, returning one final time.<br><br>
+              Your support ticket <em>{TKT-XXXXXX}</em> has been marked as resolved. It is hoped that Aether's assistance has brought you closer to resolution, or at the very least, eased the burden of getting there.<br><br>
+              If you found the assistance helpful, a moment of your time to leave a rating would be most appreciated — five stars, if the chaos was managed to your satisfaction. You may do so here: <em>{link}</em><br><br>
+              A note on tips: Aether does not ask for them. They are entirely optional. Should you consider leaving one, Aether asks only that you tip what you do not need — this assistance is about your wellbeing and peace of mind, first and foremost.<br><br>
+              Should chaos, device possession, software revolutions, or the odd web-based curse rear its ugly head once again — you know where to find us.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMMAND REFERENCE -->
+  <div class="form-section">
+    <div class="section-label">Command Reference</div>
+
+    <div class="command-list">
+      <div class="command-group-label">Ticket Lifecycle</div>
+      <div class="command-row">
+        <span class="command-name">/reviewing TKT-XXXXXX</span>
+        <span class="command-desc">Triggers the review begun DM to the submitter</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/resolve TKT-XXXXXX</span>
+        <span class="command-desc">Marks resolved, sends the resolution DM with rating link</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/escalate TKT-XXXXXX</span>
+        <span class="command-desc">Bumps a ticket to higher urgency in the queue</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/close TKT-XXXXXX [reason]</span>
+        <span class="command-desc">Closes without resolution — no rating link sent, reason logged</span>
+      </div>
+
+      <div class="command-group-label">Queue Management</div>
+      <div class="command-row">
+        <span class="command-name">/queue</span>
+        <span class="command-desc">Shows current open tickets in order with urgency and position</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/ticket TKT-XXXXXX</span>
+        <span class="command-desc">Pulls full details of a specific ticket</span>
+      </div>
+
+      <div class="command-group-label">Metrics</div>
+      <div class="command-row">
+        <span class="command-name">/rating</span>
+        <span class="command-desc">Shows your current average rating across all reviews</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/rating TKT-XXXXXX</span>
+        <span class="command-desc">Shows the rating for a specific resolved ticket</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/history @handle</span>
+        <span class="command-desc">Pulls all past reports and alerts for a Discord handle</span>
+      </div>
+
+      <div class="command-group-label">Sentinel</div>
+      <div class="command-row">
+        <span class="command-name">/broadcast [message]</span>
+        <span class="command-desc">Sends a security alert to all connected mod channels</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/retract @handle</span>
+        <span class="command-desc">Retracts a previous broadcast cleanly across all servers</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/clarify @handle</span>
+        <span class="command-desc">Mod command — pipes a clarification request to the workspace</span>
+      </div>
+
+      <div class="command-group-label">Utility</div>
+      <div class="command-row">
+        <span class="command-name">/commands</span>
+        <span class="command-desc">Displays this full command list in channel</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVITE PLACEHOLDER -->
+  <div class="form-section">
+    <div class="section-label">Add Hauscall to Your Server</div>
+    <div class="invite-section">
+      <div class="invite-placeholder">
+        ⊹ &nbsp; Hauscall server invite — coming soon &nbsp; ⊹<br>
+        <span style="opacity:0.6;font-size:11px;">Available to trusted servers by invitation from Aether</span>
+      </div>
+      <p class="invite-note">Hauscall is not a public bot. Access is extended to servers within Aether's trusted community. If you believe your server qualifies, reach out via Discord.</p>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+  </footer>
+</div>
+</body>
+</html>

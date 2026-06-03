@@ -361,7 +361,7 @@
       <div class="feature-icon">📜</div>
       <div>
         <div class="feature-label">Chat Transcripts</div>
-        <div class="feature-desc">When a monitored streamer goes live, Hauscall connects to Twitch and records every chat message with full timestamps. Sessions are stored for 14 days and accessible from AetherhausDesk. Transcripts can be downloaded as .txt files or posted automatically to a configured Discord channel when the stream ends — including a full moderation report.</div>
+        <div class="feature-desc">When a monitored streamer goes live, Hauscall connects to Twitch and records every chat message with full timestamps. Sessions are stored for 14 days and accessible from AetherhausDesk. Transcripts can be downloaded as .txt files or posted automatically to a configured Discord channel when the stream ends — including a full moderation report. All timestamps in transcript files are formatted in CST (America/Chicago) and labelled as such in the file header.</div>
       </div>
     </div>
 
@@ -411,7 +411,10 @@
       <div class="feature-icon">⚠</div>
       <div>
         <div class="feature-label">Raid & Bot Detection</div>
-        <div class="feature-desc">Hauscall monitors for coordinated bot raid patterns: a spike of suspicious account joins within 30 seconds, or a flood of messages from new unverified accounts within 10 seconds. Suspicious accounts are identified by account age (under 7 days) and the absence of a profile picture. When a raid pattern is detected, Hauscall fires three sequential alerts to the mod channel — tagged, with the suspicious account names and profile links listed — to ensure it is seen. Alert only. No automatic action is taken.</div>
+        <div class="feature-desc">Hauscall monitors for two categories of bot activity.<br><br>
+        <strong style="color:var(--parchment);font-style:normal;">Coordinated raid detection</strong> — a spike of suspicious account joins within 30 seconds, or a flood of messages from new unverified accounts within 10 seconds. When a raid pattern is detected, Hauscall fires three sequential alerts to the mod channel with the suspicious account names and clickable profile links listed, to ensure it is seen.<br><br>
+        <strong style="color:var(--parchment);font-style:normal;">Solo suspicious account detection</strong> — individual accounts are scored on join against a standard set of bot indicators: account age, absence of a profile picture, no display name, username patterns common to bot accounts, and how quickly the account joined after creation. Accounts scoring above the threshold receive a single calm alert — score, indicators, and a direct profile link. If an account is already part of a detected raid, the raid alert covers it and no solo alert fires.<br><br>
+        Alert only. No automatic action is taken in either case. Mods retain full discretion.</div>
       </div>
     </div>
 

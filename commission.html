@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AetherhausStudios — Project Commission</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page-wrap">
+  <a class="back-link" href="other.html">← Back to Other Services</a>
+
+  <header class="site-header">
+    <h1 class="site-title">AetherhausStudios</h1>
+    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
+    <p class="page-title">✦ Project Commission ✦</p>
+  </header>
+
+  <div class="lore-aside">Have something that needs building? Aether takes on custom applications, moderation tools, bots, and bespoke builds. Pricing is variable and set once the project is understood — always discussed openly, always negotiable. Aether reserves the right to decline, but will always explain why.</div>
+
+  <!-- WHAT TO EXPECT -->
+  <div class="form-section">
+    <div class="section-label">How It Works</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">
+        <span style="font-size:1.2rem;flex-shrink:0;margin-top:2px;">📋</span>
+        <div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:3px;">Submit a Brief</div>
+          <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--parchment-dim);line-height:1.55;">Describe what you need, your rough timeline, and how to reach you. The more detail the better — vague briefs make for vague estimates.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">
+        <span style="font-size:1.2rem;flex-shrink:0;margin-top:2px;">💬</span>
+        <div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:3px;">Aether Reviews & Responds</div>
+          <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--parchment-dim);line-height:1.55;">Aether will reach out via Discord to discuss the project further, clarify scope, and provide a transparent cost estimate. If the project isn't something Aether can take on, you'll be told clearly and honestly — and why.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;">
+        <span style="font-size:1.2rem;flex-shrink:0;margin-top:2px;">🔨</span>
+        <div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:3px;">Scope, Cost & Build</div>
+          <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--parchment-dim);line-height:1.55;">Pricing is variable and set based on project complexity — always discussed upfront and always negotiable. No surprises.</div>
+        </div>
+      </div>
+    </div>
+    <div class="lore-aside" style="margin-top:1rem;margin-bottom:0;font-size:14px;">
+      Common reasons a commission may be declined: current work volume, project scope outside Aether's capabilities, or insufficient project clarity. Declining is never personal, and Aether will always explain.
+    </div>
+  </div>
+
+  <!-- COMMISSION FORM -->
+  <div class="form-section" id="s1">
+    <div class="section-label">Project Brief</div>
+    <div class="field-row full">
+      <div class="field-group">
+        <label for="c-discord">Discord Handle <span class="req">*</span></label>
+        <input type="text" id="c-discord" placeholder="e.g. username or user#0000">
+        <span class="error-msg" id="c-discord-err">A Discord handle is required for Aether to reach you.</span>
+      </div>
+    </div>
+    <div class="field-row full">
+      <div class="field-group">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+          <label for="c-desc">Project Description <span class="req">*</span></label>
+          <span class="char-count" id="c-char">0 / 1200</span>
+        </div>
+        <textarea id="c-desc" maxlength="1200" style="min-height:160px;"
+          placeholder="What do you need built? What does it need to do? Who is it for? The more detail you provide, the more accurate Aether's response will be..."
+          oninput="document.getElementById('c-char').textContent=this.value.length+' / 1200'"></textarea>
+        <span class="error-msg" id="c-desc-err">A project description is required.</span>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label for="c-timeline">Rough Timeline</label>
+        <select id="c-timeline">
+          <option value="">— when do you need this? —</option>
+          <option>As soon as possible</option>
+          <option>Within 2 weeks</option>
+          <option>Within a month</option>
+          <option>1–3 months</option>
+          <option>No hard deadline</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label for="c-type">Project Type</label>
+        <select id="c-type">
+          <option value="">— rough category —</option>
+          <option>Discord Bot</option>
+          <option>Web Application</option>
+          <option>Desktop Application</option>
+          <option>Moderation Tool</option>
+          <option>Automation / Script</option>
+          <option>API Integration</option>
+          <option>Something Else</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row full">
+      <div class="field-group">
+        <label for="c-extra">Anything Else Worth Knowing?</label>
+        <input type="text" id="c-extra" placeholder="Budget constraints, technical requirements, similar projects you've seen, etc.">
+      </div>
+    </div>
+  </div>
+
+  <button class="submit-btn" id="submit-btn" onclick="submitCommission()">✦ Submit Project Brief ✦</button>
+  <div class="send-status" id="send-status"></div>
+
+  <div class="success-banner" id="success">
+    <span class="success-glyph">✦</span>
+    <div class="success-title">Brief Received</div>
+    <p class="success-msg">Your project brief has been received and is in Aether's hands.<br>
+    Expect a Discord message with Aether's initial thoughts and any clarifying questions.<br><br>
+    Transparency first — always.</p>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+  </footer>
+</div>
+
+<script>
+  const WEBHOOK = 'https://discord.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
+
+  function setStatus(state, msg) {
+    document.getElementById('send-status').innerHTML = `<span class="status-dot ${state}"></span>${msg}`;
+  }
+  function validate() {
+    let ok = true;
+    const fields = [
+      ['c-discord', 'c-discord-err'],
+      ['c-desc',    'c-desc-err'],
+    ];
+    fields.forEach(([id, err]) => {
+      const val = document.getElementById(id).value.trim();
+      document.getElementById(err).style.display = val ? 'none' : 'block';
+      if (!val) ok = false;
+    });
+    return ok;
+  }
+  async function submitCommission() {
+    if (!validate()) return;
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    setStatus('sending', 'Dispatching brief...');
+
+    const discord  = document.getElementById('c-discord').value.trim();
+    const desc     = document.getElementById('c-desc').value.trim();
+    const timeline = document.getElementById('c-timeline').value || 'not specified';
+    const type     = document.getElementById('c-type').value || 'not specified';
+    const extra    = document.getElementById('c-extra').value.trim() || 'nothing additional';
+
+    const payload = { embeds: [{ title: '✦ Project Commission Brief', color: 0xc4962a, fields: [
+      { name: 'Discord',      value: discord,  inline: true },
+      { name: 'Project Type', value: type,     inline: true },
+      { name: 'Timeline',     value: timeline, inline: true },
+      { name: 'Description',  value: desc.slice(0, 1024) },
+      { name: 'Additional',   value: extra },
+    ], footer: { text: 'AetherhausStudios Commission · ' + new Date().toLocaleString() } }] };
+
+    try {
+      const res = await fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (res.ok) {
+        setStatus('ok', 'Brief submitted successfully.');
+        document.getElementById('s1').style.display = 'none';
+        document.querySelectorAll('.lore-aside, .form-section').forEach(el => el.style.display = 'none');
+        btn.style.display = 'none';
+        document.getElementById('send-status').style.display = 'none';
+        document.getElementById('success').style.display = 'block';
+      } else { throw new Error(); }
+    } catch {
+      setStatus('err', 'Submission failed — please try again or reach out via Discord.');
+      btn.disabled = false;
+    }
+  }
+</script>
+</body>
+</html>

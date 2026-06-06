@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AetherhausStudios — AetherTek Partnership Application</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 0.5rem;
+  }
+  .benefit-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .benefit-icon {
+    color: var(--amethyst-light);
+    font-size: 14px; flex-shrink: 0; margin-top: 2px;
+  }
+  .benefit-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px; color: var(--parchment-dim);
+    line-height: 1.5;
+  }
+  .benefit-text strong {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--amethyst-light); margin-bottom: 2px; font-weight: 500;
+  }
+  @media(max-width:580px){ .benefit-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <a class="back-link" href="other.html">← Back to Other Services</a>
+
+  <header class="site-header">
+    <h1 class="site-title">AetherhausStudios</h1>
+    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
+    <p class="page-title">⊹ AetherTek Partnership Application ⊹</p>
+  </header>
+
+  <div class="lore-aside">The AetherTek Partnership brings Hauscall's full community infrastructure to your server and stream. All applications are reviewed personally by Aether — partnerships are extended to communities that are a good fit, and Aether will always be transparent about the outcome.</div>
+
+  <!-- WHAT YOU GET -->
+  <div class="form-section">
+    <div class="section-label">What the Partnership Includes</div>
+    <div class="benefit-grid">
+      <div class="benefit-item">
+        <span class="benefit-icon">📜</span>
+        <div class="benefit-text">
+          <strong>Twitch Chat Transcripts</strong>
+          Full session transcripts with CST timestamps, 14-day retention, downloadable and auto-postable to Discord.
+        </div>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon">🔍</span>
+        <div class="benefit-text">
+          <strong>Post-Session Moderation Analysis</strong>
+          AI-assisted review of each stream session against your community's specific ruleset — confirmed flags and review-worthy content, separated clearly.
+        </div>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon">⚑</span>
+        <div class="benefit-text">
+          <strong>Discord Channel Monitoring</strong>
+          Hauscall watches your configured channels for AI art, unsolicited promotion, and welfare concerns — alerting your mod team with full context and a jump link.
+        </div>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon">⚠</span>
+        <div class="benefit-text">
+          <strong>Raid & Bot Detection</strong>
+          Real-time detection of coordinated join spikes and message floods, with three sequential mod alerts and clickable account links. Solo suspicious accounts flagged separately.
+        </div>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon">👁</span>
+        <div class="benefit-text">
+          <strong>Watched Users</strong>
+          Passive per-streamer watch lists — messages from flagged users are silently collected and compiled into the session transcript.
+        </div>
+      </div>
+      <div class="benefit-item">
+        <span class="benefit-icon">🛠</span>
+        <div class="benefit-text">
+          <strong>In-Server Technical Assistance</strong>
+          Direct access to Aether for technical support within your community — device issues, streaming setup, OBS, network, and general chaos management.
+        </div>
+      </div>
+    </div>
+    <div class="lore-aside" style="margin-top:1rem;margin-bottom:0;">
+      Hauscall is not a public bot. All configuration is managed directly with Aether through AetherhausDesk. Setup, onboarding, and ongoing support are handled personally.
+    </div>
+  </div>
+
+  <!-- APPLICATION FORM -->
+  <div class="form-section" id="s1">
+    <div class="section-label">Your Details</div>
+    <div class="field-row">
+      <div class="field-group">
+        <label for="p-discord">Discord Handle <span class="req">*</span></label>
+        <input type="text" id="p-discord" placeholder="e.g. username or user#0000">
+        <span class="error-msg" id="p-discord-err">A Discord handle is required so Aether can reach you.</span>
+      </div>
+      <div class="field-group">
+        <label for="p-server">Server Name <span class="req">*</span></label>
+        <input type="text" id="p-server" placeholder="Your Discord server name">
+        <span class="error-msg" id="p-server-err">Please provide your server name.</span>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label for="p-twitch">Twitch Link <span class="req">*</span></label>
+        <input type="text" id="p-twitch" placeholder="e.g. twitch.tv/yourchannel">
+        <span class="error-msg" id="p-twitch-err">A Twitch link is required.</span>
+      </div>
+      <div class="field-group">
+        <label for="p-size">Community Size <span class="req">*</span></label>
+        <select id="p-size">
+          <option value="">— approximate size —</option>
+          <option>Under 50 members</option>
+          <option>50–200 members</option>
+          <option>200–500 members</option>
+          <option>500–1,000 members</option>
+          <option>1,000–5,000 members</option>
+          <option>5,000+ members</option>
+        </select>
+        <span class="error-msg" id="p-size-err">Please select a community size.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section" id="s2">
+    <div class="section-label">Your Application</div>
+    <div class="field-row full">
+      <div class="field-group">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+          <label for="p-why">Why Do You Feel AetherTek Services Would Benefit Your Community? <span class="req">*</span></label>
+          <span class="char-count" id="p-char">0 / 1000</span>
+        </div>
+        <textarea id="p-why" maxlength="1000" style="min-height:140px;"
+          placeholder="Tell Aether about your community, what challenges you're facing, and what you're hoping Hauscall and AetherTek can bring to your space..."
+          oninput="document.getElementById('p-char').textContent=this.value.length+' / 1000'"></textarea>
+        <span class="error-msg" id="p-why-err">Please tell Aether about your community before submitting.</span>
+      </div>
+    </div>
+    <div class="lore-aside" style="margin-bottom:0;font-size:14px;">
+      All applications are reviewed personally. Aether will reach out via Discord with a decision — and will always explain if the answer is no. There is no shame in applying and no obligation on either side.
+    </div>
+  </div>
+
+  <button class="submit-btn" id="submit-btn" onclick="submitPartnership()">⊹ Submit Partnership Application ⊹</button>
+  <div class="send-status" id="send-status"></div>
+
+  <div class="success-banner" id="success">
+    <span class="success-glyph">⊹</span>
+    <div class="success-title">Application Received</div>
+    <p class="success-msg">Your partnership application has been dispatched to Aether.<br>
+    A personal review awaits — you will hear back via Discord.<br><br>
+    Thank you for your interest in the AetherTek Partnership.</p>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+  </footer>
+</div>
+
+<script>
+  const WEBHOOK = 'https://discord.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
+
+  function setStatus(state, msg) {
+    document.getElementById('send-status').innerHTML = `<span class="status-dot ${state}"></span>${msg}`;
+  }
+  function validate() {
+    let ok = true;
+    const fields = [
+      ['p-discord', 'p-discord-err'],
+      ['p-server',  'p-server-err'],
+      ['p-twitch',  'p-twitch-err'],
+      ['p-why',     'p-why-err'],
+    ];
+    fields.forEach(([id, err]) => {
+      const val = document.getElementById(id).value.trim();
+      document.getElementById(err).style.display = val ? 'none' : 'block';
+      if (!val) ok = false;
+    });
+    const size = document.getElementById('p-size').value;
+    document.getElementById('p-size-err').style.display = size ? 'none' : 'block';
+    if (!size) ok = false;
+    return ok;
+  }
+  async function submitPartnership() {
+    if (!validate()) return;
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    setStatus('sending', 'Dispatching application...');
+
+    const discord = document.getElementById('p-discord').value.trim();
+    const server  = document.getElementById('p-server').value.trim();
+    const twitch  = document.getElementById('p-twitch').value.trim();
+    const size    = document.getElementById('p-size').value;
+    const why     = document.getElementById('p-why').value.trim();
+
+    const payload = { embeds: [{ title: '⊹ AetherTek Partnership Application', color: 0x0d9488, fields: [
+      { name: 'Discord',        value: discord,  inline: true },
+      { name: 'Server',         value: server,   inline: true },
+      { name: 'Twitch',         value: twitch,   inline: true },
+      { name: 'Community Size', value: size,     inline: true },
+      { name: 'Application',    value: why },
+    ], footer: { text: 'AetherhausStudios Partnership · ' + new Date().toLocaleString() } }] };
+
+    try {
+      const res = await fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (res.ok) {
+        setStatus('ok', 'Application submitted successfully.');
+        ['s1','s2'].forEach(id => document.getElementById(id).style.display = 'none');
+        document.querySelectorAll('.lore-aside').forEach(el => el.style.display = 'none');
+        btn.style.display = 'none';
+        document.getElementById('send-status').style.display = 'none';
+        document.getElementById('success').style.display = 'block';
+      } else { throw new Error(); }
+    } catch {
+      setStatus('err', 'Submission failed — please try again or reach out via Discord.');
+      btn.disabled = false;
+    }
+  }
+</script>
+</body>
+</html>

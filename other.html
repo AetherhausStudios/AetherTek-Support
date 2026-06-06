@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AetherhausStudios — Other Services</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .panel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+    margin-top: 0.5rem;
+  }
+  .panel-btn {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 1rem;
+    padding: 2.5rem 1.8rem;
+    background: linear-gradient(160deg, var(--surface) 0%, rgba(4,8,16,0.98) 100%);
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    text-decoration: none;
+    position: relative; overflow: hidden;
+    transition: all 0.22s;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.03);
+    cursor: pointer;
+    text-align: center;
+  }
+  .panel-btn::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--amethyst), var(--amethyst-light), var(--amethyst));
+    box-shadow: 0 0 12px rgba(13,148,136,0.5);
+    transition: box-shadow 0.22s;
+  }
+  .panel-btn::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(13,148,136,0.06) 0%, transparent 65%);
+    pointer-events: none;
+    transition: opacity 0.22s;
+  }
+  .panel-btn:hover {
+    border-color: var(--amethyst-light);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(13,148,136,0.2), 0 0 0 1px rgba(13,148,136,0.15), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .panel-btn:hover::before { box-shadow: 0 0 20px rgba(77,240,232,0.6); }
+  .panel-btn:hover::after { opacity: 2; }
+  .panel-glyph {
+    font-size: 2.4rem;
+    color: var(--amethyst-light);
+    line-height: 1;
+    transition: text-shadow 0.22s;
+  }
+  .panel-btn:hover .panel-glyph {
+    text-shadow: 0 0 30px rgba(77,240,232,0.6);
+  }
+  .panel-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--amethyst-light);
+    line-height: 1.4;
+  }
+  .panel-desc {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic; font-size: 14px;
+    color: var(--parchment-dim);
+    line-height: 1.55;
+  }
+  .panel-cta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--amethyst-mid);
+    margin-top: 0.4rem;
+    transition: color 0.2s;
+  }
+  .panel-btn:hover .panel-cta { color: var(--amethyst-light); }
+  @media(max-width:580px){ .panel-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <a class="back-link" href="index.html">← Return to the Maelstrom</a>
+
+  <header class="site-header">
+    <h1 class="site-title">AetherhausStudios</h1>
+    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
+    <p class="page-title">✦ Other Services ✦</p>
+  </header>
+
+  <div class="lore-aside">Beyond the support queue, Aether offers two extended avenues of service — community infrastructure partnerships and bespoke project commissions. Select your path below.</div>
+
+  <div class="form-section">
+    <div class="section-label">Where are you headed?</div>
+    <div class="panel-grid">
+
+      <a class="panel-btn" href="partnership.html">
+        <span class="panel-glyph">⊹</span>
+        <span class="panel-title">AetherTek Partnership Application</span>
+        <span class="panel-desc">Bring Hauscall's moderation infrastructure, stream monitoring, and community protection to your server.</span>
+        <span class="panel-cta">Apply now →</span>
+      </a>
+
+      <a class="panel-btn" href="commission.html">
+        <span class="panel-glyph">✦</span>
+        <span class="panel-title">Project Commission</span>
+        <span class="panel-desc">Commission a custom application, moderation tool, or bespoke build — scoped and priced to your project.</span>
+        <span class="panel-cta">Submit a brief →</span>
+      </a>
+
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+  </footer>
+</div>
+</body>
+</html>

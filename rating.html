@@ -206,13 +206,12 @@
 </div>
 
 <script>
-  const HAUSCALL_URL = 'https://hauscall-production.up.railway.app';
+  const WEBHOOK = 'https://discord.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
 
   // ── GATE: redirect if no ticket ID in URL ──
-  const params   = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search);
   const ticketId = params.get('ticket');
-  const VALID    = ['TKT-', 'HW-', 'RPT-'];
-  if (!ticketId || !VALID.some(p => ticketId.startsWith(p))) {
+  if (!ticketId || !ticketId.startsWith('TKT-')) {
     window.location.replace('index.html');
   } else {
     document.getElementById('ticket-badge').textContent = ticketId + ' — Resolved';
@@ -265,10 +264,23 @@
       ? '★'.repeat(currentStar) + '☆'.repeat(5 - currentStar)
       : 'not rated';
 
-    const payload = { ticketId, name, stars: currentStar, service, review, quote };
+    const payload = {
+      embeds: [{
+        title: `✦ New Review — ${ticketId}`,
+        color: 0xc4962a,
+        fields: [
+          { name: 'From', value: name, inline: true },
+          { name: 'Rating', value: stars, inline: true },
+          { name: 'Helped with', value: service, inline: true },
+          { name: 'Testimony', value: review },
+          ...(quote ? [{ name: 'Hall of Fame', value: `"${quote}"` }] : [])
+        ],
+        footer: { text: 'AetherhausStudios Reviews · ' + new Date().toLocaleString() }
+      }]
+    };
 
     try {
-      const res = await fetch(`${HAUSCALL_URL}/review`, {
+      const res = await fetch(WEBHOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -281,7 +293,7 @@
         document.getElementById('review-success').style.display = 'block';
       } else { throw new Error(); }
     } catch {
-      setStatus('review-status', 'err', 'Transmission failed — please try again.');
+      setStatus('review-status', 'err', 'Discord failed — please try again.');
       btn.disabled = false;
     }
   }

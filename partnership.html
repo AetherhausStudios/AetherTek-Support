@@ -176,7 +176,7 @@
 </div>
 
 <script>
-  const WEBHOOK = 'https://discord.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
+  const HAUSCALL = 'https://hauscall-production.up.railway.app';
 
   function setStatus(state, msg) {
     document.getElementById('send-status').innerHTML = `<span class="status-dot ${state}"></span>${msg}`;
@@ -205,22 +205,16 @@
     btn.disabled = true;
     setStatus('sending', 'Dispatching application...');
 
-    const discord = document.getElementById('p-discord').value.trim();
-    const server  = document.getElementById('p-server').value.trim();
-    const twitch  = document.getElementById('p-twitch').value.trim();
-    const size    = document.getElementById('p-size').value;
-    const why     = document.getElementById('p-why').value.trim();
-
-    const payload = { embeds: [{ title: '⊹ AetherTek Partnership Application', color: 0x0d9488, fields: [
-      { name: 'Discord',        value: discord,  inline: true },
-      { name: 'Server',         value: server,   inline: true },
-      { name: 'Twitch',         value: twitch,   inline: true },
-      { name: 'Community Size', value: size,     inline: true },
-      { name: 'Application',    value: why },
-    ], footer: { text: 'AetherhausStudios Partnership · ' + new Date().toLocaleString() } }] };
+    const payload = {
+      discord: document.getElementById('p-discord').value.trim(),
+      server:  document.getElementById('p-server').value.trim(),
+      twitch:  document.getElementById('p-twitch').value.trim(),
+      size:    document.getElementById('p-size').value,
+      why:     document.getElementById('p-why').value.trim(),
+    };
 
     try {
-      const res = await fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const res = await fetch(HAUSCALL + '/partnership', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (res.ok) {
         setStatus('ok', 'Application submitted successfully.');
         ['s1','s2'].forEach(id => document.getElementById(id).style.display = 'none');

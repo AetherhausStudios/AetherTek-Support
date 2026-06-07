@@ -124,7 +124,7 @@
 </div>
 
 <script>
-  const WEBHOOK = 'https://discord.com/api/webhooks/1499916622888960221/8Q15ozXiTxZ-eTuPqkyXpEqcb1xFGEG4_1Py06G1By5zAd1J9DruAIMX-vk_Ns5Bf9Em';
+  const HAUSCALL = 'https://hauscall-production.up.railway.app';
 
   function setStatus(state, msg) {
     document.getElementById('send-status').innerHTML = `<span class="status-dot ${state}"></span>${msg}`;
@@ -154,16 +154,16 @@
     const type     = document.getElementById('c-type').value || 'not specified';
     const extra    = document.getElementById('c-extra').value.trim() || 'nothing additional';
 
-    const payload = { embeds: [{ title: '✦ Project Commission Brief', color: 0xc4962a, fields: [
-      { name: 'Discord',      value: discord,  inline: true },
-      { name: 'Project Type', value: type,     inline: true },
-      { name: 'Timeline',     value: timeline, inline: true },
-      { name: 'Description',  value: desc.slice(0, 1024) },
-      { name: 'Additional',   value: extra },
-    ], footer: { text: 'AetherhausStudios Commission · ' + new Date().toLocaleString() } }] };
+    const payload = {
+      discord:  discord,
+      projType: type,
+      timeline: timeline,
+      desc:     desc,
+      extra:    extra,
+    };
 
     try {
-      const res = await fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const res = await fetch(HAUSCALL + '/commission', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (res.ok) {
         setStatus('ok', 'Brief submitted successfully.');
         document.getElementById('s1').style.display = 'none';

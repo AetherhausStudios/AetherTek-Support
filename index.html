@@ -3,92 +3,177 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AetherhausStudios — Tech Support</title>
+<title>AetherhausStudios — AetherTek Support</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   :root{
-    --bg:#040810;--surface:rgba(8,15,26,0.92);--parchment:#e8f4f8;
+    --bg:#040810;--surface:rgba(8,15,26,0.92);--surface-raised:rgba(13,24,37,0.9);
+    --parchment:#e8f4f8;--parchment-dim:#a8c8d8;--parchment-muted:#4a6a7a;
     --teal:#0d9488;--teal-light:#4df0e8;--teal-mid:#14b8a6;
     --purple:#7c3aed;--purple-light:#a78bfa;
     --gold:#c4962a;--gold-light:#f0d48a;
-    --smoke:#4a6a7a;--border:rgba(13,148,136,0.2);--border-strong:rgba(13,148,136,0.42);
+    --ember:#ef4444;
+    --border:rgba(13,148,136,0.2);--border-strong:rgba(13,148,136,0.42);
   }
+  html{background:var(--bg);}
   body{
-    background:var(--bg);color:var(--parchment);
-    font-family:'Crimson Pro',Georgia,serif;
-    font-size:17px;line-height:1.6;min-height:100vh;
-    display:flex;align-items:center;justify-content:center;
+    background-color:var(--bg);
     background-image:
-      radial-gradient(ellipse 70% 60% at 20% 25%,rgba(13,148,136,0.2) 0%,transparent 65%),
-      radial-gradient(ellipse 55% 50% at 80% 75%,rgba(124,58,237,0.15) 0%,transparent 60%),
-      radial-gradient(ellipse 40% 40% at 50% 50%,rgba(13,148,136,0.06) 0%,transparent 70%),
-      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230d9488' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      radial-gradient(ellipse 70% 60% at 20% 15%,rgba(13,148,136,0.2) 0%,transparent 65%),
+      radial-gradient(ellipse 55% 50% at 80% 80%,rgba(124,58,237,0.15) 0%,transparent 60%),
+      radial-gradient(ellipse 40% 40% at 50% 50%,rgba(13,148,136,0.05) 0%,transparent 70%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%230d9488' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    color:var(--parchment);
+    font-family:'Crimson Pro',Georgia,serif;
+    font-size:17px;line-height:1.7;min-height:100vh;
   }
-  .wrap{max-width:520px;width:100%;padding:2rem 1.5rem;text-align:center;}
-  .sigil{
-    font-size:2.6rem;color:var(--teal-light);margin-bottom:1.5rem;
-    animation:pulse 3s ease-in-out infinite;
+  .page{max-width:820px;margin:0 auto;padding:3rem 1.5rem 5rem;}
+
+  /* ── HERO ── */
+  .hero{text-align:center;padding:3rem 0 2.5rem;position:relative;}
+
+  /* ── SVG LOGO ── */
+  .logo-wrap{margin-bottom:1.8rem;display:flex;justify-content:center;}
+  .logo-svg{filter:drop-shadow(0 0 18px rgba(77,240,232,0.5)) drop-shadow(0 0 40px rgba(13,148,136,0.3));}
+
+  .hero-tagline{
+    font-family:'Cinzel Decorative',serif;font-size:0.65rem;
+    letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--parchment-dim);opacity:0.6;margin-top:0.3rem;
   }
-  @keyframes pulse{
-    0%,100%{opacity:0.55;text-shadow:0 0 20px rgba(13,148,136,0.3);}
-    50%{opacity:1;text-shadow:0 0 50px rgba(77,240,232,0.65);}
-  }
-  .site-title{
-    font-family:'Cinzel Decorative',serif;font-size:1.9rem;font-weight:700;
-    color:var(--teal-light);letter-spacing:0.03em;line-height:1.2;margin-bottom:0.3rem;
-    text-shadow:0 0 40px rgba(77,240,232,0.35), 0 0 80px rgba(13,148,136,0.2);
-  }
-  .site-sub{
+  .hero-desc{
     font-family:'Crimson Pro',serif;font-style:italic;
-    color:var(--parchment);opacity:0.6;font-size:1rem;margin-bottom:0.5rem;
+    font-size:1.05rem;color:var(--parchment-dim);
+    max-width:520px;margin:1.4rem auto 0;line-height:1.75;opacity:0.8;
   }
-  .slogan{
-    font-family:'Cinzel Decorative',serif;font-size:0.6rem;
-    letter-spacing:0.14em;text-transform:uppercase;
-    color:var(--gold-light);opacity:0.5;margin-bottom:2.2rem;
+
+  /* ── SECTION LABEL ── */
+  .section-label{
+    font-family:'Cinzel Decorative',serif;font-size:0.62rem;font-weight:400;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--teal-light);
+    margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;
   }
-  .card{
-    background:var(--surface);border:1px solid var(--border-strong);
-    border-radius:16px;padding:2.5rem 2rem;position:relative;overflow:hidden;
-    backdrop-filter:blur(8px);
-    box-shadow:0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(13,148,136,0.06);
+  .section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border-strong),transparent);}
+
+  /* ── WHAT WE DO ── */
+  .services{margin:3rem 0;}
+  .service-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .service-card{
+    background:linear-gradient(160deg,var(--surface) 0%,rgba(4,8,16,0.98) 100%);
+    border:1px solid var(--border-strong);border-radius:12px;
+    padding:1.4rem 1.6rem;position:relative;overflow:hidden;
+    text-decoration:none;display:block;
+    transition:all 0.22s;
+    box-shadow:0 6px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.03);
   }
-  .card::before{
-    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  .service-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
     background:linear-gradient(90deg,var(--teal),var(--teal-light),var(--teal));
-    box-shadow:0 0 12px rgba(13,148,136,0.5);
+    box-shadow:0 0 10px rgba(13,148,136,0.4);
   }
-  .card::after{
-    content:'';position:absolute;top:0;left:0;right:0;bottom:0;
-    background:radial-gradient(ellipse at 50% 0%,rgba(13,148,136,0.06) 0%,transparent 65%);
-    pointer-events:none;
+  .service-card:hover{
+    border-color:var(--teal-light);transform:translateY(-2px);
+    box-shadow:0 10px 32px rgba(13,148,136,0.18),inset 0 1px 0 rgba(255,255,255,0.04);
   }
-  .prompt{
-    font-family:'Cinzel Decorative',serif;font-size:0.72rem;font-weight:400;
-    letter-spacing:0.08em;color:var(--teal-light);margin-bottom:1.3rem;
-    display:flex;align-items:center;gap:10px;justify-content:center;
-    opacity:0.8;
+  .service-glyph{font-size:1.6rem;display:block;margin-bottom:0.7rem;}
+  .service-name{
+    font-family:'Cinzel Decorative',serif;font-size:0.65rem;
+    letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--teal-light);margin-bottom:0.4rem;
   }
-  .prompt::before,.prompt::after{
-    content:'';flex:1;max-width:50px;height:1px;background:var(--border-strong);
+  .service-desc{
+    font-family:'Crimson Pro',serif;font-style:italic;
+    font-size:14px;color:var(--parchment-dim);line-height:1.55;
   }
+  .service-link{
+    font-family:'JetBrains Mono',monospace;font-size:9px;
+    letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--teal-mid);margin-top:0.8rem;display:block;
+    transition:color 0.2s;
+  }
+  .service-card:hover .service-link{color:var(--teal-light);}
+
+  /* ── PHILOSOPHY ── */
+  .philosophy{
+    background:linear-gradient(160deg,var(--surface) 0%,rgba(4,8,16,0.98) 100%);
+    border:1px solid var(--border-strong);border-radius:12px;
+    padding:2rem 2.2rem;margin:2.5rem 0;position:relative;overflow:hidden;
+    box-shadow:0 6px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+  .philosophy::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,var(--purple),var(--teal-light),var(--purple));
+    box-shadow:0 0 10px rgba(124,58,237,0.4);
+  }
+  .philosophy-body{
+    font-family:'Crimson Pro',serif;font-size:16px;
+    color:var(--parchment-dim);line-height:1.85;
+  }
+  .philosophy-body p{margin-bottom:1rem;}
+  .philosophy-body p:last-child{margin-bottom:0;}
+  .philosophy-body strong{
+    color:var(--teal-light);font-style:normal;
+    font-weight:600;
+  }
+
+  /* ── HAUSCALL MENTION ── */
+  .hauscall-strip{
+    display:flex;align-items:center;gap:14px;
+    background:rgba(8,15,26,0.7);border:1px solid rgba(124,58,237,0.25);
+    border-radius:8px;padding:12px 18px;margin:2rem 0;
+    text-decoration:none;transition:border-color 0.2s;
+  }
+  .hauscall-strip:hover{border-color:rgba(124,58,237,0.5);}
+  .hauscall-glyph{font-size:1.4rem;color:var(--purple-light);flex-shrink:0;}
+  .hauscall-text{flex:1;}
+  .hauscall-name{
+    font-family:'Cinzel Decorative',serif;font-size:0.62rem;
+    letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--purple-light);margin-bottom:2px;
+  }
+  .hauscall-sub{
+    font-family:'Crimson Pro',serif;font-style:italic;
+    font-size:13.5px;color:var(--parchment-muted);
+  }
+  .hauscall-cta{
+    font-family:'JetBrains Mono',monospace;font-size:9px;
+    letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--purple-light);flex-shrink:0;opacity:0.7;
+  }
+
+  /* ── SERVICE SELECTOR ── */
+  .selector-wrap{
+    background:linear-gradient(160deg,var(--surface) 0%,rgba(4,8,16,0.98) 100%);
+    border:1px solid var(--border-strong);border-radius:12px;
+    padding:2rem 2.2rem;position:relative;overflow:hidden;
+    box-shadow:0 6px 24px rgba(0,0,0,0.4);
+  }
+  .selector-wrap::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,var(--teal),var(--teal-light),var(--teal));
+    box-shadow:0 0 10px rgba(13,148,136,0.4);
+  }
+  .selector-prompt{
+    font-family:'Cinzel Decorative',serif;font-size:0.7rem;
+    letter-spacing:0.08em;color:var(--teal-light);
+    margin-bottom:1rem;display:flex;align-items:center;gap:10px;justify-content:center;
+    opacity:0.85;
+  }
+  .selector-prompt::before,.selector-prompt::after{content:'';flex:1;max-width:60px;height:1px;background:var(--border-strong);}
   select{
     font-family:'Crimson Pro',serif;font-size:17px;
     padding:12px 40px 12px 16px;
     border:1px solid var(--border-strong);border-radius:8px;
     background:#060c16;color:var(--parchment);
-    width:100%;margin-bottom:1.2rem;
+    width:100%;margin-bottom:1rem;
     appearance:none;cursor:pointer;outline:none;
     background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234df0e8'/%3E%3C/svg%3E");
     background-repeat:no-repeat;background-position:right 14px center;
     transition:border-color 0.2s,box-shadow 0.2s;
     box-shadow:inset 0 2px 6px rgba(0,0,0,0.4);
   }
-  select:focus{
-    border-color:var(--teal-mid);
-    box-shadow:0 0 0 3px rgba(13,148,136,0.18),inset 0 2px 6px rgba(0,0,0,0.4);
-  }
+  select:focus{border-color:var(--teal-mid);box-shadow:0 0 0 3px rgba(13,148,136,0.18),inset 0 2px 6px rgba(0,0,0,0.4);}
   select option{background:#060c16;color:var(--parchment);}
   .go-btn{
     font-family:'Cinzel Decorative',serif;font-size:0.7rem;font-weight:700;
@@ -99,32 +184,213 @@
     transition:all 0.2s;position:relative;overflow:hidden;
     box-shadow:0 4px 20px rgba(13,148,136,0.28);
   }
-  .go-btn::after{
-    content:'';position:absolute;inset:0;
-    background:linear-gradient(135deg,rgba(255,255,255,0.08),transparent);
-    pointer-events:none;
-  }
-  .go-btn:hover{
-    background:linear-gradient(135deg,#14b8a6,#0d9488,#0a7a70);
-    transform:translateY(-2px);
-    box-shadow:0 8px 28px rgba(13,148,136,0.42);
-  }
+  .go-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.08),transparent);pointer-events:none;}
+  .go-btn:hover{background:linear-gradient(135deg,#14b8a6,#0d9488,#0a7a70);transform:translateY(-2px);box-shadow:0 8px 28px rgba(13,148,136,0.42);}
   .go-btn:active{transform:translateY(0);}
-  .footer-runes{margin-top:2rem;display:flex;justify-content:center;gap:20px;font-size:17px;color:var(--teal-mid);opacity:0.35;}
-  .footer-note{margin-top:1rem;font-style:italic;font-size:13px;color:var(--smoke);opacity:0.6;}
-  @media(max-width:480px){.site-title{font-size:1.4rem;}.card{padding:2rem 1.2rem;}}
+
+  /* ── FOOTER ── */
+  .footer{text-align:center;margin-top:3.5rem;padding-top:1.8rem;border-top:1px solid var(--border);}
+  .footer-runes{display:flex;justify-content:center;gap:20px;font-size:16px;color:var(--teal-mid);opacity:0.35;margin-bottom:0.8rem;}
+  .footer-slogan{font-family:'Cinzel Decorative',serif;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal-light);opacity:0.45;margin-bottom:0.4rem;}
+  .footer-note{font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;color:var(--parchment-muted);opacity:0.5;}
+
+  @media(max-width:580px){
+    .service-grid{grid-template-columns:1fr;}
+    .hauscall-strip{flex-wrap:wrap;}
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="sigil">⟡</div>
-  <h1 class="site-title">AetherhausStudios</h1>
-  <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
-  <p class="slogan">Chaos Managed. Probably.</p>
+<div class="page">
 
-  <div class="card">
-    <div class="prompt">Please select the nature of your Technological Chaos</div>
-    <select id="destination" aria-label="Select the nature of your request">
+  <!-- ── HERO ── -->
+  <div class="hero">
+
+    <!-- SVG LOGO -->
+    <div class="logo-wrap">
+      <svg class="logo-svg" width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-strong">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- LEFT WING -->
+        <g fill="none" stroke="#4df0e8" filter="url(#glow)">
+          <!-- Outer upper wing -->
+          <path d="M160,85 C140,65 110,45 75,52 C50,57 38,72 42,85 C46,98 68,100 90,95 C115,89 140,88 160,100"
+            stroke-width="1.2" stroke-opacity="0.85" fill="rgba(77,240,232,0.06)"/>
+          <!-- Inner upper wing detail -->
+          <path d="M155,88 C138,73 115,58 88,63 C70,67 60,78 65,87 C70,95 88,96 108,91"
+            stroke-width="0.7" stroke-opacity="0.45"/>
+          <!-- Wing veins -->
+          <line x1="155" y1="90" x2="95" y2="70" stroke-width="0.6" stroke-opacity="0.35"/>
+          <line x1="150" y1="93" x2="105" y2="80" stroke-width="0.5" stroke-opacity="0.3"/>
+          <line x1="148" y1="96" x2="115" y2="90" stroke-width="0.5" stroke-opacity="0.25"/>
+          <!-- Lower wing -->
+          <path d="M160,100 C145,105 118,112 100,125 C85,135 82,148 92,152 C104,157 122,148 138,135 C152,123 158,110 160,100"
+            stroke-width="1" stroke-opacity="0.7" fill="rgba(77,240,232,0.04)"/>
+          <!-- Lower wing detail -->
+          <path d="M155,104 C142,110 120,118 105,130 C95,138 94,148 102,150"
+            stroke-width="0.6" stroke-opacity="0.35"/>
+          <!-- Wing tip sparkle left upper -->
+          <circle cx="44" cy="68" r="2.5" fill="#4df0e8" fill-opacity="0.8" stroke="none" filter="url(#glow)"/>
+          <line x1="44" y1="62" x2="44" y2="56" stroke-width="1" stroke-opacity="0.6"/>
+          <line x1="38" y1="68" x2="32" y2="68" stroke-width="1" stroke-opacity="0.6"/>
+          <line x1="40" y1="63" x2="36" y2="59" stroke-width="0.8" stroke-opacity="0.5"/>
+          <line x1="48" y1="63" x2="52" y2="59" stroke-width="0.8" stroke-opacity="0.5"/>
+        </g>
+
+        <!-- RIGHT WING (mirrored) -->
+        <g fill="none" stroke="#4df0e8" filter="url(#glow)">
+          <!-- Outer upper wing -->
+          <path d="M160,85 C180,65 210,45 245,52 C270,57 282,72 278,85 C274,98 252,100 230,95 C205,89 180,88 160,100"
+            stroke-width="1.2" stroke-opacity="0.85" fill="rgba(77,240,232,0.06)"/>
+          <!-- Inner upper wing detail -->
+          <path d="M165,88 C182,73 205,58 232,63 C250,67 260,78 255,87 C250,95 232,96 212,91"
+            stroke-width="0.7" stroke-opacity="0.45"/>
+          <!-- Wing veins -->
+          <line x1="165" y1="90" x2="225" y2="70" stroke-width="0.6" stroke-opacity="0.35"/>
+          <line x1="170" y1="93" x2="215" y2="80" stroke-width="0.5" stroke-opacity="0.3"/>
+          <line x1="172" y1="96" x2="205" y2="90" stroke-width="0.5" stroke-opacity="0.25"/>
+          <!-- Lower wing -->
+          <path d="M160,100 C175,105 202,112 220,125 C235,135 238,148 228,152 C216,157 198,148 182,135 C168,123 162,110 160,100"
+            stroke-width="1" stroke-opacity="0.7" fill="rgba(77,240,232,0.04)"/>
+          <!-- Lower wing detail -->
+          <path d="M165,104 C178,110 200,118 215,130 C225,138 226,148 218,150"
+            stroke-width="0.6" stroke-opacity="0.35"/>
+          <!-- Wing tip sparkle right upper -->
+          <circle cx="276" cy="68" r="2.5" fill="#4df0e8" fill-opacity="0.8" stroke="none" filter="url(#glow)"/>
+          <line x1="276" y1="62" x2="276" y2="56" stroke-width="1" stroke-opacity="0.6"/>
+          <line x1="282" y1="68" x2="288" y2="68" stroke-width="1" stroke-opacity="0.6"/>
+          <line x1="272" y1="63" x2="268" y2="59" stroke-width="0.8" stroke-opacity="0.5"/>
+          <line x1="280" y1="63" x2="284" y2="59" stroke-width="0.8" stroke-opacity="0.5"/>
+        </g>
+
+        <!-- TOP SPARKLE -->
+        <g stroke="#4df0e8" stroke-opacity="0.7" filter="url(#glow)">
+          <circle cx="160" cy="52" r="3" fill="#4df0e8" fill-opacity="0.9" stroke="none"/>
+          <line x1="160" y1="44" x2="160" y2="36" stroke-width="1.2"/>
+          <line x1="152" y1="52" x2="144" y2="52" stroke-width="1"/>
+          <line x1="168" y1="52" x2="176" y2="52" stroke-width="1"/>
+          <line x1="154" y1="46" x2="148" y2="40" stroke-width="0.8"/>
+          <line x1="166" y1="46" x2="172" y2="40" stroke-width="0.8"/>
+          <!-- Small accent stars -->
+          <circle cx="130" cy="48" r="1.2" fill="#4df0e8" fill-opacity="0.5" stroke="none"/>
+          <circle cx="190" cy="48" r="1.2" fill="#4df0e8" fill-opacity="0.5" stroke="none"/>
+          <circle cx="145" cy="40" r="0.8" fill="#4df0e8" fill-opacity="0.4" stroke="none"/>
+          <circle cx="175" cy="40" r="0.8" fill="#4df0e8" fill-opacity="0.4" stroke="none"/>
+        </g>
+
+        <!-- A LETTERFORM -->
+        <g filter="url(#glow-strong)">
+          <!-- A body -->
+          <path d="M160,62 L132,138 L144,138 L160,96 L176,138 L188,138 Z"
+            fill="#4df0e8" fill-opacity="0.92"/>
+          <!-- Crossbar cutout -->
+          <rect x="141" y="112" width="38" height="12" fill="#040810" rx="1"/>
+          <!-- Crossbar glow line -->
+          <line x1="137" y1="118" x2="183" y2="118" stroke="#4df0e8" stroke-width="1" stroke-opacity="0.5"/>
+          <!-- Side decorative lines on A -->
+          <line x1="128" y1="138" x2="122" y2="138" stroke="#4df0e8" stroke-width="1.5" stroke-opacity="0.5"/>
+          <line x1="192" y1="138" x2="198" y2="138" stroke="#4df0e8" stroke-width="1.5" stroke-opacity="0.5"/>
+        </g>
+
+        <!-- DIAMOND ACCENTS flanking A base -->
+        <g fill="#4df0e8" fill-opacity="0.4">
+          <polygon points="118,130 122,138 118,146 114,138"/>
+          <polygon points="202,130 206,138 202,146 198,138"/>
+        </g>
+
+        <!-- WORDMARK -->
+        <text x="160" y="168"
+          text-anchor="middle"
+          font-family="Cinzel Decorative, serif"
+          font-size="22" font-weight="700"
+          fill="#4df0e8" fill-opacity="0.92"
+          letter-spacing="8"
+          filter="url(#glow)">AETHERTEK</text>
+
+        <!-- TAGLINE -->
+        <text x="160" y="185"
+          text-anchor="middle"
+          font-family="JetBrains Mono, monospace"
+          font-size="8"
+          fill="#4df0e8" fill-opacity="0.5"
+          letter-spacing="4">-PROTECT. AUTOMATE. EMPOWER.-</text>
+      </svg>
+    </div>
+
+    <p class="hero-desc">Community protection infrastructure, technical support, and bespoke tools — built personally, operated with care, and powered by Hauscall.</p>
+  </div>
+
+  <!-- ── WHAT WE DO ── -->
+  <div class="services">
+    <div class="section-label">What We Do</div>
+    <div class="service-grid">
+
+      <a class="service-card" href="ticket.html">
+        <span class="service-glyph">⟡</span>
+        <div class="service-name">Tech Support</div>
+        <div class="service-desc">Device sorcery, streaming setup, OBS afflictions, network untangling, and general tech chaos — handled personally by Aether.</div>
+        <span class="service-link">Submit a ticket →</span>
+      </a>
+
+      <a class="service-card" href="partnership.html">
+        <span class="service-glyph">⊹</span>
+        <div class="service-name">AetherTek Partnership</div>
+        <div class="service-desc">Bring Hauscall's full moderation infrastructure, stream monitoring, and community protection to your server and stream.</div>
+        <span class="service-link">Apply for partnership →</span>
+      </a>
+
+      <a class="service-card" href="hardware.html">
+        <span class="service-glyph">🔧</span>
+        <div class="service-name">Hardware Advice</div>
+        <div class="service-desc">Quality gear on a budget. Aether specialises in hunting down solid hardware without sacrificing your life savings to the void.</div>
+        <span class="service-link">Submit an inquiry →</span>
+      </a>
+
+      <a class="service-card" href="commission.html">
+        <span class="service-glyph">✦</span>
+        <div class="service-name">Project Commission</div>
+        <div class="service-desc">Custom applications, Discord bots, and moderation tools — scoped, priced transparently, and built to your needs.</div>
+        <span class="service-link">Submit a brief →</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ── PHILOSOPHY ── -->
+  <div class="philosophy">
+    <div class="section-label">The AetherTek Ethos</div>
+    <div class="philosophy-body">
+      <p>The issue with big tech is that it is <strong>robotic, impersonal, and exploitative</strong>. AetherTek is not interested in that approach.</p>
+      <p>Every ticket is read by a person. Every partnership is configured personally. Every commission is discussed openly before a single line is written or a penny is spent. There are no automated responses, no copy-paste replies, no hidden costs, and no disappearing after delivery.</p>
+      <p><strong>Community protection comes first.</strong> Hauscall flags — humans decide. Automation assists but never replaces judgement. The people in these communities are real, and they deserve infrastructure that treats them that way.</p>
+      <p>Negotiations on commissions are not just tolerated — they are <strong>welcomed and encouraged</strong>. The goal is to find an arrangement that works for both parties without placing undue strain on the client. Respectful discussion is always met with equal respect.</p>
+      <p style="font-style:italic;opacity:0.7;font-size:15px;">Built from a boredom project. Grown into something worth building properly.</p>
+    </div>
+  </div>
+
+  <!-- ── HAUSCALL STRIP ── -->
+  <a class="hauscall-strip" href="hauscall.html">
+    <span class="hauscall-glyph">⊹</span>
+    <div class="hauscall-text">
+      <div class="hauscall-name">Powered by Hauscall</div>
+      <div class="hauscall-sub">The familiar behind the queue — keeping the infrastructure running so Aether can focus on what matters.</div>
+    </div>
+    <span class="hauscall-cta">Learn more →</span>
+  </a>
+
+  <!-- ── SERVICE SELECTOR ── -->
+  <div class="selector-wrap">
+    <div class="selector-prompt">Ready? Select where you need to go</div>
+    <select id="destination" aria-label="Select service">
       <option value="">— I am here because... —</option>
       <option value="ticket.html">I need Tech Support</option>
       <option value="hardware.html">I need Hardware Advice</option>
@@ -134,10 +400,14 @@
     <button class="go-btn" onclick="proceed()">Release Thy Request to the Maelstrom</button>
   </div>
 
-  <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
-  <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
-</div>
+  <!-- ── FOOTER ── -->
+  <div class="footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+  </div>
 
+</div>
 <script>
   function proceed() {
     const dest = document.getElementById('destination').value;

@@ -48,7 +48,16 @@
   .last-updated { text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--parchment-muted); opacity:0.5; margin-top:0.5rem; }
   .loading-state { text-align:center; padding:2rem; font-family:'Crimson Pro',serif; font-style:italic; color:var(--parchment-muted); }
 
-  @media(max-width:580px){ .subsystem-grid{ grid-template-columns:1fr 1fr; } }
+  .subsystem-grid .subsystem-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
+    width: 100%;
+  }
+  @media(max-width:580px){
+    .subsystem-grid{ grid-template-columns:1fr; }
+    .subsystem-grid .subsystem-card:last-child:nth-child(odd) { max-width:100%; grid-column:auto; }
+  }
 
   .digest-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:0.5rem; }
   .digest-card { background:var(--surface-raised); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center; }
@@ -63,8 +72,8 @@
   <a class="back-link" href="index.html">← Return to the Maelstrom</a>
 
   <header class="site-header">
-    <h1 class="site-title">AetherhausStudios</h1>
-    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
+    <h1 class="site-title">AetherTek</h1>
+    <p class="site-sub">Protect. Automate. Empower.</p>
     <p class="page-title">📡 System Status</p>
   </header>
 

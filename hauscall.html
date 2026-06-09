@@ -43,29 +43,6 @@
     color: var(--gold); opacity: 0.7;
   }
 
-  /* Capability pills */
-  .capability-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin: 1rem 0;
-  }
-  .capability-pill {
-    padding: 10px 12px;
-    background: linear-gradient(135deg, var(--surface) 0%, rgba(18,9,32,0.9) 100%);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    text-align: center;
-    transition: border-color 0.2s;
-  }
-  .capability-pill:hover { border-color: var(--amethyst); }
-  .capability-pill-icon { font-size: 1.3rem; display: block; margin-bottom: 4px; }
-  .capability-pill-label {
-    font-family: 'JetBrains Mono', monospace; font-size: 9px;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--amethyst-light);
-  }
-
   /* Workflow steps */
   .workflow-steps {
     display: flex; flex-direction: column; gap: 0;
@@ -165,58 +142,6 @@
     background: linear-gradient(90deg, var(--border-strong), transparent);
   }
 
-  /* Feature detail rows */
-  .feature-row {
-    display: flex; gap: 1rem; align-items: flex-start;
-    padding: 0.9rem 0; border-bottom: 1px solid var(--border);
-  }
-  .feature-row:last-child { border-bottom: none; }
-  .feature-icon {
-    font-size: 1.3rem; flex-shrink: 0; width: 36px; text-align: center; margin-top: 2px;
-  }
-  .feature-label {
-    font-family: 'Cinzel Decorative', serif; font-size: 0.6rem;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 0.2rem;
-  }
-  .feature-desc {
-    font-family: 'Crimson Pro', serif; font-size: 14px;
-    color: var(--parchment-muted); line-height: 1.6; font-style: italic;
-  }
-
-  /* Alert preview */
-  .alert-preview {
-    background: rgba(196,74,42,0.08);
-    border: 1px solid rgba(196,74,42,0.3);
-    border-radius: 10px; padding: 1rem 1.2rem;
-    margin-top: 0.8rem; position: relative;
-  }
-  .alert-preview::before {
-    content: 'Hauscall';
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    font-weight: 500; color: var(--amethyst-light);
-    letter-spacing: 0.04em; display: block; margin-bottom: 0.4rem;
-  }
-  .alert-preview::after {
-    content: 'BOT';
-    font-family: 'JetBrains Mono', monospace; font-size: 9px;
-    background: var(--amethyst); color: #fff;
-    padding: 1px 5px; border-radius: 3px;
-    position: absolute; top: 1rem; left: 85px;
-    letter-spacing: 0.04em;
-  }
-  .alert-category {
-    font-family: 'JetBrains Mono', monospace; font-size: 9px;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: #f0a898; background: rgba(196,74,42,0.15);
-    border: 1px solid rgba(196,74,42,0.35); border-radius: 3px;
-    padding: 2px 8px; display: inline-block; margin-bottom: 0.5rem;
-  }
-  .alert-category.welfare {
-    color: #a0a8f8; background: rgba(88,101,242,0.15);
-    border-color: rgba(88,101,242,0.35);
-  }
-
   /* Invite section */
   .invite-section {
     text-align: center; padding: 1rem 0.5rem;
@@ -237,7 +162,6 @@
     .hauscall-name { font-size: 1.6rem; }
     .command-name { min-width: 160px; font-size: 12px; }
     .workflow-step { flex-direction: column; gap: 0.5rem; }
-    .capability-grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
@@ -246,8 +170,8 @@
   <a class="back-link" href="index.html">← Return to the Maelstrom</a>
 
   <header class="site-header">
-    <h1 class="site-title">AetherhausStudios</h1>
-    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
+    <h1 class="site-title">AetherTek</h1>
+    <p class="site-sub">Protect. Automate. Empower.</p>
     <p class="page-title">⊹ Meet Hauscall ⊹</p>
   </header>
 
@@ -256,47 +180,16 @@
     <span class="hauscall-sigil">⊹</span>
     <div class="hauscall-name">Hauscall</div>
     <p class="hauscall-title">Familiar of Aetherhaus · Keeper of the Queue</p>
-    <p class="hauscall-slogan">Composed. Dutiful. Watching. Probably Fine.</p>
+    <p class="hauscall-slogan">Composed. Dutiful. Probably Fine.</p>
   </div>
 
   <div class="lore-aside">
-    Hauscall is the familiar that keeps the Aetherhaus support operation running. It does not possess Aether's power — but it operates in Aether's name, carries Aether's authority, and manages the structured touchpoints so that every petitioner knows where they stand. Over time, its duties have grown. It now watches over communities, monitors streams, reads chat, and flags what warrants a second look — all without judgement, and always at the discretion of the humans it serves.
+    Hauscall is the familiar that keeps the Aetherhaus support operation running. It does not possess Aether's power — but it operates in Aether's name, carries Aether's authority, and manages the structured touchpoints so that every petitioner knows where they stand.
   </div>
 
-  <!-- CAPABILITY OVERVIEW -->
+  <!-- HOW IT WORKS -->
   <div class="form-section">
-    <div class="section-label">What Hauscall Does</div>
-    <div class="capability-grid">
-      <div class="capability-pill">
-        <span class="capability-pill-icon">📋</span>
-        <span class="capability-pill-label">Support Queue</span>
-      </div>
-      <div class="capability-pill">
-        <span class="capability-pill-icon">📜</span>
-        <span class="capability-pill-label">Chat Transcripts</span>
-      </div>
-      <div class="capability-pill">
-        <span class="capability-pill-icon">🔍</span>
-        <span class="capability-pill-label">Moderation Analysis</span>
-      </div>
-      <div class="capability-pill">
-        <span class="capability-pill-icon">⚑</span>
-        <span class="capability-pill-label">Channel Monitor</span>
-      </div>
-      <div class="capability-pill">
-        <span class="capability-pill-icon">⚠</span>
-        <span class="capability-pill-label">Raid Detection</span>
-      </div>
-      <div class="capability-pill">
-        <span class="capability-pill-icon">👁</span>
-        <span class="capability-pill-label">Watched Users</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- HOW IT WORKS — SUPPORT -->
-  <div class="form-section">
-    <div class="section-label">Support Ticket Lifecycle</div>
+    <div class="section-label">How It Works</div>
     <div class="workflow-steps">
 
       <div class="workflow-step">
@@ -351,73 +244,6 @@
       </div>
 
     </div>
-  </div>
-
-  <!-- STREAM & COMMUNITY FEATURES -->
-  <div class="form-section">
-    <div class="section-label">Stream & Community Features</div>
-
-    <div class="feature-row">
-      <div class="feature-icon">📜</div>
-      <div>
-        <div class="feature-label">Chat Transcripts</div>
-        <div class="feature-desc">When a monitored streamer goes live, Hauscall connects to Twitch and records every chat message with full timestamps. Sessions are stored for 14 days and accessible from AetherhausDesk. Transcripts can be downloaded as .txt files or posted automatically to a configured Discord channel when the stream ends — including a full moderation report. All timestamps in transcript files are formatted in CST (America/Chicago) and labelled as such in the file header.</div>
-      </div>
-    </div>
-
-    <div class="feature-row">
-      <div class="feature-icon">🔍</div>
-      <div>
-        <div class="feature-label">Post-Session Moderation Analysis</div>
-        <div class="feature-desc">After each stream session, Hauscall runs an automated review of the full transcript against the streamer's specific ruleset. Confirmed rule violations are listed clearly. Borderline cases are flagged separately as "worth a second look" — with a note that no action is implied, and mods retain full discretion. The report is appended to the transcript file and included in any Discord post.</div>
-      </div>
-    </div>
-
-    <div class="feature-row">
-      <div class="feature-icon">👁</div>
-      <div>
-        <div class="feature-label">Watched Users</div>
-        <div class="feature-desc">Mods can add specific usernames to a per-streamer watch list from AetherhausDesk. Every message from a watched user is collected silently during the session and compiled into a dedicated section at the bottom of the transcript. Nothing changes about how their messages appear in chat — this is a passive record only.</div>
-      </div>
-    </div>
-
-    <div class="feature-row">
-      <div class="feature-icon">⚑</div>
-      <div>
-        <div class="feature-label">Discord Channel Monitor</div>
-        <div class="feature-desc">Hauscall watches configured Discord channels for three categories of content: AI art references and promotion, unsolicited self-promotion of goods or services, and heavy or sensitive topics that may warrant a welfare check. When something is flagged, Hauscall quotes the message with full context — author, channel, content, and a direct jump link — and posts it to the server's designated mod channel. It flags. Mods decide.</div>
-        <div class="alert-preview" style="margin-top:0.8rem;">
-          <span class="alert-category">⚑ AI Art Reference</span>
-          <div class="message-text">
-            <strong>@mods</strong> — A thing occurred in #🎨・creativity. I merely observe. You, however, may wish to act.<br><br>
-            <strong>Posted by:</strong> username · <strong>In:</strong> #🎨・creativity<br><br>
-            &gt; here's the piece I made with midjourney for the challenge!<br><br>
-            <em style="font-size:12px;">Jump to message · Hauscall · I flag, you decide · No action implied</em>
-          </div>
-        </div>
-        <div class="alert-preview" style="margin-top:0.6rem; background:rgba(88,101,242,0.06); border-color:rgba(88,101,242,0.3);">
-          <span class="alert-category welfare">🫂 Heavy / Sensitive Topic</span>
-          <div class="message-text">
-            <strong>@mods</strong> — A matter has surfaced in #💬・general-chat that may warrant a gentle check-in.<br><br>
-            <strong>Posted by:</strong> username · <strong>In:</strong> #💬・general-chat<br><br>
-            &gt; [message content]<br><br>
-            <em style="font-size:12px;">Jump to message · Hauscall · Welfare check — mod discretion</em>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="feature-row">
-      <div class="feature-icon">⚠</div>
-      <div>
-        <div class="feature-label">Raid & Bot Detection</div>
-        <div class="feature-desc">Hauscall monitors for two categories of bot activity.<br><br>
-        <strong style="color:var(--parchment);font-style:normal;">Coordinated raid detection</strong> — a spike of suspicious account joins within 30 seconds, or a flood of messages from new unverified accounts within 10 seconds. When a raid pattern is detected, Hauscall fires three sequential alerts to the mod channel with the suspicious account names and clickable profile links listed, to ensure it is seen.<br><br>
-        <strong style="color:var(--parchment);font-style:normal;">Solo suspicious account detection</strong> — individual accounts are scored on join against a standard set of bot indicators: account age, absence of a profile picture, no display name, username patterns common to bot accounts, and how quickly the account joined after creation. Accounts scoring above the threshold receive a single calm alert — score, indicators, and a direct profile link. If an account is already part of a detected raid, the raid alert covers it and no solo alert fires.<br><br>
-        Alert only. No automatic action is taken in either case. Mods retain full discretion.</div>
-      </div>
-    </div>
-
   </div>
 
   <!-- COMMAND REFERENCE -->
@@ -489,22 +315,15 @@
     </div>
   </div>
 
-  <!-- AETHERHAUSDESK -->
-  <div class="form-section">
-    <div class="section-label">AetherhausDesk</div>
-    <div class="lore-aside" style="margin-bottom:0;">
-      All of Hauscall's features are managed through AetherhausDesk — a private desktop application for Aether and trusted operators. The Desk provides the full support queue, stream monitoring, transcript viewer, Discord channel monitor configuration, watched user management, and raid alert log in a single interface. AetherhausDesk is not publicly distributed.
-    </div>
-  </div>
-
-  <!-- INVITE -->
+  <!-- INVITE PLACEHOLDER -->
   <div class="form-section">
     <div class="section-label">Add Hauscall to Your Server</div>
     <div class="invite-section">
-      <a class="submit-btn" href="https://discord.com/oauth2/authorize?client_id=1500636086983200768&permissions=0&integration_type=0&scope=bot+applications.commands" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin-bottom:1rem;">
-        ⊹ Add Hauscall to Your Server ⊹
-      </a>
-      <p class="invite-note">Hauscall is not a public bot. Access is extended to servers within Aether's trusted community. Setup is handled directly with Aether — channel monitoring, transcript settings, and mod role configuration are all managed through AetherhausDesk once onboarded. If you believe your server qualifies, reach out via Discord.</p>
+      <div class="invite-placeholder">
+        ⊹ &nbsp; Hauscall server invite — coming soon &nbsp; ⊹<br>
+        <span style="opacity:0.6;font-size:11px;">Available to trusted servers by invitation from Aether</span>
+      </div>
+      <p class="invite-note">Hauscall is not a public bot. Access is extended to servers within Aether's trusted community. If you believe your server qualifies, reach out via Discord.</p>
     </div>
   </div>
 

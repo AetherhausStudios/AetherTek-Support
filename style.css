@@ -77,8 +77,8 @@ body{
   font-family: 'Cinzel Decorative', serif;
   font-size: 1.75rem; font-weight: 700;
   color: var(--amethyst-light);
-  letter-spacing: 0.03em; line-height: 1.2;
-  text-shadow: 0 0 60px rgba(77,240,232,0.4), 0 0 20px rgba(13,148,136,0.3);
+  letter-spacing: 0.05em; line-height: 1.2;
+  text-shadow: 0 0 40px rgba(77,240,232,0.5), 0 0 80px rgba(13,148,136,0.2);
 }
 .site-sub{
   font-family: 'Crimson Pro', serif;

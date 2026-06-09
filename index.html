@@ -203,10 +203,17 @@
   }
 </style>
 <script>
-  // Set aurora class before page renders to avoid flash
-  if (localStorage.getItem('aurora') !== 'off') {
-    document.documentElement.classList.add('aurora-on');
-  }
+  // Apply aurora class to body as early as possible
+  document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('aurora') !== 'off') {
+      document.body.classList.add('aurora-on');
+      const lbl = document.getElementById('aurora-toggle-label');
+      if (lbl) lbl.textContent = 'Aurora On';
+    } else {
+      const lbl = document.getElementById('aurora-toggle-label');
+      if (lbl) lbl.textContent = 'Aurora Off';
+    }
+  });
 </script>
 </head>
 <body>
@@ -432,7 +439,6 @@
       <option value="other.html">Other — Partnership or Commission</option>
       <option value="faq.html">I have a question — FAQ</option>
       <option value="status.html">I want to check system status</option>
-      <option value="digest.html">I want to see the weekly digest</option>
     </select>
     <button class="go-btn" onclick="proceed()">Release Thy Request to the Maelstrom</button>
   </div>

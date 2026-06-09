@@ -203,17 +203,10 @@
   }
 </style>
 <script>
-  // Apply aurora class to body as early as possible
-  document.addEventListener('DOMContentLoaded', function() {
-    if (localStorage.getItem('aurora') !== 'off') {
-      document.body.classList.add('aurora-on');
-      const lbl = document.getElementById('aurora-toggle-label');
-      if (lbl) lbl.textContent = 'Aurora On';
-    } else {
-      const lbl = document.getElementById('aurora-toggle-label');
-      if (lbl) lbl.textContent = 'Aurora Off';
-    }
-  });
+  // Apply aurora to html element before render — no flash
+  if (localStorage.getItem('aurora') !== 'off') {
+    document.documentElement.classList.add('aurora-on');
+  }
 </script>
 </head>
 <body>
@@ -396,12 +389,6 @@
         <span class="service-link">Check status →</span>
       </a>
 
-      <a class="service-card" href="digest.html">
-        <span class="service-glyph">⊹</span>
-        <div class="service-name">Weekly Digest</div>
-        <div class="service-desc">A weekly snapshot of what Hauscall has been monitoring — sessions logged, messages captured, alerts fired.</div>
-        <span class="service-link">View digest →</span>
-      </a>
 
     </div>
   </div>

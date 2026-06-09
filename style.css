@@ -61,7 +61,7 @@ body{
 }
 
 /* Aurora active state — layered pseudo-elements for smooth flowing animation */
-body::before {
+html::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -75,7 +75,7 @@ body::before {
     radial-gradient(ellipse 40% 60% at 10% 80%, rgba(124,58,237,0.1) 0%, transparent 60%);
   transition: opacity 1s ease;
 }
-body::after {
+html::after {
   content: '';
   position: fixed;
   inset: 0;
@@ -90,11 +90,11 @@ body::after {
 }
 
 /* Aurora ON */
-body.aurora-on::before {
+html.aurora-on::before {
   opacity: 1;
   animation: aurora-drift-1 12s ease-in-out infinite alternate;
 }
-body.aurora-on::after {
+html.aurora-on::after {
   opacity: 1;
   animation: aurora-drift-2 17s ease-in-out infinite alternate-reverse;
 }
@@ -114,7 +114,7 @@ body.aurora-on::after {
 
 @media (prefers-reduced-motion: reduce) {
   body.aurora-on::before,
-  body.aurora-on::after { animation: none; }
+  html.aurora-on::after { animation: none; }
 }
 
 /* ── AURORA TOGGLE ── */
@@ -135,8 +135,8 @@ body.aurora-on::after {
   background: var(--parchment-muted); flex-shrink: 0;
   transition: background 0.3s, box-shadow 0.3s;
 }
-body.aurora-on .aurora-toggle { border-color: rgba(13,148,136,0.4); color: var(--amethyst-light); }
-body.aurora-on .aurora-toggle-dot { background: var(--amethyst-light); box-shadow: 0 0 6px rgba(77,240,232,0.6); }
+html.aurora-on .aurora-toggle { border-color: rgba(13,148,136,0.4); color: var(--amethyst-light); }
+html.aurora-on .aurora-toggle-dot { background: var(--amethyst-light); box-shadow: 0 0 6px rgba(77,240,232,0.6); }
 
 /* ── LAYOUT ── */
 .page-wrap { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }

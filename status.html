@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AetherhausStudios — System Status</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .status-hero { text-align:center; padding:1.5rem 0 2rem; }
+  .overall-status {
+    display:inline-flex; align-items:center; gap:12px;
+    padding:14px 28px; border-radius:40px; margin:1rem auto;
+    font-family:'Cinzel Decorative',serif; font-size:0.8rem;
+    letter-spacing:0.1em; text-transform:uppercase;
+    transition:all 0.3s;
+  }
+  .overall-status.operational { background:rgba(13,148,136,0.12); border:1px solid rgba(13,148,136,0.4); color:var(--amethyst-light); }
+  .overall-status.degraded    { background:rgba(196,150,42,0.12); border:1px solid rgba(196,150,42,0.4); color:var(--gold-light); }
+  .overall-status.down        { background:rgba(239,68,68,0.12);  border:1px solid rgba(239,68,68,0.4);  color:#f0a898; }
+  .overall-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .overall-dot.operational { background:var(--amethyst-mid); box-shadow:0 0 8px rgba(13,148,136,0.7); animation:pulse-dot 2s infinite; }
+  .overall-dot.degraded    { background:var(--gold);         box-shadow:0 0 8px rgba(196,150,42,0.6); animation:pulse-dot 1.5s infinite; }
+  .overall-dot.down        { background:var(--ember);        box-shadow:0 0 8px rgba(239,68,68,0.6);  animation:pulse-dot 1s infinite; }
+  @keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  .subsystem-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:1rem; }
+  .subsystem-card { background:var(--surface-raised); border:1px solid var(--border); border-radius:10px; padding:12px 14px; position:relative; overflow:hidden; }
+  .subsystem-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+  .subsystem-card.ok::before      { background:var(--amethyst-mid); }
+  .subsystem-card.warn::before    { background:var(--gold); }
+  .subsystem-card.error::before   { background:var(--ember); }
+  .subsystem-card.loading::before { background:var(--parchment-muted); }
+  .subsystem-name { font-family:'Cinzel Decorative',serif; font-size:0.58rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:5px; }
+  .subsystem-card.ok .subsystem-name    { color:var(--amethyst-light); }
+  .subsystem-card.warn .subsystem-name  { color:var(--gold-light); }
+  .subsystem-card.error .subsystem-name { color:#f0a898; }
+  .subsystem-card.loading .subsystem-name { color:var(--parchment-muted); }
+  .subsystem-status { display:flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:0.05em; }
+  .sub-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .sub-dot.ok    { background:var(--amethyst-mid); }
+  .sub-dot.warn  { background:var(--gold); animation:pulse-dot 2s infinite; }
+  .sub-dot.error { background:var(--ember); animation:pulse-dot 1s infinite; }
+  .sub-dot.loading { background:var(--parchment-muted); }
+  .subsystem-detail { font-family:'Crimson Pro',serif; font-style:italic; font-size:12px; color:var(--parchment-muted); margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+  .uptime-bar { display:flex; align-items:center; justify-content:center; gap:8px; margin:1rem 0; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--parchment-muted); }
+  .uptime-bar span { color:var(--amethyst-light); }
+  .last-updated { text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--parchment-muted); opacity:0.5; margin-top:0.5rem; }
+  .loading-state { text-align:center; padding:2rem; font-family:'Crimson Pro',serif; font-style:italic; color:var(--parchment-muted); }
+
+  @media(max-width:580px){ .subsystem-grid{ grid-template-columns:1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <a class="back-link" href="index.html">← Return to the Maelstrom</a>
+
+  <header class="site-header">
+    <h1 class="site-title">AetherhausStudios</h1>
+    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
+    <p class="page-title">📡 System Status</p>
+  </header>
+
+  <div class="status-hero">
+    <div id="overall-status" class="overall-status loading">
+      <span class="overall-dot loading"></span>
+      <span id="overall-label">Checking status...</span>
+    </div>
+    <div class="uptime-bar">Uptime <span id="uptime-val">—</span> &nbsp;·&nbsp; Last checked <span id="last-check">—</span></div>
+  </div>
+
+  <div class="form-section">
+    <div class="section-label">Subsystem Status</div>
+    <div id="subsystem-grid" class="subsystem-grid">
+      <div class="loading-state" style="grid-column:1/-1;">Fetching system status...</div>
+    </div>
+    <p class="last-updated" id="last-updated-ts"></p>
+  </div>
+
+  <div class="form-section">
+    <div class="section-label">About This Page</div>
+    <div class="lore-aside" style="margin-bottom:0;">
+      This page reflects the live operational status of Hauscall and the AetherTek infrastructure. Status is fetched directly and updates every 60 seconds. If you are experiencing issues not reflected here, reach out via Discord.
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+  </footer>
+</div>
+
+<script>
+  const HAUSCALL = 'https://hauscall-production.up.railway.app';
+  const API_KEY  = 'ChaosManageProbably';
+
+  const SUBSYSTEM_LABELS = {
+    discord:    'Discord',
+    twitch:     'Twitch',
+    monitor:    'Monitor',
+    server:     'Server',
+    moderation: 'Moderation',
+    updater:    'Updater',
+  };
+
+  function statusLabel(s) {
+    if (s === 'ok')       return 'Operational';
+    if (s === 'warn')     return 'Degraded';
+    if (s === 'error')    return 'Disrupted';
+    if (s === 'starting') return 'Starting';
+    return 'Unknown';
+  }
+
+  async function fetchStatus() {
+    try {
+      const res  = await fetch(HAUSCALL + '/health', { headers: { 'X-API-Key': API_KEY } });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+
+      const subsystems = data.subsystems || {};
+      const statuses   = Object.values(subsystems).map(s => s.status);
+      const hasError   = statuses.some(s => s === 'error');
+      const hasWarn    = statuses.some(s => s === 'warn');
+      const overall    = hasError ? 'down' : hasWarn ? 'degraded' : 'operational';
+      const labels     = { operational: 'All Systems Operational', degraded: 'Partial Degradation', down: 'Service Disruption' };
+
+      // Overall status
+      const overallEl = document.getElementById('overall-status');
+      overallEl.className = 'overall-status ' + overall;
+      overallEl.querySelector('.overall-dot').className = 'overall-dot ' + overall;
+      document.getElementById('overall-label').textContent = labels[overall];
+
+      // Uptime
+      document.getElementById('uptime-val').textContent = data.uptimeFormatted || '--';
+      document.getElementById('last-check').textContent = new Date().toLocaleTimeString('en-US', { timeZone: 'America/Chicago', hour: '2-digit', minute: '2-digit', hour12: false }) + ' CST';
+
+      // Subsystem cards
+      const grid = document.getElementById('subsystem-grid');
+      grid.innerHTML = Object.entries(subsystems).map(([key, sub]) => `
+        <div class="subsystem-card ${sub.status}">
+          <div class="subsystem-name">${SUBSYSTEM_LABELS[key] || key}</div>
+          <div class="subsystem-status">
+            <span class="sub-dot ${sub.status}"></span>
+            <span style="color:${sub.status==='ok'?'var(--amethyst-light)':sub.status==='error'?'#f0a898':'var(--gold-light)'};">
+              ${statusLabel(sub.status)}
+            </span>
+          </div>
+          <div class="subsystem-detail" title="${sub.detail||''}">${sub.detail || '—'}</div>
+        </div>`).join('');
+
+      document.getElementById('last-updated-ts').textContent =
+        'Auto-refreshes every 60 seconds · ' + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago', dateStyle: 'short', timeStyle: 'short' }) + ' CST';
+
+    } catch {
+      document.getElementById('overall-status').className = 'overall-status down';
+      document.getElementById('overall-status').querySelector('.overall-dot').className = 'overall-dot down';
+      document.getElementById('overall-label').textContent = 'Status Unavailable';
+      document.getElementById('subsystem-grid').innerHTML = '<div class="loading-state" style="grid-column:1/-1;color:var(--parchment-muted);">Could not reach Hauscall. The infrastructure may be temporarily unavailable.</div>';
+    }
+  }
+
+  fetchStatus();
+  setInterval(fetchStatus, 60000);
+</script>
+</body>
+</html>

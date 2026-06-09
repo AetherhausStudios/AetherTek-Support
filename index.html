@@ -58,7 +58,7 @@
 
   /* ── WHAT WE DO ── */
   .services{margin:3rem 0;}
-  .service-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .service-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
   .service-card{
     background:linear-gradient(160deg,var(--surface) 0%,rgba(4,8,16,0.98) 100%);
     border:1px solid var(--border-strong);border-radius:12px;
@@ -194,7 +194,10 @@
   .footer-slogan{font-family:'Cinzel Decorative',serif;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal-light);opacity:0.45;margin-bottom:0.4rem;}
   .footer-note{font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;color:var(--parchment-muted);opacity:0.5;}
 
-  @media(max-width:580px){
+  @media(max-width:720px){
+    .service-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:480px){
     .service-grid{grid-template-columns:1fr;}
     .hauscall-strip{flex-wrap:wrap;}
   }
@@ -362,6 +365,20 @@
         <span class="service-link">Submit a brief →</span>
       </a>
 
+      <a class="service-card" href="faq.html">
+        <span class="service-glyph">⟡</span>
+        <div class="service-name">FAQ</div>
+        <div class="service-desc">Common questions answered plainly — support times, costs, how Hauscall works, commissions, and privacy.</div>
+        <span class="service-link">Read the FAQ →</span>
+      </a>
+
+      <a class="service-card" href="status.html">
+        <span class="service-glyph">📡</span>
+        <div class="service-name">System Status</div>
+        <div class="service-desc">Live operational status of Hauscall and the AetherTek infrastructure. Auto-refreshes every 60 seconds.</div>
+        <span class="service-link">Check status →</span>
+      </a>
+
     </div>
   </div>
 
@@ -396,6 +413,8 @@
       <option value="hardware.html">I need Hardware Advice</option>
       <option value="report.html">I want to Report a Compromised Account</option>
       <option value="other.html">Other — Partnership or Commission</option>
+      <option value="faq.html">I have a question — FAQ</option>
+      <option value="status.html">I want to check system status</option>
     </select>
     <button class="go-btn" onclick="proceed()">Release Thy Request to the Maelstrom</button>
   </div>

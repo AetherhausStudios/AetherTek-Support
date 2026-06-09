@@ -6,13 +6,14 @@
 <title>AetherhausStudios — Project Commission</title>
 <link rel="stylesheet" href="style.css">
 <script>
-  // Set aurora class before page renders to avoid flash
+  // Apply aurora to html element before render — no flash
   if (localStorage.getItem('aurora') !== 'off') {
     document.documentElement.classList.add('aurora-on');
   }
 </script>
 </head>
 <body>
+<div id="aurora-layer" aria-hidden="true"><div class="a1"></div><div class="a2"></div><div class="a3"></div></div>
 <button class="aurora-toggle" onclick="toggleAurora()" id="aurora-toggle-btn">
   <span class="aurora-toggle-dot"></span>
   <span id="aurora-toggle-label">Aurora</span>
@@ -26,40 +27,115 @@
     <p class="page-title">✦ Project Commission ✦</p>
   </header>
 
-  <div class="lore-aside">Have something that needs building? Aether takes on custom applications, moderation tools, bots, and bespoke builds. Pricing is variable and set once the project is understood — always discussed openly, always negotiable. Aether reserves the right to decline, but will always explain why.</div>
+  <div class="lore-aside">Have something that needs building? Aether takes on custom applications, moderation tools, bots, and bespoke builds — scoped and priced transparently, built to your needs. Submitting a brief is the start of a conversation, not a commitment.</div>
 
-  <!-- WHAT TO EXPECT -->
+  <!-- PRICING TIERS -->
   <div class="form-section">
-    <div class="section-label">How It Works</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">
-        <span style="font-size:1.2rem;flex-shrink:0;margin-top:2px;">📋</span>
-        <div>
-          <div style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:3px;">Submit a Brief</div>
-          <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--parchment-dim);line-height:1.55;">Describe what you need, your rough timeline, and how to reach you. The more detail the better — vague briefs make for vague estimates.</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">
-        <span style="font-size:1.2rem;flex-shrink:0;margin-top:2px;">💬</span>
-        <div>
-          <div style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:3px;">Aether Reviews & Responds</div>
-          <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--parchment-dim);line-height:1.55;">Aether will reach out via Discord to discuss the project further, clarify scope, and provide a transparent cost estimate. If the project isn't something Aether can take on, you'll be told clearly and honestly — and why.</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;">
-        <span style="font-size:1.2rem;flex-shrink:0;margin-top:2px;">🔨</span>
-        <div>
-          <div style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:3px;">Scope, Cost & Build</div>
-          <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--parchment-dim);line-height:1.55;">Pricing is variable and set based on project complexity — always discussed upfront and always negotiable. No surprises.</div>
-        </div>
-      </div>
+    <div class="section-label">Pricing</div>
+
+    <div style="text-align:center;margin-bottom:1.4rem;">
+      <span style="font-family:'Crimson Pro',serif;font-style:italic;font-size:15px;color:var(--parchment-dim);">All commissions begin at a base rate of <strong style="font-style:normal;color:var(--amethyst-light);">$50</strong> with a complexity tier added on top.</span>
     </div>
-    <div class="lore-aside" style="margin-top:1rem;margin-bottom:0;font-size:14px;">
-      Common reasons a commission may be declined: current work volume, project scope outside Aether's capabilities, or insufficient project clarity. Declining is never personal, and Aether will always explain.
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.4rem;">
+
+      <div style="background:var(--surface-raised);border:1px solid var(--border);border-radius:10px;padding:1.2rem;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amethyst),var(--amethyst-light));"></div>
+        <div style="font-family:'Cinzel Decorative',serif;font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:6px;">Low Complexity</div>
+        <div style="font-family:'Cinzel Decorative',serif;font-size:1.3rem;color:var(--amethyst-light);margin-bottom:2px;">+$30</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--parchment-muted);margin-bottom:10px;">Total: $80</div>
+        <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:13.5px;color:var(--parchment-dim);line-height:1.6;margin-bottom:10px;">A single-purpose application or bot with no connections to external services.</div>
+        <div style="border-top:1px solid var(--border);padding-top:8px;font-family:'Crimson Pro',serif;font-size:13px;color:var(--parchment-muted);line-height:1.8;">
+          ✓ Simple bot or single-use tool<br>
+          ✓ No APIs <span style="font-size:11px;">(Application Programming Interfaces — connections to external services like Discord or Twitch)</span> required<br>
+          ✗ No backend hosting setup
+        </div>
+      </div>
+
+      <div style="background:var(--surface-raised);border:1px solid rgba(196,150,42,0.3);border-radius:10px;padding:1.2rem;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));"></div>
+        <div style="font-family:'Cinzel Decorative',serif;font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold-light);margin-bottom:6px;">Medium Complexity</div>
+        <div style="font-family:'Cinzel Decorative',serif;font-size:1.3rem;color:var(--gold-light);margin-bottom:2px;">+$45</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--parchment-muted);margin-bottom:10px;">Total: $95</div>
+        <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:13.5px;color:var(--parchment-dim);line-height:1.6;margin-bottom:10px;">A multifunctional application with bot integration and connections to external services.</div>
+        <div style="border-top:1px solid var(--border);padding-top:8px;font-family:'Crimson Pro',serif;font-size:13px;color:var(--parchment-muted);line-height:1.8;">
+          ✓ Multifunctional bot or application<br>
+          ✓ API integrations <span style="font-size:11px;">(connections to external services)</span> required<br>
+          ✓ Multiple components working together<br>
+          ✗ No backend <span style="font-size:11px;">(server-side infrastructure)</span> hosting setup
+        </div>
+      </div>
+
+      <div style="background:var(--surface-raised);border:1px solid rgba(77,240,232,0.2);border-radius:10px;padding:1.2rem;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amethyst-light),var(--amethyst));"></div>
+        <div style="font-family:'Cinzel Decorative',serif;font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:6px;">High Complexity</div>
+        <div style="font-family:'Cinzel Decorative',serif;font-size:1.3rem;color:var(--amethyst-light);margin-bottom:2px;">+$60</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--parchment-muted);margin-bottom:10px;">Total: $110</div>
+        <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:13.5px;color:var(--parchment-dim);line-height:1.6;margin-bottom:10px;">Everything in Medium, plus full backend hosting setup, configuration, and deployment assistance.</div>
+        <div style="border-top:1px solid var(--border);padding-top:8px;font-family:'Crimson Pro',serif;font-size:13px;color:var(--parchment-muted);line-height:1.8;">
+          ✓ Everything in Medium Complexity<br>
+          ✓ Backend <span style="font-size:11px;">(server-side infrastructure)</span> hosting setup<br>
+          ✓ Deployment and environment configuration<br>
+          ✓ Aether recommends affordable hosting options
+        </div>
+      </div>
+
+    </div>
+
+    <div class="lore-aside" style="margin-bottom:1rem;">
+      <strong style="font-style:normal;color:var(--parchment);">Hosting costs are the client's responsibility.</strong> The ongoing cost of keeping your application live and accessible — services like Railway or GitHub Pages. Aether will always point you toward an affordable option suited to your project. The High Complexity tier includes full setup assistance. Aether covers the build; you cover the running costs.
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.25);border-radius:8px;">
+      <span style="font-size:1.4rem;flex-shrink:0;">🛠</span>
+      <div>
+        <div style="font-family:'Cinzel Decorative',serif;font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:3px;">6-Month Support Guarantee</div>
+        <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--parchment-dim);line-height:1.55;">Every commission includes six months of support after delivery. If something breaks or needs adjusting, Aether is there — at no additional cost.</div>
+      </div>
     </div>
   </div>
 
-  <!-- COMMISSION FORM -->
+  <!-- HOW IT WORKS -->
+  <div class="form-section">
+    <div class="section-label">How It Works</div>
+    <div style="display:flex;flex-direction:column;gap:0;">
+
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:1rem 0;border-bottom:1px solid var(--border);">
+        <span style="font-size:1.3rem;flex-shrink:0;margin-top:2px;">📋</span>
+        <div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:4px;">Submit a Brief</div>
+          <div style="font-family:'Crimson Pro',serif;font-size:15px;color:var(--parchment-dim);line-height:1.7;">Describe what you need, your rough timeline, and how to reach you. The more detail, the more accurate Aether's response. <em style="color:var(--amethyst-light);">Submitting a brief carries no obligation to proceed on either side.</em></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:1rem 0;border-bottom:1px solid var(--border);">
+        <span style="font-size:1.3rem;flex-shrink:0;margin-top:2px;">💬</span>
+        <div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:4px;">Discussion & Scope</div>
+          <div style="font-family:'Crimson Pro',serif;font-size:15px;color:var(--parchment-dim);line-height:1.7;">Aether will reach out via Discord to fully understand the project before discussing cost. No payment is expected or requested until scope and cost have been discussed and agreed upon by both parties.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:1rem 0;border-bottom:1px solid var(--border);">
+        <span style="font-size:1.3rem;flex-shrink:0;margin-top:2px;">🤝</span>
+        <div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:4px;">Negotiation is Welcome</div>
+          <div style="font-family:'Crimson Pro',serif;font-size:15px;color:var(--parchment-dim);line-height:1.7;">Negotiation is not just tolerated — it is <em style="color:var(--amethyst-light);">actively encouraged</em>. If a quoted cost presents a genuine barrier, say so. The goal is to find an arrangement that works for both parties without placing undue strain on the client. Respectful discussion is always met with equal respect.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:1rem 0;">
+        <span style="font-size:1.3rem;flex-shrink:0;margin-top:2px;">🔨</span>
+        <div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--amethyst-light);margin-bottom:4px;">The Build</div>
+          <div style="font-family:'Crimson Pro',serif;font-size:15px;color:var(--parchment-dim);line-height:1.7;">Once scope and cost are agreed, Aether builds. You'll be kept informed throughout. Aether reserves the right to decline — this will always be explained clearly. Common reasons: current work volume, project scope, or insufficient clarity. Declining is never personal.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+    <!-- COMMISSION FORM -->
   <div class="form-section" id="s1">
     <div class="section-label">Project Brief</div>
     <div class="field-row full">

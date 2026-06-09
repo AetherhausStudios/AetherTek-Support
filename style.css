@@ -1,3 +1,54 @@
+/* ── AURORA ANIMATION ── */
+#aurora-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+html.aurora-on #aurora-layer {
+  opacity: 1;
+}
+#aurora-layer .a1, #aurora-layer .a2, #aurora-layer .a3 {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+#aurora-layer .a1 {
+  background: radial-gradient(ellipse 80% 60% at 20% 20%, rgba(13,148,136,0.28) 0%, transparent 65%),
+              radial-gradient(ellipse 50% 70% at 80% 80%, rgba(77,240,232,0.12) 0%, transparent 60%);
+  animation: aurora-1 14s ease-in-out infinite alternate;
+}
+#aurora-layer .a2 {
+  background: radial-gradient(ellipse 65% 55% at 70% 30%, rgba(13,148,136,0.18) 0%, transparent 60%),
+              radial-gradient(ellipse 45% 65% at 15% 75%, rgba(124,58,237,0.1) 0%, transparent 55%);
+  animation: aurora-2 19s ease-in-out infinite alternate-reverse;
+}
+#aurora-layer .a3 {
+  background: radial-gradient(ellipse 55% 45% at 50% 55%, rgba(77,240,232,0.08) 0%, transparent 65%),
+              radial-gradient(ellipse 40% 50% at 85% 15%, rgba(13,148,136,0.12) 0%, transparent 55%);
+  animation: aurora-3 11s ease-in-out infinite alternate;
+}
+@keyframes aurora-1 {
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(4%, -5%) scale(1.06); }
+  100% { transform: translate(-3%, 4%) scale(0.97); }
+}
+@keyframes aurora-2 {
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(-5%, 4%) scale(1.04); }
+  100% { transform: translate(4%, -3%) scale(0.98); }
+}
+@keyframes aurora-3 {
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(3%, 5%) scale(1.05); }
+  100% { transform: translate(-4%, -4%) scale(0.96); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #aurora-layer .a1, #aurora-layer .a2, #aurora-layer .a3 { animation: none; }
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
@@ -30,91 +81,7 @@
 /* ── BODY & BACKGROUND ── */
 html { background: var(--bg); }
 
-/* ── AURORA ANIMATION ── */
-@keyframes aurora-1 {
-  0%,100% { background-position: 15% 12%, 88% 88%, 78% 30%, 95% 5%; }
-  25%      { background-position: 25% 20%, 75% 75%, 60% 45%, 85% 15%; }
-  50%      { background-position: 10% 30%, 90% 65%, 85% 20%, 80% 8%;  }
-  75%      { background-position: 20% 8%,  80% 80%, 70% 50%, 90% 20%; }
-}
-@keyframes aurora-2 {
-  0%,100% { opacity: 1; }
-  50%     { opacity: 0.7; }
-}
 
-body{
-  background-color: var(--bg);
-  background-image:
-    radial-gradient(ellipse 70% 60% at 15% 12%, rgba(13,148,136,0.22) 0%, transparent 70%),
-    radial-gradient(ellipse 55% 50% at 88% 88%, rgba(124,58,237,0.15) 0%, transparent 65%),
-    radial-gradient(ellipse 45% 55% at 78% 30%, rgba(13,148,136,0.1) 0%, transparent 60%),
-    radial-gradient(ellipse 35% 30% at 95% 5%, rgba(196,150,42,0.08) 0%, transparent 55%),
-    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230d9488' fill-opacity='0.045'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  background-attachment: fixed;
-  background-size: auto, auto, auto, auto, auto;
-  color: var(--parchment);
-  font-family: 'Crimson Pro', Georgia, serif;
-  font-size: 17px;
-  line-height: 1.7;
-  min-height: 100vh;
-  transition: none;
-}
-
-/* Aurora active state — layered pseudo-elements for smooth flowing animation */
-html::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  opacity: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 15%, rgba(13,148,136,0.28) 0%, transparent 65%),
-    radial-gradient(ellipse 60% 70% at 80% 80%, rgba(77,240,232,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(13,148,136,0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(124,58,237,0.1) 0%, transparent 60%);
-  transition: opacity 1s ease;
-}
-html::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  opacity: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 60% 80% at 85% 20%, rgba(77,240,232,0.1) 0%, transparent 65%),
-    radial-gradient(ellipse 70% 50% at 30% 70%, rgba(13,148,136,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 45% 45% at 65% 35%, rgba(124,58,237,0.08) 0%, transparent 55%);
-  transition: opacity 1s ease;
-}
-
-/* Aurora ON */
-html.aurora-on::before {
-  opacity: 1;
-  animation: aurora-drift-1 12s ease-in-out infinite alternate;
-}
-html.aurora-on::after {
-  opacity: 1;
-  animation: aurora-drift-2 17s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes aurora-drift-1 {
-  0%   { transform: translate(0%, 0%) scale(1);      filter: blur(0px); }
-  33%  { transform: translate(3%, -4%) scale(1.05);  filter: blur(1px); }
-  66%  { transform: translate(-4%, 3%) scale(0.97);  filter: blur(0px); }
-  100% { transform: translate(5%, 2%) scale(1.03);   filter: blur(1px); }
-}
-@keyframes aurora-drift-2 {
-  0%   { transform: translate(0%, 0%) scale(1);      filter: blur(0px); }
-  33%  { transform: translate(-3%, 5%) scale(1.04);  filter: blur(1px); }
-  66%  { transform: translate(4%, -3%) scale(0.98);  filter: blur(0px); }
-  100% { transform: translate(-5%, -2%) scale(1.02); filter: blur(1px); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body.aurora-on::before,
-  html.aurora-on::after { animation: none; }
 }
 
 /* ── AURORA TOGGLE ── */

@@ -37,13 +37,14 @@
   @media(max-width:580px){ .benefit-grid { grid-template-columns: 1fr; } }
 </style>
 <script>
-  // Set aurora class before page renders to avoid flash
+  // Apply aurora to html element before render — no flash
   if (localStorage.getItem('aurora') !== 'off') {
     document.documentElement.classList.add('aurora-on');
   }
 </script>
 </head>
 <body>
+<div id="aurora-layer" aria-hidden="true"><div class="a1"></div><div class="a2"></div><div class="a3"></div></div>
 <button class="aurora-toggle" onclick="toggleAurora()" id="aurora-toggle-btn">
   <span class="aurora-toggle-dot"></span>
   <span id="aurora-toggle-label">Aurora</span>

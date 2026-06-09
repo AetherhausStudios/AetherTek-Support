@@ -202,8 +202,18 @@
     .hauscall-strip{flex-wrap:wrap;}
   }
 </style>
+<script>
+  // Set aurora class before page renders to avoid flash
+  if (localStorage.getItem('aurora') !== 'off') {
+    document.documentElement.classList.add('aurora-on');
+  }
+</script>
 </head>
 <body>
+<button class="aurora-toggle" onclick="toggleAurora()" id="aurora-toggle-btn">
+  <span class="aurora-toggle-dot"></span>
+  <span id="aurora-toggle-label">Aurora</span>
+</button>
 <div class="page">
 
   <!-- ── HERO ── -->
@@ -379,6 +389,13 @@
         <span class="service-link">Check status →</span>
       </a>
 
+      <a class="service-card" href="digest.html">
+        <span class="service-glyph">⊹</span>
+        <div class="service-name">Weekly Digest</div>
+        <div class="service-desc">A weekly snapshot of what Hauscall has been monitoring — sessions logged, messages captured, alerts fired.</div>
+        <span class="service-link">View digest →</span>
+      </a>
+
     </div>
   </div>
 
@@ -415,6 +432,7 @@
       <option value="other.html">Other — Partnership or Commission</option>
       <option value="faq.html">I have a question — FAQ</option>
       <option value="status.html">I want to check system status</option>
+      <option value="digest.html">I want to see the weekly digest</option>
     </select>
     <button class="go-btn" onclick="proceed()">Release Thy Request to the Maelstrom</button>
   </div>

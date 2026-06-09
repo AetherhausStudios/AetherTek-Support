@@ -49,6 +49,13 @@
   .loading-state { text-align:center; padding:2rem; font-family:'Crimson Pro',serif; font-style:italic; color:var(--parchment-muted); }
 
   @media(max-width:580px){ .subsystem-grid{ grid-template-columns:1fr 1fr; } }
+
+  .digest-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:0.5rem; }
+  .digest-card { background:var(--surface-raised); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center; }
+  .digest-val { font-family:'Cinzel Decorative',serif; font-size:1.4rem; font-weight:700; color:var(--amethyst-light); display:block; margin-bottom:4px; text-shadow:0 0 20px rgba(77,240,232,0.3); }
+  .digest-lbl { font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:0.07em; text-transform:uppercase; color:var(--parchment-muted); opacity:0.7; }
+  .digest-week { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--parchment-muted); opacity:0.5; text-align:center; margin-top:8px; }
+  @media(max-width:580px){ .digest-grid{ grid-template-columns:repeat(2,1fr); } }
 </style>
 </head>
 <body>
@@ -75,6 +82,15 @@
       <div class="loading-state" style="grid-column:1/-1;">Fetching system status...</div>
     </div>
     <p class="last-updated" id="last-updated-ts"></p>
+  </div>
+
+  <div class="form-section" id="digest-section" style="display:none;">
+    <div class="section-label">Weekly Activity</div>
+    <div class="digest-grid" id="digest-grid"></div>
+    <div class="digest-week" id="digest-week"></div>
+    <div class="lore-aside" style="margin-top:1rem;margin-bottom:0;font-size:14px;">
+      Community and streamer identities are not disclosed. These figures reflect aggregate activity across all monitored servers and streams for the week shown.
+    </div>
   </div>
 
   <div class="form-section">
@@ -160,7 +176,42 @@
     }
   }
 
+  async function fetchDigest() {
+    try {
+      const res    = await fetch(HAUSCALL + '/digest');
+      const data   = await res.json();
+      const digest = data.digest;
+      if (!digest) return;
+
+      const section = document.getElementById('digest-section');
+      const grid    = document.getElementById('digest-grid');
+      const week    = document.getElementById('digest-week');
+      section.style.display = 'block';
+
+      const metrics = [
+        { val: digest.streams.sessions.toLocaleString(),   lbl: 'Streams Monitored' },
+        { val: digest.streams.messages.toLocaleString(),   lbl: 'Messages Logged' },
+        { val: digest.streams.flags.toLocaleString(),      lbl: 'Chat Flags Raised' },
+        { val: digest.discord.alertsFired.toLocaleString(), lbl: 'Discord Alerts Fired' },
+      ];
+
+      grid.innerHTML = metrics.map(m => `
+        <div class="digest-card">
+          <span class="digest-val">${m.val}</span>
+          <span class="digest-lbl">${m.lbl}</span>
+        </div>`).join('');
+
+      const weekDate = new Date(digest.weekOf + 'T00:00:00Z');
+      const endDate  = new Date(weekDate.getTime() + 7 * 24 * 60 * 60 * 1000);
+      week.textContent = 'Week of ' +
+        weekDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' – ' +
+        endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
+        ' · Generated ' + new Date(digest.generatedAt).toLocaleDateString('en-US', { timeZone: 'America/Chicago', dateStyle: 'medium' }) + ' CST';
+    } catch {}
+  }
+
   fetchStatus();
+  fetchDigest();
   setInterval(fetchStatus, 60000);
 </script>
 </body>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AetherTek — Changelog</title>
+<link rel="stylesheet" href="style.css">
+<script>if(localStorage.getItem('aurora')!=='off'){document.documentElement.classList.add('aurora-on');}</script>
+<style>
+  .changelog-entry {
+    display: flex;
+    gap: 1.4rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .changelog-entry:last-child { border-bottom: none; }
+  .changelog-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.06em;
+    color: var(--gold-light);
+    white-space: nowrap;
+    padding-top: 3px;
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+  .changelog-body { flex: 1; }
+  .changelog-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 3px;
+    margin-bottom: 5px; margin-right: 4px;
+  }
+  .tag-hauscall  { background: rgba(145,70,255,0.15); border: 1px solid rgba(145,70,255,0.35); color: #c4b5fd; }
+  .tag-site      { background: rgba(13,148,136,0.12); border: 1px solid rgba(13,148,136,0.3);  color: var(--amethyst-light); }
+  .tag-commissions { background: rgba(196,150,42,0.12); border: 1px solid rgba(196,150,42,0.3); color: var(--gold-light); }
+  .tag-partnerships { background: rgba(88,101,242,0.12); border: 1px solid rgba(88,101,242,0.3); color: #7a8ff8; }
+  .tag-moderation { background: rgba(196,74,42,0.12); border: 1px solid rgba(196,74,42,0.3); color: #f0a898; }
+  .changelog-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.72rem; letter-spacing: 0.04em;
+    color: var(--parchment);
+    margin-bottom: 5px;
+  }
+  .changelog-desc {
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px; color: var(--parchment-dim);
+    line-height: 1.7;
+  }
+  .changelog-timeline {
+    position: relative;
+    padding-left: 1rem;
+  }
+  .changelog-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--border-strong), transparent);
+  }
+  .changelog-dot {
+    position: absolute;
+    left: -1rem;
+    top: 1.5rem;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--amethyst-mid);
+    border: 1px solid var(--amethyst-light);
+    box-shadow: 0 0 6px rgba(124,77,170,0.4);
+    transform: translateX(-3px);
+  }
+</style>
+</head>
+<body>
+<div id="aurora-layer" aria-hidden="true"><div class="a1"></div><div class="a2"></div><div class="a3"></div></div>
+<button class="aurora-toggle" onclick="toggleAurora()" id="aurora-toggle-btn">
+  <span class="aurora-toggle-dot"></span>
+  <span id="aurora-toggle-label">Aurora</span>
+</button>
+
+<div class="page-wrap">
+  <a class="back-link" href="index.html">← Return to the Maelstrom</a>
+
+  <header class="site-header">
+    <h1 class="site-title">AetherTek</h1>
+    <p class="site-sub">Protect. Automate. Empower.</p>
+    <p class="page-title">⊹ Changelog ⊹</p>
+  </header>
+
+  <div class="lore-aside">A running record of what's changed, improved, or been added to AetherTek and Hauscall. No version numbers, no patch notes — just honest updates on what's new and why.</div>
+
+  <!-- JUNE 2026 -->
+  <div class="form-section">
+    <div class="section-label">June 2026</div>
+    <div class="changelog-timeline">
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <span class="changelog-tag tag-moderation">Moderation</span>
+          <div class="changelog-title">AI Image Detection</div>
+          <div class="changelog-desc">Hauscall can now analyse images posted in watched Discord channels for signs of AI generation. Detection runs on contextual signals first — account age, filename patterns, caption language, image dimensions — and only calls Claude Vision when enough signals are present. Rate-limited to 20 analyses per day. Alerts post to the mod channel with the image inline, the verdict, and the reasoning. Hauscall flags, mods decide.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Hype Train Tracking</div>
+          <div class="changelog-desc">Hauscall now detects Twitch Hype Trains via EventSub webhooks and records them per session — level reached, contribution count, and date. A leaderboard per streamer tracks their all-time best trains, sorted by highest level. The post-stream Discord report now includes Hype Train count and highest level for each session.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Community Event Tracking</div>
+          <div class="changelog-desc">Bits cheered, subs, gifted subs, Throne contributions, and donations are now extracted directly from the Twitch chat stream during sessions and recorded against the session. The post-stream Discord report now includes a Community line showing these totals — bits and subs as counts, Throne and donations as occurrence counts only, no dollar amounts shown publicly.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-site">Support Site</span>
+          <span class="changelog-tag tag-commissions">Commissions</span>
+          <div class="changelog-title">Commission Page Rebuilt</div>
+          <div class="changelog-desc">The commission intake page now clearly outlines pricing tiers ($50 base, with Low / Medium / High complexity tiers), explains hosting costs, the 6-month support guarantee, and makes explicit that submitting a brief carries no obligation. Negotiation is actively encouraged — the page now says so directly.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MAY 2026 -->
+  <div class="form-section">
+    <div class="section-label">May 2026</div>
+    <div class="changelog-timeline">
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">May 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-site">Support Site</span>
+          <div class="changelog-title">AetherTek Rebrand & Site Overhaul</div>
+          <div class="changelog-desc">The support infrastructure is now operating under the AetherTek name — Protect. Automate. Empower. The support site was rebuilt from the ground up with a new landing page, service grid, philosophy section, and dedicated pages for FAQ, Status, Partnership applications, Commission intake, and Hauscall. The aurora animation system was added across all pages.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">May 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-site">Support Site</span>
+          <div class="changelog-title">Status Page</div>
+          <div class="changelog-desc">A live status page now shows the operational state of Hauscall's subsystems in real time — bot connectivity, API, Twitch monitoring, Discord monitoring, and transcripts. Auto-refreshes every 60 seconds. Also shows the weekly public digest when available.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">May 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Weekly Public Digest</div>
+          <div class="changelog-desc">Hauscall generates a weekly digest every Sunday at 10am CST summarising the previous week's activity — sessions monitored, messages captured, alerts fired. Visible on the Status page. No identifying information is included.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">May 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-partnerships">Partnerships</span>
+          <span class="changelog-tag tag-commissions">Commissions</span>
+          <div class="changelog-title">Business Ticket System</div>
+          <div class="changelog-desc">Partnership and commission inquiries now go through a structured intake process with dedicated forms, reference IDs, and Hauscall DM updates at each stage — received, under review, accepted or declined. Every decision is communicated directly and explained honestly.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EARLIER -->
+  <div class="form-section">
+    <div class="section-label">Earlier</div>
+    <div class="changelog-timeline">
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Early 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Cross-Server Broadcast System</div>
+          <div class="changelog-desc">Security alerts and community notices can now be broadcast simultaneously to all connected servers, with the ability to retract them cleanly across all channels if circumstances change. Every broadcast is logged.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Early 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Transcript Archive & Post-Stream Reports</div>
+          <div class="changelog-desc">Full chat transcripts are recorded for every monitored stream session and auto-posted to a configured Discord channel when the stream ends. Each transcript includes a moderation report flagging anything that needs a second look — confirmed violations and items for mod discretion clearly separated. Flags require mod review before any action is taken.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Early 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Hauscall Goes Live</div>
+          <div class="changelog-desc">Hauscall — the familiar of Aetherhaus, keeper of the queue — went live as the operational backbone of AetherhausStudios tech support. Starting with ticket management, support DMs, and a rating system, it has grown steadily from there. Hauscall is not a public bot. Access is extended to trusted servers by invitation from Aether.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+  </footer>
+</div>
+
+<script>
+  function toggleAurora() {
+    const isOn = document.documentElement.classList.toggle('aurora-on');
+    localStorage.setItem('aurora', isOn ? 'on' : 'off');
+    const lbl = document.getElementById('aurora-toggle-label');
+    if (lbl) lbl.textContent = isOn ? 'Aurora On' : 'Aurora Off';
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    const isOn = document.documentElement.classList.contains('aurora-on');
+    const lbl = document.getElementById('aurora-toggle-label');
+    if (lbl) lbl.textContent = isOn ? 'Aurora On' : 'Aurora Off';
+  });
+</script>
+</body>
+</html>

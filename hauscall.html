@@ -164,25 +164,14 @@
     .workflow-step { flex-direction: column; gap: 0.5rem; }
   }
 </style>
-<script>
-  // Apply aurora to html element before render — no flash
-  if (localStorage.getItem('aurora') !== 'off') {
-    document.documentElement.classList.add('aurora-on');
-  }
-</script>
 </head>
 <body>
-<div id="aurora-layer" aria-hidden="true"><div class="a1"></div><div class="a2"></div><div class="a3"></div></div>
-<button class="aurora-toggle" onclick="toggleAurora()" id="aurora-toggle-btn">
-  <span class="aurora-toggle-dot"></span>
-  <span id="aurora-toggle-label">Aurora</span>
-</button>
 <div class="page-wrap">
   <a class="back-link" href="index.html">← Return to the Maelstrom</a>
 
   <header class="site-header">
-    <h1 class="site-title">AetherTek</h1>
-    <p class="site-sub">Protect. Automate. Empower.</p>
+    <h1 class="site-title">AetherhausStudios</h1>
+    <p class="site-sub">tech support, chaos management & general arcane troubleshooting</p>
     <p class="page-title">⊹ Meet Hauscall ⊹</p>
   </header>
 
@@ -195,7 +184,7 @@
   </div>
 
   <div class="lore-aside">
-    Hauscall is the familiar that keeps the Aetherhaus support operation running. It does not possess Aether's power — but it operates in Aether's name, carries Aether's authority, and manages the structured touchpoints so that every petitioner knows where they stand.
+    Hauscall is the familiar that keeps the Aetherhaus operation running. It does not possess Aether's power — but it operates in Aether's name, carries Aether's authority, and manages the structured touchpoints so that every petitioner knows where they stand. Beyond the support queue, Hauscall watches over partner communities — monitoring Discord servers for threats, alerting mod teams, and keeping a quiet eye on who comes and goes.
   </div>
 
   <!-- HOW IT WORKS -->
@@ -257,6 +246,50 @@
     </div>
   </div>
 
+  <!-- SENTINEL -->
+  <div class="form-section">
+    <div class="section-label">Sentinel — Community Protection</div>
+    <div class="workflow-steps">
+
+      <div class="workflow-step">
+        <div class="step-icon">🔍</div>
+        <div class="step-content">
+          <div class="step-label">Threat Detection</div>
+          <div class="step-title">Watching the watched channels</div>
+          <div class="step-desc">Hauscall monitors configured Discord channels for a range of known threat patterns — phishing links, social engineering scams, honeypot giveaways, item giveaway bait, and unsolicited promotion. High priority channels receive a full scan on every message. Alerts post to the mod channel with the flagged message, the reason, and a jump link. Hauscall flags. Mods decide.</div>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <div class="step-icon">🚨</div>
+        <div class="step-content">
+          <div class="step-label">Join Monitoring</div>
+          <div class="step-title">Every new member, scored on arrival</div>
+          <div class="step-desc">Every account that joins a monitored server is scored for suspicion — account age, avatar presence, username patterns, time between account creation and joining. Accounts that cross the threshold trigger an alert. During a live stream, the threshold drops: any single suspicious signal is enough. Bad actors tend to time their moves for when attention is divided.</div>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <div class="step-icon">🔴</div>
+        <div class="step-content">
+          <div class="step-label">Stream Start Scan</div>
+          <div class="step-title">A sweep before things get busy</div>
+          <div class="step-desc">When a streamer goes live, Hauscall scans all members who joined their Discord server in the last 7 days and posts a summary to the alert channel. Clean sweep means a green all-clear. Flagged accounts get a full breakdown — score, account age, join date, and the specific signals that raised concern. Mods have the information before the stream is properly underway.</div>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <div class="step-icon">📡</div>
+        <div class="step-content">
+          <div class="step-label">Broadcast System</div>
+          <div class="step-title">Community-wide security alerts</div>
+          <div class="step-desc">Aether can send security broadcasts to all connected mod channels simultaneously — from the AetherhausDesk or directly via <span class="step-badge">/broadcast</span> on Discord mobile. Three urgency levels: 🌿 Chill for informational notices, 🕯 Burning for active security concerns, 🔥 ON FIRE for urgent threats. Broadcasts include a retract command if a situation resolves or a warning turns out to be unfounded.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- COMMAND REFERENCE -->
   <div class="form-section">
     <div class="section-label">Command Reference</div>
@@ -306,8 +339,8 @@
 
       <div class="command-group-label">Sentinel</div>
       <div class="command-row">
-        <span class="command-name">/broadcast [message]</span>
-        <span class="command-desc">Sends a security alert to all connected mod channels</span>
+        <span class="command-name">/broadcast [message] [urgency]</span>
+        <span class="command-desc">Sends a broadcast to all connected mod channels — urgency choices: 🌿 Chill, 🕯 Burning, 🔥 ON FIRE</span>
       </div>
       <div class="command-row">
         <span class="command-name">/retract @handle</span>
@@ -330,10 +363,11 @@
   <div class="form-section">
     <div class="section-label">Add Hauscall to Your Server</div>
     <div class="invite-section">
-      <a class="submit-btn" href="https://discord.com/oauth2/authorize?client_id=1500636086983200768&permissions=281474976934912&integration_type=0&scope=bot+applications.commands" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin-bottom:1rem;">
-        ⊹ Add Hauscall to Your Server ⊹
-      </a>
-      <p class="invite-note">Hauscall is not a public bot. Access is extended to servers within Aether's trusted community. If you believe your server qualifies, reach out via Discord or submit a <a href="partnership.html" style="color:var(--amethyst-light);">Partnership Application</a>.</p>
+      <div class="invite-placeholder">
+        ⊹ &nbsp; Hauscall server invite — coming soon &nbsp; ⊹<br>
+        <span style="opacity:0.6;font-size:11px;">Available to trusted servers by invitation from Aether</span>
+      </div>
+      <p class="invite-note">Hauscall is not a public bot. Access is extended to servers within Aether's trusted community. If you believe your server qualifies, reach out via Discord.</p>
     </div>
   </div>
 

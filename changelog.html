@@ -100,7 +100,169 @@
         <div class="changelog-date">Jun 2026</div>
         <div class="changelog-body">
           <span class="changelog-tag tag-hauscall">Hauscall</span>
-          <span class="changelog-tag tag-moderation">Moderation</span>
+          <span class="changelog-tag tag-security">Security</span>
+          <div class="changelog-title">Sentinel — Expanded Threat Detection</div>
+          <div class="changelog-desc">Hauscall's Discord monitor now detects a significantly broader range of threat patterns: phishing and scam links, the "Accidental Report" social engineering scam, Honeypot casino and withdrawal scams, item giveaway scams (with image attachment detection firing as confirmed), and unsolicited self-promotion. Detection runs in priority order — social engineering first, phishing second, honeypot third — so the most serious threats are always caught before anything else.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <span class="changelog-tag tag-security">Security</span>
+          <div class="changelog-title">Sentinel — Live Stream Mode &amp; Stream Start Member Scan</div>
+          <div class="changelog-desc">When a streamer goes live, Hauscall automatically scans all Discord members who joined in the last 7 days and posts a summary to the mod alert channel — flagged accounts with score, account age, join date, and the signals that triggered the flag. From stream start to stream end, Hauscall enters live mode: any new join is scored against a stricter threshold since bad actors tend to time their activity for when streamers and mods are occupied. Live mode reverts automatically when the stream ends.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Sentinel — High Priority Channels</div>
+          <div class="changelog-desc">Discord server configs now support a High Priority Channels list alongside the existing Watched Channels list. Messages in high priority channels receive a full scan across all threat categories and alert on both confirmed and review-severity detections — not just confirmed. Designed for general chat, welcome channels, and anywhere scam activity has been observed. Configurable per server from the AetherhausDesk Hub.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Sentinel — New Account Scoring Tightened</div>
+          <div class="changelog-desc">Suspicion scoring for new joins has been tightened. Accounts under 10 days old now score 2 points on join alone — enough to trigger an alert without any other signals present. Accounts under 3 days score 3, under 24 hours score 4. During a live stream the threshold drops to 1, meaning any single suspicious signal is enough to flag a join. All join alerts include account age, join date, and score prominently.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">/broadcast — Urgency Levels from Discord Mobile</div>
+          <div class="changelog-desc">The /broadcast slash command now supports urgency as a dropdown choice — 🌿 Chill for informational notices, 🕯 Burning for security concerns, and 🔥 ON FIRE for urgent alerts. Urgency controls the embed colour and title prefix. The dropdown works from Discord mobile, meaning broadcasts can be sent from anywhere without needing access to the Desk.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <span class="changelog-tag tag-desk">Desk</span>
+          <div class="changelog-title">Mod Tracking — Per-Session Active / Lurking / Not Seen</div>
+          <div class="changelog-desc">A new Mods tab in the AetherhausDesk Streamer Hub tracks mod activity in real time during live streams. A static mod list is maintained per streamer — mods are marked Active if they have sent a message in the last 10 minutes, Lurking if they have been seen this session but gone quiet, and Not Seen if they haven't appeared yet. The tab auto-refreshes every 30 seconds while the stream is live. Mods can be added and removed directly from the tab.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Metrics — Permanent Session Snapshots</div>
+          <div class="changelog-desc">Session metrics are now persisted indefinitely in a separate storage file, independent of the 14-day transcript cleanup. Every session end writes a compact snapshot — message count, flag counts, bits, subs, Throne contributions, donations, and Hype Train data. The Stream History Graph and Partner Health Report now draw from this permanent record first, meaning monthly reporting stays accurate regardless of how old the data is.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-desk">Desk</span>
+          <div class="changelog-title">Stream History — Bar Chart Replaces Line Graph</div>
+          <div class="changelog-desc">The per-streamer stream history visualisation has been replaced with a bar chart. The previous polyline SVG graph had rendering issues at low data densities in Electron. The bar chart is more readable at all session counts, shows all metrics by default, and supports the same toggle controls. Hover tooltips show exact values per bar.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-desk">Desk</span>
+          <div class="changelog-title">Permissions Check Restored to Discord Config</div>
+          <div class="changelog-desc">The permissions check panel is back in the Discord Config tab of the Streamer Hub. It checks whether Hauscall has the necessary permissions in the configured alert channel and all watched channels in real time. Shows a green all-clear or a specific breakdown of what's missing and where.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-site">Site</span>
+          <div class="changelog-title">Commission Page — Business Projects Tier</div>
+          <div class="changelog-desc">The commission page now includes a dedicated Business Projects section below the personal tiers. Two tiers: Sole Prop &amp; Creator ($300 labor, 12-month support) and Small Business ($650 labor, 24-month support, multi-device sync and staff access infrastructure included). Modular add-ons are priced transparently — Ko-fi API (+$125), Stripe API (+$175), Inventory &amp; Product Catalog (scaled by item count), and POS system (Tier 2 only, from +$800). Business submissions receive a BIZ- prefixed ID and a gold embed in the Hauscall queue.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Transcript Auto-Post to Discord</div>
+          <div class="changelog-desc">When a monitored Twitch session ends, Hauscall now automatically posts the session transcript and moderation report to the configured Discord channel. The post includes message count, session ID, flag summary, and community event totals. Configurable per streamer from the Discord Config tab in the AetherhausDesk Hub.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Sub and Hype Train Detection Fixed</div>
+          <div class="changelog-desc">Subscriptions, gifted subs, and mass gift subs are now correctly captured from Twitch IRC via USERNOTICE messages, which were previously being discarded before parsing. Hype Train EventSub subscriptions are now registered on bot startup. Throne contributions and donation detection patterns have been broadened to match the actual alert formats used by Streamlabs, StreamElements, and the Throne bot itself.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Startup Live Check</div>
+          <div class="changelog-desc">Hauscall now runs a second live status check 20 seconds after startup to catch any streamers who went live during a downtime window. Previously a restart during an active stream would mean the session was missed entirely until the next poll cycle.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Streamer Profile Images &amp; Discord Server Icons</div>
+          <div class="changelog-desc">Twitch profile pictures now appear in the Partner Streamers nav buttons and Streamer Hub header in AetherhausDesk. Discord server icons appear in the Discord panel header and Config tab. Images are fetched fresh from the Twitch API on every Hauscall startup and cached in the streamer registry.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
+          <div class="changelog-title">Security Broadcasts — Mix It Up Outage &amp; Multiple Scam Alerts</div>
+          <div class="changelog-desc">Community broadcasts were sent covering: the Mix It Up DNS outage and subsequent hotfix rollout (three updates including affected services, wiki workaround, and update instructions), the Honeypot scam, the Accidental Report account-stealing scam, and the Wallpaper Engine Steam Workshop malware campaign. All sent via Hauscall to all connected mod channels.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-site">Site</span>
+          <div class="changelog-title">Changelog Restored to Site Navigation</div>
+          <div class="changelog-desc">The changelog page is now linked from the service grid on the landing page, the page selector dropdown, and the footer of every page on the support site.</div>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-dot"></div>
+        <div class="changelog-date">Jun 2026</div>
+        <div class="changelog-body">
+          <span class="changelog-tag tag-hauscall">Hauscall</span>
           <div class="changelog-title">AI Image Detection</div>
           <div class="changelog-desc">Hauscall can now analyse images posted in watched Discord channels for signs of AI generation. Detection runs on contextual signals first — account age, filename patterns, caption language, image dimensions — and only calls Claude Vision when enough signals are present. Rate-limited to 20 analyses per day. Alerts post to the mod channel with the image inline, the verdict, and the reasoning. Hauscall flags, mods decide.</div>
         </div>

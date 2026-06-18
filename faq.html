@@ -112,7 +112,7 @@
     <div class="faq-item">
       <div class="faq-q">What does the AetherTek Partnership actually include?</div>
       <div class="faq-a">
-        The partnership encompasses <strong>both the streamer and their community</strong>. On the Twitch side: full session transcript logging with post-session moderation analysis calibrated to your community's specific rules. On the Discord side: channel monitoring for AI art, unsolicited promotion, and welfare concerns, plus real-time raid and bot detection with clickable account profiles sent directly to your mod channel. Partners also get access to Aether's tech support services directly within their community. Everything is configured personally — nothing is set-and-forget.
+        The partnership encompasses <strong>both the streamer and their community</strong>. On the Twitch side: full session transcript logging with post-session moderation analysis calibrated to your community's specific rules. On the Discord side: channel monitoring across a broad range of threat categories, real-time raid and bot detection, live stream mode with a stricter join threshold, and a stream-start member scan that sweeps recent joins before things get busy. Partners also get access to Aether's tech support services directly within their community. Everything is configured personally — nothing is set-and-forget.
       </div>
     </div>
 
@@ -120,6 +120,43 @@
       <div class="faq-q">How does the moderation analysis work?</div>
       <div class="faq-a">
         After each stream session, Hauscall reviews the full transcript against your community's specific ruleset. <strong>Confirmed flags are listed clearly. Borderline cases are flagged separately</strong> as worth a second look — with a clear note that no action is implied and mods retain full discretion. The system flags. Humans decide. Always.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What does Hauscall detect in Discord?</div>
+      <div class="faq-a">
+        Hauscall monitors configured channels for a range of known threat patterns, checked in priority order:
+        <br><br>
+        <strong>Social engineering scams</strong> — the "Accidental Report" scam, fake Discord support agents, account verification requests, and pressure tactics designed to get someone to hand over a verification code or change their account email.<br>
+        <strong>Phishing and scam links</strong> — Discord Nitro scams, crypto airdrops, fake Steam or account compromise warnings, shortened URLs in suspicious context, and bot DM solicitation.<br>
+        <strong>Honeypot scams</strong> — fake casino registrations, promo codes, and withdrawal confirmation screenshots designed to lure people into handing over payment details.<br>
+        <strong>Item giveaway scams</strong> — messages claiming to give away an item, especially when paired with an image. The image is used to build credibility before the DM solicitation follows. When text and image appear together, this fires as confirmed immediately.<br>
+        <strong>Self-promotion</strong> — unsolicited channel plugs, commission solicitations, and service advertising in channels where it isn't permitted.<br>
+        <strong>Welfare concerns</strong> — language that may indicate a community member is struggling, flagged quietly for a mod check-in rather than a public alert.
+        <br><br>
+        High priority channels receive a full scan on every message, including review-severity detections. Standard watched channels alert on confirmed detections only.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What happens when a streamer goes live?</div>
+      <div class="faq-a">
+        When a monitored streamer goes live, Hauscall does two things. First, it scans all members who joined the linked Discord server in the last 7 days and posts a summary to the mod alert channel — flagged accounts get a full breakdown of why they were flagged, account age, join date, and suspicion score. Second, it enters <strong>live mode</strong> for that server: any new join during the stream is scored against a stricter threshold. Bad actors commonly time their activity for when streamers and mods are occupied with the stream. Live mode reverts automatically when the stream ends.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How does Hauscall score suspicious accounts?</div>
+      <div class="faq-a">
+        Every account that joins a monitored server is scored across several signals: account age, whether a profile picture is set, username patterns common to bots, and how quickly the account joined after being created. Accounts under 10 days old score 2 points on join alone — enough to trigger an alert without any other signals. Under 3 days scores 3, under 24 hours scores 4. During a live stream the threshold drops to 1, so any single signal is enough. <strong>Hauscall flags. Mods decide.</strong> No action is ever implied and no automated moderation is performed.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can Hauscall take action on flagged accounts or messages automatically?</div>
+      <div class="faq-a">
+        No. Hauscall is a <strong>detection and alerting system</strong>, not an automated moderation system. It posts alerts to your mod channel with all the relevant context — the flagged message, the reason, a jump link, account details — and leaves the decision entirely with your mod team. This is intentional. Automated moderation produces false positives that damage communities and erode trust. Hauscall exists to make sure nothing gets missed, not to act without a human in the loop.
       </div>
     </div>
   </div>

@@ -194,12 +194,70 @@
   .footer-slogan{font-family:'Cinzel Decorative',serif;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal-light);opacity:0.45;margin-bottom:0.4rem;}
   .footer-note{font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;color:var(--parchment-muted);opacity:0.5;}
 
+  /* ── FORM PANEL ── */
+  .form-section{
+    background:linear-gradient(160deg,var(--surface) 0%,rgba(4,8,16,0.98) 100%);
+    border:1px solid var(--border-strong);
+    border-radius:14px;
+    padding:1.9rem 2.1rem;
+    margin-bottom:1.4rem;
+    position:relative;overflow:hidden;
+    box-shadow:0 8px 32px rgba(0,0,0,0.6),0 0 0 1px rgba(13,148,136,0.06),inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+  .form-section::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--teal),var(--teal-light),var(--teal));
+    box-shadow:0 0 12px rgba(13,148,136,0.5);
+  }
+  .form-section::after{
+    content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+    background:radial-gradient(ellipse at 50% 0%,rgba(13,148,136,0.06) 0%,transparent 65%);
+    pointer-events:none;
+  }
+
+  /* ── NEWS FEED ── */
+  .nf-item{
+    border-radius:9px;padding:1rem 1.2rem;margin-bottom:10px;position:relative;
+    border:1px solid rgba(13,148,136,0.35);background:rgba(13,148,136,0.08);
+  }
+  .nf-item.urgency-warning{border-color:rgba(196,150,42,0.45);background:rgba(196,150,42,0.09);}
+  .nf-item.urgency-critical{border-color:rgba(196,74,42,0.45);background:rgba(196,74,42,0.09);}
+  .nf-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+  .nf-badge{
+    font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;
+    letter-spacing:0.08em;padding:2px 8px;background:rgba(0,0,0,0.25);border-radius:3px;
+    color:var(--teal-light);
+  }
+  .nf-item.urgency-warning .nf-badge{color:var(--gold-light);}
+  .nf-item.urgency-critical .nf-badge{color:#f0a898;}
+  .nf-repost-tag{
+    font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;
+    letter-spacing:0.06em;padding:2px 6px;background:rgba(0,0,0,0.2);border-radius:3px;
+    color:var(--parchment-muted);
+  }
+  .nf-date{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--parchment-muted);margin-left:auto;}
+  .nf-body{font-family:'Crimson Pro',serif;font-size:15px;color:var(--parchment-dim);line-height:1.7;}
+  .nf-body p{margin:0 0 4px;}
+  .nf-body .nf-indent{padding-left:12px;color:var(--parchment-muted);}
+  .nf-body strong{color:var(--parchment);}
+  .nf-empty{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--parchment-muted);padding:8px 0;}
+  .nf-pager{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:1rem;}
+  .nf-pager-btn{
+    font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;
+    padding:4px 12px;border:1px solid var(--border-strong);border-radius:4px;
+    background:transparent;color:var(--parchment-dim);cursor:pointer;transition:border-color 0.15s,color 0.15s;
+  }
+  .nf-pager-btn:hover:not(:disabled){border-color:var(--teal-light);color:var(--teal-light);}
+  .nf-pager-btn:disabled{opacity:0.3;cursor:not-allowed;}
+  .nf-pager-info{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--parchment-muted);}
+
   @media(max-width:720px){
     .service-grid{grid-template-columns:1fr 1fr;}
   }
   @media(max-width:480px){
     .service-grid{grid-template-columns:1fr;}
     .hauscall-strip{flex-wrap:wrap;}
+    .form-section{padding:1.4rem 1.2rem;}
   }
 </style>
 <script>
@@ -443,10 +501,8 @@
   <!-- NEWS FEED -->
   <div class="form-section" id="newsfeed-section" style="margin-top:2rem;">
     <div class="section-label">Community Broadcasts &amp; Notices</div>
-    <div id="newsfeed-items">
-      <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--parchment-muted);padding:8px 0;">Loading...</div>
-    </div>
-    <div id="newsfeed-pagination" style="display:flex;gap:8px;align-items:center;justify-content:center;margin-top:1rem;"></div>
+    <div id="newsfeed-items"><div class="nf-empty">Loading...</div></div>
+    <div class="nf-pager" id="newsfeed-pagination"></div>
   </div>
 
   <div class="footer">
@@ -471,69 +527,66 @@
 </script>
 <script>
 (function() {
-  const FEED_URL = 'https://hauscall-production.up.railway.app/newsfeed';
+  const FEED_URL    = 'https://hauscall-production.up.railway.app/newsfeed';
   const urgencyLabel = { info: '🌿 Notice', warning: '🕯 Alert', critical: '🔥 Urgent' };
-  const urgencyColor = { info: 'rgba(13,148,136,0.25)', warning: 'rgba(196,150,42,0.25)', critical: 'rgba(196,74,42,0.25)' };
-  const urgencyBorder = { info: 'rgba(13,148,136,0.5)', warning: 'rgba(196,150,42,0.5)', critical: 'rgba(196,74,42,0.5)' };
-  const urgencyTag = { info: 'var(--amethyst-light)', warning: 'var(--gold-light)', critical: '#f0a898' };
 
   function fmt(iso) {
-    return new Date(iso).toLocaleString('en-US', { timeZone:'America/Chicago', month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit', hour12:true }) + ' CST';
+    return new Date(iso).toLocaleString('en-US', {
+      timeZone: 'America/Chicago', month: 'short', day: 'numeric',
+      year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true
+    }) + ' CST';
   }
 
   function renderFeed(data) {
     const container = document.getElementById('newsfeed-items');
     const pager     = document.getElementById('newsfeed-pagination');
+
     if (!data.items || !data.items.length) {
-      container.innerHTML = '<div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--parchment-muted);padding:8px 0;">No broadcasts yet.</div>';
+      container.innerHTML = '<div class="nf-empty">No broadcasts yet.</div>';
       pager.innerHTML = '';
       return;
     }
 
     container.innerHTML = data.items.map(item => {
-      const u       = item.urgency || 'info';
-      const label   = urgencyLabel[u] || urgencyLabel.info;
-      const bg      = urgencyColor[u]  || urgencyColor.info;
-      const border  = urgencyBorder[u] || urgencyBorder.info;
-      const tagCol  = urgencyTag[u]    || urgencyTag.info;
+      const u        = item.urgency || 'info';
+      const label    = urgencyLabel[u] || urgencyLabel.info;
       const isRepost = item.isRepost;
       const dateStr  = isRepost
-        ? 'Originally posted ' + fmt(item.originalDate) + ' &nbsp;·&nbsp; Reposted ' + fmt(item.publishedAt)
+        ? 'Originally posted ' + fmt(item.originalDate) + ' &nbsp;&middot;&nbsp; Reposted ' + fmt(item.publishedAt)
         : 'Posted ' + fmt(item.originalDate);
 
       const lines = item.message.split('\n').map(l => {
         if (!l.trim()) return '<br>';
-        if (l.startsWith('—') || l.startsWith('-')) return '<div style="padding-left:12px;color:var(--parchment-dim);">' + l + '</div>';
-        if (/^\*\*.*\*\*$/.test(l.trim())) return '<strong style="color:var(--parchment);">' + l.replace(/\*\*/g,'') + '</strong>';
-        return '<p style="margin:0 0 4px;">' + l + '</p>';
+        if (l.startsWith('—') || l.startsWith('-')) return '<div class="nf-indent">' + l + '</div>';
+        if (/^\*\*.*\*\*$/.test(l.trim())) return '<strong>' + l.replace(/\*\*/g, '') + '</strong>';
+        return '<p>' + l + '</p>';
       }).join('');
 
-      return '<div style="border:1px solid ' + border + ';background:' + bg + ';border-radius:9px;padding:1rem 1.2rem;margin-bottom:10px;position:relative;">' +
-        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">' +
-          '<span style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:' + tagCol + ';padding:2px 8px;background:rgba(0,0,0,0.25);border-radius:3px;">' + label + '</span>' +
-          (isRepost ? '<span style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.06em;color:var(--parchment-muted);padding:2px 6px;background:rgba(0,0,0,0.2);border-radius:3px;">Repost</span>' : '') +
-          '<span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--parchment-muted);margin-left:auto;">' + dateStr + '</span>' +
+      return '<div class="nf-item urgency-' + u + '">' +
+        '<div class="nf-meta">' +
+          '<span class="nf-badge">' + label + '</span>' +
+          (isRepost ? '<span class="nf-repost-tag">Repost</span>' : '') +
+          '<span class="nf-date">' + dateStr + '</span>' +
         '</div>' +
-        '<div style="font-family:'Crimson Pro',serif;font-size:15px;color:var(--parchment-dim);line-height:1.7;">' + lines + '</div>' +
+        '<div class="nf-body">' + lines + '</div>' +
       '</div>';
     }).join('');
 
-    // Pagination
     if (data.pages > 1) {
       pager.innerHTML = '';
-      const prev = document.createElement('button');
-      prev.textContent = '← Older';
-      prev.className = 'urgency-pill';
-      prev.disabled = data.page >= data.pages;
-      prev.onclick = () => loadFeed(data.page + 1);
-      const info = document.createElement('span');
-      info.style = 'font-family:JetBrains Mono,monospace;font-size:10px;color:var(--parchment-muted);';
-      info.textContent = 'Page ' + data.page + ' of ' + data.pages;
       const next = document.createElement('button');
       next.textContent = 'Newer →';
-      next.className = 'urgency-pill';
+      next.className = 'nf-pager-btn';
       next.disabled = data.page <= 1;
       next.onclick = () => loadFeed(data.page - 1);
+      const info = document.createElement('span');
+      info.className = 'nf-pager-info';
+      info.textContent = 'Page ' + data.page + ' of ' + data.pages;
+      const prev = document.createElement('button');
+      prev.textContent = '← Older';
+      prev.className = 'nf-pager-btn';
+      prev.disabled = data.page >= data.pages;
+      prev.onclick = () => loadFeed(data.page + 1);
       pager.append(next, info, prev);
     } else {
       pager.innerHTML = '';
@@ -547,7 +600,7 @@
       .then(renderFeed)
       .catch(() => {
         const c = document.getElementById('newsfeed-items');
-        if (c) c.innerHTML = '<div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;color:var(--parchment-muted);">Could not load broadcasts at this time.</div>';
+        if (c) c.innerHTML = '<div class="nf-empty">Could not load broadcasts at this time.</div>';
       });
   }
 

@@ -217,26 +217,43 @@
 
   /* ── NEWS FEED ── */
   .nf-item{
-    border-radius:9px;padding:1rem 1.2rem;margin-bottom:10px;position:relative;
+    border-radius:9px;padding:0;margin-bottom:10px;position:relative;
     border:1px solid rgba(13,148,136,0.35);background:rgba(13,148,136,0.08);
+    overflow:hidden;
   }
   .nf-item.urgency-warning{border-color:rgba(196,150,42,0.45);background:rgba(196,150,42,0.09);}
   .nf-item.urgency-critical{border-color:rgba(196,74,42,0.45);background:rgba(196,74,42,0.09);}
-  .nf-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+  .nf-header{
+    padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+    transition:background 0.15s;
+  }
+  .nf-header:hover{background:rgba(0,0,0,0.15);}
+  .nf-meta{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
+  .nf-meta-right{display:flex;align-items:center;gap:12px;flex-shrink:0;}
   .nf-badge{
     font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;
     letter-spacing:0.08em;padding:2px 8px;background:rgba(0,0,0,0.25);border-radius:3px;
-    color:var(--teal-light);
+    color:var(--teal-light);flex-shrink:0;
   }
   .nf-item.urgency-warning .nf-badge{color:var(--gold-light);}
   .nf-item.urgency-critical .nf-badge{color:#f0a898;}
-  .nf-repost-tag{
-    font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;
-    letter-spacing:0.06em;padding:2px 6px;background:rgba(0,0,0,0.2);border-radius:3px;
-    color:var(--parchment-muted);
+  .nf-title{
+    font-family:'Crimson Pro',serif;font-size:16px;color:var(--parchment);
+    font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
   }
-  .nf-date{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--parchment-muted);margin-left:auto;}
-  .nf-body{font-family:'Crimson Pro',serif;font-size:15px;color:var(--parchment-dim);line-height:1.7;}
+  .nf-id{
+    font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--parchment-muted);
+    text-transform:uppercase;letter-spacing:0.05em;
+  }
+  .nf-date{
+    font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--parchment-muted);
+  }
+  .nf-body{
+    font-family:'Crimson Pro',serif;font-size:15px;color:var(--parchment-dim);line-height:1.7;
+    padding:0 1.2rem 1rem;border-top:1px solid rgba(0,0,0,0.2);margin-top:0;
+    max-height:400px;overflow-y:auto;
+  }
+  .nf-body.nf-hidden{display:none;}
   .nf-body p{margin:0 0 4px;}
   .nf-body .nf-indent{padding-left:12px;color:var(--parchment-muted);}
   .nf-body strong{color:var(--parchment);}
@@ -547,14 +564,21 @@
       return;
     }
 
-    container.innerHTML = data.items.map(item => {
+    container.innerHTML = data.items.map((item, idx) => {
       const u        = item.urgency || 'info';
       const label    = urgencyLabel[u] || urgencyLabel.info;
       const isRepost = item.isRepost;
       const dateStr  = isRepost
-        ? 'Originally posted ' + fmt(item.originalDate) + ' &nbsp;&middot;&nbsp; Reposted ' + fmt(item.publishedAt)
-        : 'Posted ' + fmt(item.originalDate);
+        ? 'Reposted ' + fmt(item.publishedAt)
+        : fmt(item.originalDate);
+      
+      // Extract title from first line of message
+      const firstLine = item.message.split('\n')[0];
+      const title = firstLine.replace(/^[⚠️🌿🔥]+\s*\*?\*?/, '').replace(/\*?\*?$/, '').trim();
 
+      const itemId = 'nf-item-' + idx;
+      
+      // Full message body rendering
       const lines = item.message.split('\n').map(l => {
         if (!l.trim()) return '<br>';
         if (l.startsWith('—') || l.startsWith('-')) return '<div class="nf-indent">' + l + '</div>';
@@ -562,13 +586,18 @@
         return '<p>' + l + '</p>';
       }).join('');
 
-      return '<div class="nf-item urgency-' + u + '">' +
-        '<div class="nf-meta">' +
-          '<span class="nf-badge">' + label + '</span>' +
-          (isRepost ? '<span class="nf-repost-tag">Repost</span>' : '') +
-          '<span class="nf-date">' + dateStr + '</span>' +
+      return '<div class="nf-item urgency-' + u + '" id="' + itemId + '">' +
+        '<div class="nf-header" onclick="document.getElementById(\'nf-body-' + idx + '\').classList.toggle(\'nf-hidden\'); event.target.closest(\'.nf-header\').classList.toggle(\'nf-expanded\');" style="cursor:pointer;user-select:none;">' +
+          '<div class="nf-meta">' +
+            '<span class="nf-badge">' + label + '</span>' +
+            '<span class="nf-title">' + title + '</span>' +
+          '</div>' +
+          '<div class="nf-meta-right">' +
+            '<span class="nf-id">' + item.broadcastId + '</span>' +
+            '<span class="nf-date">' + dateStr + '</span>' +
+          '</div>' +
         '</div>' +
-        '<div class="nf-body">' + lines + '</div>' +
+        '<div class="nf-body nf-hidden" id="nf-body-' + idx + '">' + lines + '</div>' +
       '</div>';
     }).join('');
 

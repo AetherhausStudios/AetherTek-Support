@@ -6,16 +6,6 @@
 <title>AetherhausStudios — Hauscall</title>
 <link rel="stylesheet" href="style.css">
 <style>
-  /* Activate aurora before render to prevent flash */
-  html.aurora-on #aurora-layer { opacity: 1; }
-</style>
-<script>
-  // Apply aurora to html element before render — no flash
-  if (localStorage.getItem('aurora') !== 'off') {
-    document.documentElement.classList.add('aurora-on');
-  }
-</script>
-<style>
   /* Hauscall page specific */
   .hauscall-hero {
     text-align: center;
@@ -58,255 +48,127 @@
     display: flex; flex-direction: column; gap: 0;
     margin: 0.5rem 0;
   }
-
   .workflow-step {
-    padding: 1.2rem;
-    background: rgba(13, 148, 136, 0.08);
-    border-left: 3px solid var(--amethyst);
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    padding: 1.1rem 0;
     border-bottom: 1px solid var(--border);
-    text-align: left;
+    position: relative;
   }
-
-  .workflow-step:first-child {
-    border-radius: 8px 8px 0 0;
+  .workflow-step:last-child { border-bottom: none; }
+  .step-icon {
+    font-size: 1.6rem; flex-shrink: 0;
+    width: 42px; text-align: center;
+    margin-top: 2px;
   }
-
-  .workflow-step:last-child {
-    border-radius: 0 0 8px 8px;
+  .step-content { flex: 1; }
+  .step-label {
+    font-family: 'Cinzel Decorative', serif; font-size: 0.65rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--amethyst-light); margin-bottom: 0.3rem;
   }
-
-  .step-num {
-    color: var(--amethyst-light);
-    font-weight: 700;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    margin-bottom: 0.3rem;
-    letter-spacing: 0.1em;
+  .step-title {
+    font-family: 'Crimson Pro', serif; font-weight: 600;
+    font-size: 1.05rem; color: var(--parchment);
+    margin-bottom: 0.2rem;
   }
-
   .step-desc {
-    color: var(--parchment-dim);
-    line-height: 1.6;
-    font-size: 0.95rem;
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    font-size: 14px; color: var(--parchment-muted); line-height: 1.55;
+  }
+  .step-badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: rgba(124,77,170,0.15); border: 1px solid var(--border-strong);
+    color: var(--amethyst-light); border-radius: 4px;
+    padding: 2px 8px; margin-left: 8px; vertical-align: middle;
   }
 
-  .step-desc em {
-    color: var(--amethyst-light);
-    font-style: italic;
+  /* Message preview cards */
+  .message-preview {
+    background: #1e1a2e;
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 1rem 1.2rem;
+    margin-top: 0.8rem; position: relative;
+  }
+  .message-preview::before {
+    content: 'Hauscall';
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    font-weight: 500; color: var(--amethyst-light);
+    letter-spacing: 0.04em; display: block; margin-bottom: 0.4rem;
+  }
+  .message-preview::after {
+    content: 'BOT';
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    background: var(--amethyst); color: #fff;
+    padding: 1px 5px; border-radius: 3px;
+    position: absolute; top: 1rem; left: 85px;
+    letter-spacing: 0.04em;
+  }
+  .message-text {
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    font-size: 14.5px; color: var(--parchment-dim); line-height: 1.65;
+  }
+  .message-text em {
+    font-style: normal; color: var(--gold-light);
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
   }
 
-  /* Command reference */
-  .command-section {
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+  /* Command list */
+  .command-list { display: flex; flex-direction: column; gap: 6px; }
+  .command-row {
+    display: flex; gap: 12px; align-items: baseline;
+    padding: 7px 10px; border-radius: 6px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    transition: border-color 0.15s;
   }
-
-  .command-group {
-    border-left: 2px solid var(--amethyst);
-    padding-left: 1.5rem;
+  .command-row:hover { border-color: var(--amethyst); }
+  .command-name {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    color: var(--gold-light); flex-shrink: 0; min-width: 200px;
   }
-
+  .command-desc {
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    font-size: 14px; color: var(--parchment-muted);
+  }
   .command-group-label {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--gold);
+    font-family: 'Cinzel Decorative', serif; font-size: 0.6rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--amethyst-light); margin: 1rem 0 0.5rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .command-group-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--border-strong), transparent);
+  }
+
+  /* Invite section */
+  .invite-section {
+    text-align: center; padding: 1rem 0.5rem;
+  }
+  .invite-placeholder {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--parchment-muted); letter-spacing: 0.05em;
+    background: var(--surface-raised); border: 1px dashed var(--border-strong);
+    border-radius: 8px; padding: 1.2rem;
     margin-bottom: 0.8rem;
   }
-
-  .command-row {
-    padding: 0.8rem 0;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
+  .invite-note {
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    font-size: 14px; color: var(--parchment-muted);
   }
 
-  .command-row:last-child {
-    border-bottom: none;
-  }
-
-  .command-name {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--amethyst-light);
-    font-weight: 600;
-    font-size: 0.9rem;
-  }
-
-  .command-desc {
-    color: var(--parchment-muted);
-    font-size: 0.85rem;
-    line-height: 1.5;
-  }
-
-  .page-footer {
-    text-align: center;
-    padding: 2rem 1rem;
-    border-top: 1px solid var(--border);
-    color: var(--parchment-muted);
-    font-size: 0.9rem;
-  }
-
-  .page-footer a, .page-footer button {
-    color: var(--amethyst-mid);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .page-footer a:hover, .page-footer button:hover {
-    color: var(--amethyst-light);
-    text-decoration: underline;
-  }
-
-  .page-footer button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-  }
-
-  /* Modal styles */
-  .modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    z-index: 9999;
-  }
-  
-  .modal-content {
-    background: var(--surface-raised);
-    border: 1px solid var(--border-strong);
-    border-radius: 14px;
-    max-width: 650px;
-    width: 100%;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
-  }
-  
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px;
-    border-bottom: 1px solid var(--border);
-  }
-  
-  .modal-header h2 {
-    margin: 0;
-    color: var(--amethyst-light);
-    font-size: 1.4rem;
-    font-weight: 600;
-  }
-  
-  .modal-close {
-    background: none;
-    border: none;
-    color: var(--parchment-muted);
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s;
-  }
-  
-  .modal-close:hover {
-    color: var(--amethyst-light);
-  }
-  
-  .modal-body {
-    overflow-y: auto;
-    padding: 24px;
-    flex: 1;
-    color: var(--parchment-dim);
-    font-size: 0.95rem;
-    line-height: 1.7;
-  }
-  
-  .modal-body h3 {
-    color: var(--amethyst-light);
-    margin-top: 16px;
-    margin-bottom: 8px;
-    font-size: 1.05rem;
-    font-weight: 600;
-  }
-  
-  .modal-body p, .modal-body ul {
-    margin: 8px 0;
-  }
-  
-  .modal-body ul {
-    padding-left: 24px;
-  }
-  
-  .modal-body a {
-    color: var(--amethyst-mid);
-    text-decoration: none;
-  }
-  
-  .modal-body a:hover {
-    color: var(--amethyst-light);
-    text-decoration: underline;
-  }
-  
-  .modal-footer {
-    padding: 24px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .modal-agree {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--parchment-dim);
-    cursor: pointer;
-    user-select: none;
-  }
-  
-  .modal-agree input {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    accent-color: var(--amethyst);
-  }
-  
-  .modal-btn {
-    background: var(--amethyst);
-    color: var(--parchment);
-    border: none;
-    padding: 12px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s;
-  }
-  
-  .modal-btn:hover:not(:disabled) {
-    background: var(--amethyst-mid);
-    box-shadow: 0 0 16px rgba(13,148,136,0.4);
-  }
-  
-  .modal-btn:disabled {
-    background: var(--surface-input);
-    color: var(--parchment-muted);
-    cursor: not-allowed;
-    opacity: 0.5;
+  @media(max-width:580px){
+    .hauscall-name { font-size: 1.6rem; }
+    .command-name { min-width: 160px; font-size: 12px; }
+    .workflow-step { flex-direction: column; gap: 0.5rem; }
   }
 </style>
+<script>
+  if (localStorage.getItem('aurora') !== 'off') {
+    document.documentElement.classList.add('aurora-on');
+  }
+</script>
 </head>
 <body>
 <div id="aurora-layer" aria-hidden="true"><div class="a1"></div><div class="a2"></div><div class="a3"></div></div>
@@ -314,7 +176,6 @@
   <span class="aurora-toggle-dot"></span>
   <span id="aurora-toggle-label">Aurora</span>
 </button>
-
 <div class="page-wrap">
   <a class="back-link" href="index.html">← Return to the Maelstrom</a>
 
@@ -327,213 +188,313 @@
   <!-- HERO -->
   <div class="hauscall-hero">
     <span class="hauscall-sigil">⊹</span>
-    <h1 class="hauscall-name">Hauscall</h1>
-    <p class="hauscall-title">Familiar of Aetherhaus</p>
-    <p class="hauscall-slogan">discord moderation & stream oversight</p>
+    <div class="hauscall-name">Hauscall</div>
+    <p class="hauscall-title">Familiar of Aetherhaus · Keeper of the Queue</p>
+    <p class="hauscall-slogan">Composed. Dutiful. Probably Fine.</p>
   </div>
 
-  <!-- WORKFLOW -->
-  <section>
-    <h2>How It Works</h2>
+  <div class="lore-aside">
+    Hauscall is the familiar that keeps the Aetherhaus operation running. It does not possess Aether's power — but it operates in Aether's name, carries Aether's authority, and manages the structured touchpoints so that every petitioner knows where they stand. Beyond the support queue, Hauscall watches over partner communities — monitoring Discord servers for threats, alerting mod teams, and keeping a quiet eye on who comes and goes.
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="form-section">
+    <div class="section-label">How It Works</div>
     <div class="workflow-steps">
+
       <div class="workflow-step">
-        <div class="step-num">Step 1</div>
-        <div class="step-desc"><em>You</em> connect Hauscall to your Discord server. It begins monitoring in real-time for phishing, fraud, spam, and policy violations.</div>
+        <div class="step-icon">📋</div>
+        <div class="step-content">
+          <div class="step-label">Step 1 — Submission</div>
+          <div class="step-title">You submit a ticket</div>
+          <div class="step-desc">Via the support page. Hauscall receives it, logs it to the queue, and sends you a confirmation DM if you opted in.</div>
+          <div class="message-preview">
+            <div class="message-text">
+              Greetings, traveller. Hauscall here, familiar of Aetherhaus and keeper of the queue.<br><br>
+              Your support ticket <em>{TKT-XXXXXX}</em> has been received, logged, and is currently <em>{X}</em> in line. Aether will be with you as soon as the chaos permits — you will be notified the moment your case enters review.<br><br>
+              Should your situation worsen or your urgency change, feel free to resubmit. The queue is watched.<br><br>
+              Sit tight, and do try not to panic.
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="workflow-step">
-        <div class="step-num">Step 2</div>
-        <div class="step-desc">Hauscall <em>flags suspicious activity</em> and sends alerts to your moderation channel. It does not take action automatically. You decide what to do.</div>
+        <div class="step-icon">🔍</div>
+        <div class="step-content">
+          <div class="step-label">Step 2 — Review</div>
+          <div class="step-title">Aether begins reviewing your case</div>
+          <div class="step-desc">When Aether picks up your ticket, Hauscall lets you know — so you're ready when contact comes.</div>
+          <div class="message-preview">
+            <div class="message-text">
+              Greetings again, traveller. Hauscall, returning with news.<br><br>
+              Aether has begun reviewing your support ticket <em>{TKT-XXXXXX}</em>. You can expect a direct message shortly to gather any additional information needed and begin working with you towards resolution.<br><br>
+              The gears are turning. Sit tight.
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="workflow-step">
-        <div class="step-num">Step 3</div>
-        <div class="step-desc">Use moderation commands (<code>/resolve</code>, <code>/escalate</code>, <code>/ticket</code>) to manage incidents. Hauscall helps you keep records and generate reports.</div>
-      </div>
-      <div class="workflow-step">
-        <div class="step-num">Step 4</div>
-        <div class="step-desc">At the end of each stream, Hauscall <em>generates a transcript</em> with chat history, events, and flagged content. Review it or discard it. The data is yours.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMMANDS -->
-  <section>
-    <h2>Commands</h2>
-    <div class="command-section">
-      <div class="command-group">
-        <div class="command-group-label">Queue Management</div>
-        <div class="command-row">
-          <span class="command-name">/queue</span>
-          <span class="command-desc">Shows all open tickets in priority order</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name">/ticket TKT-XXXXXX</span>
-          <span class="command-desc">Shows full details of a specific ticket</span>
+        <div class="step-icon">✦</div>
+        <div class="step-content">
+          <div class="step-label">Step 3 — Resolution</div>
+          <div class="step-title">Your ticket is marked resolved</div>
+          <div class="step-desc">Hauscall sends a final message with a link to leave a rating and, if you're so inclined, a tip — on your terms entirely.</div>
+          <div class="message-preview">
+            <div class="message-text">
+              Greetings, traveller. Hauscall, returning one final time.<br><br>
+              Your support ticket <em>{TKT-XXXXXX}</em> has been marked as resolved. It is hoped that Aether's assistance has brought you closer to resolution, or at the very least, eased the burden of getting there.<br><br>
+              If you found the assistance helpful, a moment of your time to leave a rating would be most appreciated — five stars, if the chaos was managed to your satisfaction. You may do so here: <em>{link}</em><br><br>
+              A note on tips: Aether does not ask for them. They are entirely optional. Should you consider leaving one, Aether asks only that you tip what you do not need — this assistance is about your wellbeing and peace of mind, first and foremost.<br><br>
+              Should chaos, device possession, software revolutions, or the odd web-based curse rear its ugly head once again — you know where to find us.
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="command-group">
-        <div class="command-group-label">Ticket Lifecycle</div>
-        <div class="command-row">
-          <span class="command-name">/reviewing TKT-XXXXXX</span>
-          <span class="command-desc">Triggers the "I'm looking into this" DM</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name">/resolve TKT-XXXXXX</span>
-          <span class="command-desc">Marks ticket resolved, sends rating link to user</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name">/escalate TKT-XXXXXX [urgency]</span>
-          <span class="command-desc">Bumps ticket priority</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name">/close TKT-XXXXXX [reason]</span>
-          <span class="command-desc">Closes without resolution</span>
-        </div>
-      </div>
-
-      <div class="command-group">
-        <div class="command-group-label">Metrics & Insight</div>
-        <div class="command-row">
-          <span class="command-name">/rating</span>
-          <span class="command-desc">Your average rating across all tickets</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name">/rating TKT-XXXXXX</span>
-          <span class="command-desc">Rating for a specific ticket</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name">/history @handle</span>
-          <span class="command-desc">All past reports and alerts for a user</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name">/transcript username</span>
-          <span class="command-desc">Search chat transcript for a Twitch username</span>
-        </div>
-      </div>
-
-      <div class="command-group">
-        <div class="command-group-label">Sentinel</div>
-        <div class="command-row">
-          <span class="command-name">/broadcast [message] [urgency]</span>
-          <span class="command-desc">Sends a broadcast to all connected mod channels</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name">/retract [reason]</span>
-          <span class="command-desc">Retracts a previous broadcast</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name">/clarify [message]</span>
-          <span class="command-desc">Pipes a clarification request to the workspace</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name">/suspicion [message_link]</span>
-          <span class="command-desc">Full suspicion score breakdown on a message</span>
-        </div>
-      </div>
-
-      <div class="command-group">
-        <div class="command-group-label">Utility</div>
-        <div class="command-row">
-          <span class="command-name">/commands</span>
-          <span class="command-desc">Shows this command list</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name">/joke</span>
-          <span class="command-desc">Tells a random tech or D&D joke</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER WITH LINKS -->
-  <div class="page-footer">
-    <button onclick="document.getElementById('tos-modal').style.display='block';">Terms of Service</button>
-    · 
-    <button onclick="document.getElementById('privacy-modal').style.display='block';">Privacy Policy</button>
-    · 
-    <a href="index.html">← Back to Home</a>
-  </div>
-</div>
-
-<!-- ToS Modal -->
-<div id="tos-modal" style="display:none;">
-  <div class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>⊹ Terms of Service</h2>
-        <button class="modal-close" onclick="document.getElementById('tos-modal').style.display='none';" aria-label="Close">✕</button>
-      </div>
-      <div class="modal-body">
-        <h3>What Hauscall Does</h3>
-        <p>Hauscall is a Discord bot that monitors community health and assists human moderators. It is a tool, not a replacement for human judgment.</p>
-        <ul>
-          <li>Detects phishing, scams, spam, and policy violations</li>
-          <li>Analyzes images for AI-generated content</li>
-          <li>Generates moderation alerts</li>
-          <li>Creates chat transcripts (14 days retention)</li>
-        </ul>
-        <h3>Limitations</h3>
-        <p>Hauscall is not perfect. It will miss violations and flag false positives. AetherhausStudios is not liable for missed alerts or service disruptions.</p>
-        <h3>Full Document</h3>
-        <p><a href="https://aetherhausstudios.github.io/AetherTek-Support/HAUSCALL_TERMS_OF_SERVICE.md" target="_blank">Read the complete Terms of Service ↗</a></p>
-      </div>
-      <div class="modal-footer">
-        <button class="modal-btn" onclick="document.getElementById('tos-modal').style.display='none';">Close</button>
-      </div>
     </div>
   </div>
-</div>
 
-<!-- Privacy Modal -->
-<div id="privacy-modal" style="display:none;">
-  <div class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>⊹ Privacy Policy</h2>
-        <button class="modal-close" onclick="document.getElementById('privacy-modal').style.display='none';" aria-label="Close">✕</button>
+  <!-- SENTINEL -->
+  <div class="form-section">
+    <div class="section-label">Sentinel — Community Protection</div>
+    <div class="workflow-steps">
+
+      <div class="workflow-step">
+        <div class="step-icon">🔍</div>
+        <div class="step-content">
+          <div class="step-label">Threat Detection</div>
+          <div class="step-title">Watching the watched channels</div>
+          <div class="step-desc">Hauscall monitors configured Discord channels for a range of known threat patterns — phishing links, social engineering scams, honeypot giveaways, item giveaway bait, and unsolicited promotion. High priority channels receive a full scan on every message. Alerts post to the mod channel with the flagged message, the reason, and a jump link. Hauscall flags. Mods decide.</div>
+        </div>
       </div>
-      <div class="modal-body">
-        <h3>Data We Collect</h3>
-        <p>Messages, user IDs, images, and Twitch transcripts for moderation purposes.</p>
-        <h3>Data Retention</h3>
-        <ul>
-          <li><strong>Transcripts:</strong> 14 days</li>
-          <li><strong>Alerts:</strong> 30 days</li>
-          <li><strong>User IDs:</strong> Indefinite</li>
-        </ul>
-        <h3>Third Parties</h3>
-        <ul>
-          <li><strong>Claude (Anthropic):</strong> Analyzes data but does not retain it</li>
-          <li><strong>Discord:</strong> Per their privacy policy</li>
-          <li><strong>Railway:</strong> Hosts infrastructure (US)</li>
-        </ul>
-        <h3>Your Rights</h3>
-        <p>You can request access, deletion, or corrections via the AetherTek Support Discord.</p>
-        <h3>Full Document</h3>
-        <p><a href="https://aetherhausstudios.github.io/AetherTek-Support/HAUSCALL_PRIVACY_POLICY.md" target="_blank">Read the complete Privacy Policy ↗</a></p>
+
+      <div class="workflow-step">
+        <div class="step-icon">🚨</div>
+        <div class="step-content">
+          <div class="step-label">Join Monitoring</div>
+          <div class="step-title">Every new member, scored on arrival</div>
+          <div class="step-desc">Every account that joins a monitored server is scored for suspicion — account age, avatar presence, username patterns, time between account creation and joining. Accounts that cross the threshold trigger an alert. During a live stream, the threshold drops: any single suspicious signal is enough. Bad actors tend to time their moves for when attention is divided.</div>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button class="modal-btn" onclick="document.getElementById('privacy-modal').style.display='none';">Close</button>
+
+      <div class="workflow-step">
+        <div class="step-icon">🔴</div>
+        <div class="step-content">
+          <div class="step-label">Stream Start Scan</div>
+          <div class="step-title">A sweep before things get busy</div>
+          <div class="step-desc">When a streamer goes live, Hauscall scans all members who joined their Discord server in the last 7 days and posts a summary to the alert channel. Clean sweep means a green all-clear. Flagged accounts get a full breakdown — score, account age, join date, and the specific signals that raised concern. Mods have the information before the stream is properly underway.</div>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <div class="step-icon">📡</div>
+        <div class="step-content">
+          <div class="step-label">Broadcast System</div>
+          <div class="step-title">Community-wide security alerts</div>
+          <div class="step-desc">Aether can send security broadcasts to all connected mod channels simultaneously — from the AetherhausDesk or directly via <span class="step-badge">/broadcast</span> on Discord mobile. Three urgency levels: 🌿 Chill for informational notices, 🕯 Burning for active security concerns, 🔥 ON FIRE for urgent threats. Broadcasts include a retract command if a situation resolves or a warning turns out to be unfounded.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMMAND REFERENCE -->
+  <div class="form-section">
+    <div class="section-label">Command Reference</div>
+
+    <div class="command-list">
+      <div class="command-group-label">Ticket Lifecycle</div>
+      <div class="command-row">
+        <span class="command-name">/reviewing TKT-XXXXXX</span>
+        <span class="command-desc">Triggers the review begun DM to the submitter</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/resolve TKT-XXXXXX</span>
+        <span class="command-desc">Marks resolved, sends the resolution DM with rating link</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/escalate TKT-XXXXXX</span>
+        <span class="command-desc">Bumps a ticket to higher urgency in the queue</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/close TKT-XXXXXX [reason]</span>
+        <span class="command-desc">Closes without resolution — no rating link sent, reason logged</span>
+      </div>
+
+      <div class="command-group-label">Queue Management</div>
+      <div class="command-row">
+        <span class="command-name">/queue</span>
+        <span class="command-desc">Shows current open tickets in order with urgency and position</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/ticket TKT-XXXXXX</span>
+        <span class="command-desc">Pulls full details of a specific ticket</span>
+      </div>
+
+      <div class="command-group-label">Metrics</div>
+      <div class="command-row">
+        <span class="command-name">/rating</span>
+        <span class="command-desc">Shows your current average rating across all reviews</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/rating TKT-XXXXXX</span>
+        <span class="command-desc">Shows the rating for a specific resolved ticket</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/history @handle</span>
+        <span class="command-desc">Pulls all past reports and alerts for a Discord handle</span>
+      </div>
+
+      <div class="command-group-label">Sentinel</div>
+      <div class="command-row">
+        <span class="command-name">/broadcast [message] [urgency]</span>
+        <span class="command-desc">Sends a broadcast to all connected mod channels — urgency choices: 🌿 Chill, 🕯 Burning, 🔥 ON FIRE</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/retract @handle</span>
+        <span class="command-desc">Retracts a previous broadcast cleanly across all servers</span>
+      </div>
+      <div class="command-row">
+        <span class="command-name">/clarify @handle</span>
+        <span class="command-desc">Mod command — pipes a clarification request to the workspace</span>
+      </div>
+
+      <div class="command-group-label">Utility</div>
+      <div class="command-row">
+        <span class="command-name">/commands</span>
+        <span class="command-desc">Displays this full command list in channel</span>
       </div>
     </div>
   </div>
-</div>
 
+  <!-- INVITE PLACEHOLDER -->
+  <div class="form-section">
+    <div class="section-label">Add Hauscall to Your Server</div>
+    <div class="invite-section">
+      <a class="submit-btn" href="https://discord.com/oauth2/authorize?client_id=1500636086983200768&permissions=281474976934912&integration_type=0&scope=bot+applications.commands" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin-bottom:1rem;">
+        ⊹ Add Hauscall to Your Server ⊹
+      </a>
+      <p class="invite-note">Hauscall is not a public bot. Access is extended to servers within Aether's trusted community. If you believe your server qualifies, reach out via Discord or submit a <a href="partnership.html" style="color:var(--amethyst-light);">Partnership Application</a>.</p>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-runes"><span>✦</span><span>⊹</span><span>⟡</span><span>⊹</span><span>✦</span></div>
+    <p class="footer-slogan">Chaos Managed. Probably.</p>
+    <p class="footer-note">Operated by Aether · Managed by Hauscall · Chaos guaranteed</p>
+    <p style="margin-top:0.5rem;font-family:'JetBrains Mono',monospace;font-size:10px;opacity:0.4;"><a href="changelog.html" style="color:var(--amethyst-light);text-decoration:none;">Changelog</a> · <a href="faq.html" style="color:var(--amethyst-light);text-decoration:none;">FAQ</a> · <a href="status.html" style="color:var(--amethyst-light);text-decoration:none;">Status</a></p>
+  </footer>
+</div>
 <script>
 function toggleAurora() {
   const html = document.documentElement;
-  const btn  = document.getElementById('aurora-toggle-label');
+  const btn = document.getElementById('aurora-toggle-label');
   if (html.classList.contains('aurora-on')) {
     html.classList.remove('aurora-on');
     localStorage.setItem('aurora', 'off');
-    btn.textContent = 'Aurora';
   } else {
     html.classList.add('aurora-on');
     localStorage.removeItem('aurora');
-    btn.textContent = 'Aurora';
   }
 }
 </script>
+
+  <!-- ── TERMS OF SERVICE MODAL ── -->
+  <div id="tos-modal" style="display:none;">
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>⊹ Hauscall Terms of Service</h2>
+          <button class="modal-close" onclick="document.getElementById('tos-modal').style.display='none';" aria-label="Close">✕</button>
+        </div>
+        <div class="modal-body">
+          <h3>What Hauscall Does</h3>
+          <p>Hauscall is a Discord bot that monitors community health and assists human moderators. It is a tool, not a replacement for human judgment.</p>
+          <h3>Limitations</h3>
+          <p>Hauscall is not perfect. It will miss violations and flag false positives. AetherhausStudios is not liable for missed alerts or service disruptions.</p>
+          <h3>Full Document</h3>
+          <p><a href="https://aetherhausstudios.github.io/AetherTek-Support/HAUSCALL_TERMS_OF_SERVICE.md" target="_blank">Read the complete Terms of Service ↗</a></p>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn" onclick="document.getElementById('tos-modal').style.display='none';">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRIVACY POLICY MODAL ── -->
+  <div id="privacy-modal" style="display:none;">
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>⊹ Privacy Policy</h2>
+          <button class="modal-close" onclick="document.getElementById('privacy-modal').style.display='none';" aria-label="Close">✕</button>
+        </div>
+        <div class="modal-body">
+          <h3>Data Retention</h3>
+          <ul>
+            <li><strong>Transcripts:</strong> 14 days</li>
+            <li><strong>Alerts:</strong> 30 days</li>
+            <li><strong>User IDs:</strong> Indefinite</li>
+          </ul>
+          <h3>Third Parties</h3>
+          <ul>
+            <li><strong>Claude (Anthropic):</strong> Does not retain data</li>
+            <li><strong>Discord:</strong> Per their privacy policy</li>
+            <li><strong>Railway:</strong> Hosts infrastructure (US)</li>
+          </ul>
+          <h3>Full Document</h3>
+          <p><a href="https://aetherhausstudios.github.io/AetherTek-Support/HAUSCALL_PRIVACY_POLICY.md" target="_blank">Read the complete Privacy Policy ↗</a></p>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn" onclick="document.getElementById('privacy-modal').style.display='none';">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL STYLES & FOOTER BUTTONS ── -->
+  <style>
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center;
+    padding: 20px; z-index: 9999;
+  }
+  .modal-content {
+    background: var(--surface-raised); border: 1px solid var(--border-strong);
+    border-radius: 14px; max-width: 650px; width: 100%; max-height: 85vh;
+    display: flex; flex-direction: column; box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+  }
+  .modal-header { display: flex; justify-content: space-between; align-items: center;
+    padding: 24px; border-bottom: 1px solid var(--border); }
+  .modal-header h2 { margin: 0; color: var(--amethyst-light); font-size: 1.4rem; font-weight: 600; }
+  .modal-close { background: none; border: none; color: var(--parchment-muted); font-size: 1.5rem;
+    cursor: pointer; padding: 0; width: 32px; height: 32px; display: flex; align-items: center;
+    justify-content: center; transition: color 0.2s; }
+  .modal-close:hover { color: var(--amethyst-light); }
+  .modal-body { overflow-y: auto; padding: 24px; flex: 1; color: var(--parchment-dim);
+    font-size: 0.95rem; line-height: 1.7; }
+  .modal-body h3 { color: var(--amethyst-light); margin-top: 16px; margin-bottom: 8px;
+    font-size: 1.05rem; font-weight: 600; }
+  .modal-body p, .modal-body ul { margin: 8px 0; }
+  .modal-body ul { padding-left: 24px; }
+  .modal-body a { color: var(--amethyst-mid); text-decoration: none; }
+  .modal-body a:hover { color: var(--amethyst-light); text-decoration: underline; }
+  .modal-footer { padding: 24px; border-top: 1px solid var(--border);
+    display: flex; justify-content: flex-end; gap: 12px; }
+  .modal-btn { background: var(--amethyst); color: var(--parchment); border: none;
+    padding: 12px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;
+    transition: all 0.2s; }
+  .modal-btn:hover { background: var(--amethyst-mid); box-shadow: 0 0 16px rgba(13,148,136,0.4); }
+  .page-footer { text-align: center; padding: 2rem 1rem; border-top: 1px solid var(--border);
+    color: var(--parchment-muted); font-size: 0.9rem; }
+  .page-footer button { background: none; border: none; color: var(--amethyst-mid);
+    cursor: pointer; text-decoration: none; transition: color 0.2s; }
+  .page-footer button:hover { color: var(--amethyst-light); text-decoration: underline; }
+  </style>
+
 
 </body>
 </html>
